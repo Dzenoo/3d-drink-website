@@ -34,7 +34,7 @@ const Section = (props: any) => {
     >
       <div className="flex items-center justify-center">
         <div className="max-w-sm w-full">
-          <div className="bg-white rounded-lg px-8 py-12">{props.children}</div>
+          <div className="rounded-lg px-8 py-12">{props.children}</div>
         </div>
       </div>
     </section>

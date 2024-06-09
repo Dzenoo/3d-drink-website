@@ -86,7 +86,7 @@ const Bottle: React.FC = () => {
             new THREE.MeshStandardMaterial({
               color: "gray",
               roughness: 0.01,
-              metalness: 0.3,
+              metalness: 1,
             })
           }
           position={[0.1, 2.45, -0.01]}
@@ -100,7 +100,7 @@ const Bottle: React.FC = () => {
             new THREE.MeshStandardMaterial({
               color: "gray",
               roughness: 0.01,
-              metalness: 0.3,
+              metalness: 0.7,
             })
           }
         />
@@ -110,7 +110,7 @@ const Bottle: React.FC = () => {
           geometry={nodes.Can.geometry}
           material={
             new THREE.MeshStandardMaterial({
-              color: "red",
+              color: "blue",
               roughness: 0.01,
               metalness: 0.3,
             })

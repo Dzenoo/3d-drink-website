@@ -4,6 +4,7 @@
 
 html,
 body {
+  background: radial-gradient(#adc5ff, rgb(0, 162, 255));
   height: 100vh;
 }
 
