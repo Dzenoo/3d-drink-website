@@ -26,6 +26,14 @@ const Bottle: React.FC = () => {
     });
 
     tl.current!.to(
+      ref.current!.rotation,
+      {
+        duration: 0.5,
+        x: 1,
+      },
+      0
+    );
+    tl.current!.to(
       ref.current!.position,
       {
         duration: 0.5,
