@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 
 const Bottle: React.FC = () => {
-  const { nodes: bottleNodes } = useGLTF("./models/bottle.glb");
+  const { nodes: bottleNodes } = useGLTF("./models/drink.glb");
   const nodes: any = bottleNodes;
 
   const ref = useRef<any>();
@@ -119,6 +119,21 @@ const Bottle: React.FC = () => {
           material={
             new THREE.MeshStandardMaterial({
               color: "blue",
+              roughness: 0.01,
+              metalness: 0.3,
+            })
+          }
+        />
+        <mesh
+          rotation={[3.36, 3.95, 4.8]}
+          scale={0.027}
+          receiveShadow
+          position={[0.91, 0.86, -0.81]}
+          castShadow
+          geometry={nodes.Droplets.geometry}
+          material={
+            new THREE.MeshStandardMaterial({
+              color: "white",
               roughness: 0.01,
               metalness: 0.3,
             })
