@@ -16,7 +16,6 @@ export default function Home() {
         <Overlay />
         <Bottle />
       </ScrollControls>
-
       <Lights />
     </Canvas>
   );

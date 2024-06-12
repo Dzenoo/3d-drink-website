@@ -1,8 +1,8 @@
-import { Environment } from "@react-three/drei";
+import { Stage } from "@react-three/drei";
 import React from "react";
 
 const Experience: React.FC = () => {
-  return <Environment preset="forest"></Environment>;
+  return <Stage />;
 };
 
 export default Experience;
