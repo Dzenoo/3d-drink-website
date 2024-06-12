@@ -1,11 +1,6 @@
 import * as THREE from "three";
 import { gsap } from "gsap";
-import {
-  MeshReflectorMaterial,
-  useGLTF,
-  useScroll,
-  useTexture,
-} from "@react-three/drei";
+import { useGLTF, useScroll, useTexture } from "@react-three/drei";
 import React, { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 
@@ -16,8 +11,9 @@ const Bottle: React.FC = () => {
   const energyTexture = useTexture("/images/energy.png");
   energyTexture.flipY = false;
   energyTexture.colorSpace = THREE.SRGBColorSpace;
-  energyTexture.wrapS = THREE.RepeatWrapping;
-  energyTexture.wrapT = THREE.RepeatWrapping;
+  energyTexture.magFilter = THREE.LinearFilter;
+  energyTexture.minFilter = THREE.LinearFilter;
+  energyTexture.repeat.set(2, 2);
 
   const ref = useRef<any>();
   const tl = useRef<any>();
