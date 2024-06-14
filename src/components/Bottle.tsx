@@ -8,7 +8,7 @@ const Bottle: React.FC = () => {
   const { nodes: bottleNodes } = useGLTF("./models/drink.glb");
   const nodes: any = bottleNodes;
 
-  const energyTexture = useTexture("/images/energy.png");
+  const energyTexture = useTexture("/images/apple.png");
   energyTexture.flipY = false;
   energyTexture.colorSpace = THREE.SRGBColorSpace;
   energyTexture.magFilter = THREE.LinearFilter;
@@ -27,10 +27,10 @@ const Bottle: React.FC = () => {
   useEffect(() => {
     tl.current = gsap.timeline();
 
-    // tl.current.to(ref.current!.position, {
-    //   duration: 2,
-    //   y: -0.5,
-    // });
+    tl.current.to(ref.current!.position, {
+      duration: 0.1,
+      y: 5,
+    });
 
     // tl.current!.to(
     //   ref.current!.position,
@@ -77,11 +77,11 @@ const Bottle: React.FC = () => {
   return (
     <>
       <group
-        rotation={[0, Math.PI * 0.5 + 0.7, 0]}
+        rotation={[0, Math.PI * 0.5 + 0.55, 0]}
         dispose={null}
         ref={ref}
         castShadow
-        position={[0, -0.1, 0]}
+        position={[0, -2.1, 0]}
       >
         <mesh
           castShadow
@@ -101,9 +101,9 @@ const Bottle: React.FC = () => {
           geometry={nodes.Top.geometry}
           material={
             new THREE.MeshStandardMaterial({
-              color: "lightgray",
+              color: "#2b2b2b",
               roughness: 0.01,
-              metalness: 0.9,
+              metalness: 1,
             })
           }
         />
@@ -146,7 +146,7 @@ const Bottle: React.FC = () => {
             new THREE.MeshStandardMaterial({
               color: "lightgray",
               roughness: 0.01,
-              metalness: 0.9,
+              metalness: 0.5,
             })
           }
         />
