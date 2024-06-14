@@ -3,13 +3,19 @@ import React from "react";
 const Lights: React.FC = () => {
   return (
     <>
-      <ambientLight color="#ffffff" intensity={4.5} />
-
+      <ambientLight intensity={1.5} />
       <directionalLight
         color="#ffffff"
-        intensity={5.5}
+        intensity={0.5}
         castShadow
-        position={[1, 1, 5]}
+        position={[-25, 1, 7]}
+        shadow-mapSize={[1024, 1024]}
+        shadow-camera-near={1}
+        shadow-camera-far={10}
+        shadow-camera-left={-5}
+        shadow-camera-right={5}
+        shadow-camera-top={5}
+        shadow-camera-bottom={-5}
       />
     </>
   );
