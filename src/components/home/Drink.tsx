@@ -4,7 +4,7 @@ import { useGLTF, useScroll, useTexture } from "@react-three/drei";
 import React, { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 
-const Bottle: React.FC = () => {
+const Drink: React.FC = () => {
   const { nodes: bottleNodes } = useGLTF("./models/drink.glb");
   const nodes: any = bottleNodes;
 
@@ -155,4 +155,4 @@ const Bottle: React.FC = () => {
   );
 };
 
-export default Bottle;
+export default Drink;

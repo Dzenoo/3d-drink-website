@@ -1,11 +1,10 @@
 "use client";
-import * as THREE from "three";
-import Bottle from "@/components/Bottle";
+import Drink from "@/components/home/Drink";
 import { Canvas } from "@react-three/fiber";
-import Lights from "@/components/Lights";
-import Experience from "@/components/Experience";
+import Lights from "@/components/setup/Lights";
+import Experience from "@/components/setup/Experience";
 import { ScrollControls } from "@react-three/drei";
-import Overlay from "@/components/Overlay";
+import HomeOverlay from "@/components/home/HomeOverlay";
 
 export default function Home() {
   return (
@@ -13,9 +12,11 @@ export default function Home() {
       <Experience />
 
       <ScrollControls pages={5} damping={0.25}>
-        <Overlay />
-        <Bottle />
+        <HomeOverlay />
+
+        <Drink />
       </ScrollControls>
+
       <Lights />
     </Canvas>
   );

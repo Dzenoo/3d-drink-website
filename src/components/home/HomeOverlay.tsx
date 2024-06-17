@@ -1,12 +1,13 @@
 import { Scroll } from "@react-three/drei";
 import React from "react";
+import Hero from "./Hero";
 
-const Overlay = () => {
+const HomeOverlay = () => {
   return (
     <Scroll html>
       <div className="w-screen">
         <Section>
-          <h1 className="text-5xl font-bold">Beautiful</h1>
+          <Hero />
         </Section>
         <Section>
           <h1 className="text-5xl font-bold">Beautiful</h1>
@@ -29,4 +30,4 @@ const Section = ({ children }: { children: React.ReactNode }) => {
   return <section className={`h-screen w-full`}>{children}</section>;
 };
 
-export default Overlay;
+export default HomeOverlay;
