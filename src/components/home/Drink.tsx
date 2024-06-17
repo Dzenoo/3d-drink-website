@@ -29,17 +29,27 @@ const Drink: React.FC = () => {
 
     tl.current.to(ref.current!.position, {
       duration: 0.1,
-      y: 5,
+      y: -0.1,
     });
 
-    // tl.current!.to(
-    //   ref.current!.position,
-    //   {
-    //     duration: 0.5,
-    //     x: -1,
-    //   },
-    //   0
-    // );
+    tl.current!.to(
+      ref.current!.rotation,
+      {
+        duration: 0.5,
+        y: 2.8,
+        z: 0.5,
+      },
+      0
+    );
+    tl.current!.to(
+      ref.current!.rotation,
+      {
+        duration: 0.5,
+        y: Math.PI * 0.5 + 0.55,
+        z: 0,
+      },
+      1
+    );
     // tl.current!.to(
     //   ref.current!.position,
     //   {
@@ -146,7 +156,7 @@ const Drink: React.FC = () => {
             new THREE.MeshStandardMaterial({
               color: "lightgray",
               roughness: 0.01,
-              metalness: 0.5,
+              metalness: 1,
             })
           }
         />

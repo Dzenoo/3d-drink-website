@@ -9,9 +9,7 @@ const HomeOverlay = () => {
         <Section>
           <Hero />
         </Section>
-        <Section>
-          <h1 className="text-5xl font-bold">Beautiful</h1>
-        </Section>
+        <Section></Section>
         <Section>
           <h1 className="text-5xl font-bold">Beautiful</h1>
         </Section>
@@ -26,7 +24,7 @@ const HomeOverlay = () => {
   );
 };
 
-const Section = ({ children }: { children: React.ReactNode }) => {
+const Section = ({ children }: { children?: React.ReactNode }) => {
   return <section className={`h-screen w-full`}>{children}</section>;
 };
 
