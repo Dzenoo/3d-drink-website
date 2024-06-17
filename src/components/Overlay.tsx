@@ -8,13 +8,13 @@ const Overlay = () => {
         <Section>
           <h1 className="text-5xl font-bold">Beautiful</h1>
         </Section>
-        <Section right>
+        <Section>
           <h1 className="text-5xl font-bold">Beautiful</h1>
         </Section>
         <Section>
           <h1 className="text-5xl font-bold">Beautiful</h1>
         </Section>
-        <Section right>
+        <Section>
           <h1 className="text-5xl font-bold">Beautiful</h1>
         </Section>
         <Section>
@@ -25,20 +25,8 @@ const Overlay = () => {
   );
 };
 
-const Section = (props: any) => {
-  return (
-    <section
-      className={`h-screen flex flex-col justify-center p-10 w-full ${
-        props.right ? "items-end" : "items-start"
-      }`}
-    >
-      <div className="flex items-center justify-center">
-        <div className="max-w-sm w-full">
-          <div className="rounded-lg px-8 py-12">{props.children}</div>
-        </div>
-      </div>
-    </section>
-  );
+const Section = ({ children }: { children: React.ReactNode }) => {
+  return <section className={`h-screen w-full`}>{children}</section>;
 };
 
 export default Overlay;
