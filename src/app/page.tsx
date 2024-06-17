@@ -5,15 +5,18 @@ import Lights from "@/components/setup/Lights";
 import Experience from "@/components/setup/Experience";
 import { ScrollControls } from "@react-three/drei";
 import HomeOverlay from "@/components/home/HomeOverlay";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
     <Canvas camera={{ fov: 55, position: [3, 0, 5] }} flat>
       <Experience />
-      <ScrollControls pages={5} damping={0.25}>
-        <HomeOverlay />
-        <Drink />
-      </ScrollControls>
+      <Suspense fallback={null}>
+        <ScrollControls pages={5} damping={0.25}>
+          <HomeOverlay />
+          <Drink />
+        </ScrollControls>
+      </Suspense>
       <Lights />
     </Canvas>
   );
