@@ -1,6 +1,7 @@
 import { Scroll } from "@react-three/drei";
 import React from "react";
 import Hero from "./Hero";
+import Flavors from "./Flavors";
 
 const HomeOverlay = () => {
   return (
@@ -17,7 +18,7 @@ const HomeOverlay = () => {
           <h1 className="text-5xl font-bold">Beautiful</h1>
         </Section>
         <Section>
-          <h1 className="text-5xl font-bold">Beautiful</h1>
+          <Flavors />
         </Section>
       </div>
     </Scroll>
