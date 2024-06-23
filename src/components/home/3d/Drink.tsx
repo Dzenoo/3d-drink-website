@@ -3,12 +3,17 @@ import { gsap } from "gsap";
 import { useGLTF, useScroll, useTexture } from "@react-three/drei";
 import React, { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
+import { DrinkTexture } from "@/app/page";
 
-const Drink: React.FC = () => {
+interface DrinkProps {
+  texture?: DrinkTexture;
+}
+
+const Drink: React.FC<DrinkProps> = ({ texture = "apple" }) => {
   const { nodes: bottleNodes } = useGLTF("./models/drink.glb");
   const nodes: any = bottleNodes;
 
-  const energyTexture = useTexture("/images/apple.png");
+  const energyTexture = useTexture(`/images/${texture}.png`);
   energyTexture.flipY = false;
   energyTexture.colorSpace = THREE.SRGBColorSpace;
   energyTexture.magFilter = THREE.LinearFilter;
@@ -50,38 +55,33 @@ const Drink: React.FC = () => {
       },
       1
     );
-    // tl.current!.to(
-    //   ref.current!.position,
-    //   {
-    //     duration: 0.5,
-    //     x: 0,
-    //   },
-    //   1
-    // );
-    // tl.current!.to(
-    //   ref.current!.rotation,
-    //   {
-    //     duration: 0.5,
-    //     x: -1,
-    //   },
-    //   0
-    // );
-    // tl.current!.to(
-    //   ref.current!.rotation,
-    //   {
-    //     duration: 0.5,
-    //     x: 0,
-    //   },
-    //   1
-    // );
-    // tl.current!.to(
-    //   ref.current!.rotation,
-    //   {
-    //     duration: 0.5,
-    //     z: 0,
-    //   },
-    //   1.5
-    // );
+    tl.current!.to(
+      ref.current!.position,
+      {
+        duration: 0.5,
+        x: 1.5,
+        z: -1.5,
+      },
+      0
+    );
+    tl.current!.to(
+      ref.current!.position,
+      {
+        duration: 0.5,
+        x: -1,
+        z: 1,
+      },
+      0.5
+    );
+    tl.current!.to(
+      ref.current!.position,
+      {
+        duration: 0.5,
+        x: 0,
+        z: 0,
+      },
+      1
+    );
   }, []);
 
   return (

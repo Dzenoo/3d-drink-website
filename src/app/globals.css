@@ -25,3 +25,8 @@ canvas {
   transform: translateY(115px);
   transition: transform 0.5s;
 }
+
+.text-outlined {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1.5px;
+}

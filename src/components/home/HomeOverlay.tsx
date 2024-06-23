@@ -2,23 +2,31 @@ import { Scroll } from "@react-three/drei";
 import React from "react";
 import Hero from "./Hero";
 import Flavors from "./Flavors";
+import Ingredients from "./Ingredients";
+import Refreshing from "./Refreshing";
+import { DrinkTexture } from "@/app/page";
 
-const HomeOverlay = () => {
+const HomeOverlay: React.FC<{
+  drinkTexture: DrinkTexture;
+  setdrinkTexture: React.Dispatch<React.SetStateAction<DrinkTexture>>;
+}> = ({ drinkTexture, setdrinkTexture }) => {
   return (
     <Scroll html>
       <div className="w-screen">
         <Section>
           <Hero />
         </Section>
-        <Section></Section>
         <Section>
-          <h1 className="text-5xl font-bold">Beautiful</h1>
+          <Ingredients />
         </Section>
         <Section>
-          <h1 className="text-5xl font-bold">Beautiful</h1>
+          <Refreshing />
         </Section>
         <Section>
-          <Flavors />
+          <Flavors
+            drinkTexture={drinkTexture}
+            setdrinkTexture={setdrinkTexture}
+          />
         </Section>
       </div>
     </Scroll>

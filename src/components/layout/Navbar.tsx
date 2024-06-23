@@ -3,7 +3,7 @@ import React from "react";
 
 const Navbar: React.FC = () => {
   return (
-    <header className="px-10 py-5 flex justify-between gap-5 items-center z-10 sticky">
+    <header className="px-10 py-5 flex justify-between gap-5 items-center z-10 sticky top-0">
       <div>
         <h1 className="text-[1.5rem] font-semibold">DRINK</h1>
       </div>
