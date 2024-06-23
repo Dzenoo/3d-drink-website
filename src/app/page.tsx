@@ -16,7 +16,7 @@ export default function Home() {
     <Canvas camera={{ fov: 55, position: [3, 0, 5] }} flat>
       <Experience />
       <Suspense fallback={null}>
-        <ScrollControls pages={4} damping={0.25}>
+        <ScrollControls pages={5} damping={0.25}>
           <HomeOverlay
             drinkTexture={drinkTexture}
             setdrinkTexture={setdrinkTexture}

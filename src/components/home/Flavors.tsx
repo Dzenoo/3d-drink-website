@@ -39,7 +39,7 @@ const Flavors: React.FC<{
   ];
 
   return (
-    <div className="overflow-hidden p-10 flex flex-col gap-[10em]">
+    <div className="mt-10 overflow-hidden p-10 flex flex-col gap-[10em]">
       <div className="flex justify-between gap-5">
         <div className="flex flex-col justify-between gap-[25em]">
           <div>
