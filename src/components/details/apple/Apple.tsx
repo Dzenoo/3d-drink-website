@@ -1,14 +1,15 @@
 import React from "react";
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
+import { RigidBody } from "@react-three/rapier";
 
 const Apple: React.FC = () => {
   const { nodes: appleNodes } = useGLTF("./models/apple.glb");
   const nodes: any = appleNodes;
 
   return (
-    <>
-      <group>
+    <RigidBody type="dynamic">
+      <group position={[0, 10, 0]}>
         <mesh
           scale={0.09}
           geometry={nodes.Apple_Peduncle.geometry}
@@ -31,7 +32,7 @@ const Apple: React.FC = () => {
           }
         />
       </group>
-    </>
+    </RigidBody>
   );
 };
 

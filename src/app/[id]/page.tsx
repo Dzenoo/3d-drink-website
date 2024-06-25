@@ -10,19 +10,25 @@ import DetailsOverlay from "@/components/details/DetailsOverlay";
 import Lights from "@/components/setup/Lights";
 import { Canvas } from "@react-three/fiber";
 import { DrinkTexture } from "../page";
+import Plane from "@/components/details/plane/Plane";
+import { Physics, RigidBody } from "@react-three/rapier";
 
 const DrinkDetails = ({ params }: { params: { id: DrinkTexture } }) => {
   return (
-    <Canvas camera={{ fov: 75 }} flat>
+    <Canvas shadows camera={{ fov: 75 }} flat>
       <Experience />
       <Lights />
       <Suspense>
-        <Drink
-          position={[0, -0.5, 0]}
-          rotation={[0, 1.55, 0]}
-          enableScroll={false}
-          texture={params?.id}
-        />
+        <Physics>
+          <Drink
+            position={[0, -0.5, 0]}
+            rotation={[0, 1.55, 0]}
+            enableScroll={false}
+            texture={params?.id}
+          />
+          <Apple />
+          <Plane />
+        </Physics>
       </Suspense>
     </Canvas>
   );
