@@ -5,7 +5,6 @@ import Flavors from "./Flavors";
 import Ingredients from "./Ingredients";
 import Refreshing from "./Refreshing";
 import { DrinkTexture } from "@/app/page";
-import Explore from "./Explore";
 
 const HomeOverlay: React.FC<{
   drinkTexture: DrinkTexture;
@@ -28,9 +27,6 @@ const HomeOverlay: React.FC<{
             drinkTexture={drinkTexture}
             setdrinkTexture={setdrinkTexture}
           />
-        </Section>
-        <Section>
-          <Explore />
         </Section>
       </div>
     </Scroll>
