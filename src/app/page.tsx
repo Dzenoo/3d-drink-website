@@ -21,7 +21,11 @@ export default function Home() {
             drinkTexture={drinkTexture}
             setdrinkTexture={setdrinkTexture}
           />
-          <Drink texture={drinkTexture} />
+          <Drink
+            position={[0, -2.1, 0]}
+            rotation={[0, Math.PI * 0.5 + 0.55, 0]}
+            texture={drinkTexture}
+          />
         </ScrollControls>
       </Suspense>
       <Lights />

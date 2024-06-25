@@ -6,10 +6,20 @@ import { useFrame } from "@react-three/fiber";
 import { DrinkTexture } from "@/app/page";
 
 interface DrinkProps {
+  enableScroll?: boolean;
   texture?: DrinkTexture;
+  position?: [number, number, number];
+  rotation?: [number, number, number];
+  scale?: [number, number, number];
 }
 
-const Drink: React.FC<DrinkProps> = ({ texture = "apple" }) => {
+const Drink: React.FC<DrinkProps> = ({
+  enableScroll = true,
+  texture = "apple",
+  position = [0, 0, 0],
+  rotation = [0, 0, 0],
+  scale = [1, 1, 1],
+}) => {
   const { nodes: bottleNodes } = useGLTF("./models/drink.glb");
   const nodes: any = bottleNodes;
 
@@ -26,72 +36,77 @@ const Drink: React.FC<DrinkProps> = ({ texture = "apple" }) => {
   const scroll = useScroll();
 
   useFrame(() => {
-    tl.current!.seek(scroll.offset * tl.current!.duration());
+    if (enableScroll) {
+      tl.current!.seek(scroll.offset * tl.current!.duration());
+    }
   });
 
   useEffect(() => {
-    tl.current = gsap.timeline();
+    if (enableScroll) {
+      tl.current = gsap.timeline();
 
-    tl.current.to(ref.current!.position, {
-      duration: 0.1,
-      y: -0.1,
-    });
+      tl.current.to(ref.current!.position, {
+        duration: 0.1,
+        y: -0.1,
+      });
 
-    tl.current!.to(
-      ref.current!.rotation,
-      {
-        duration: 0.5,
-        y: 2.8,
-        z: 0.5,
-      },
-      0
-    );
-    tl.current!.to(
-      ref.current!.rotation,
-      {
-        duration: 0.5,
-        y: Math.PI * 0.5 + 0.55,
-        z: 0,
-      },
-      1
-    );
-    tl.current!.to(
-      ref.current!.position,
-      {
-        duration: 0.5,
-        x: 1.5,
-        z: -1.5,
-      },
-      0
-    );
-    tl.current!.to(
-      ref.current!.position,
-      {
-        duration: 0.5,
-        x: -1,
-        z: 1,
-      },
-      0.5
-    );
-    tl.current!.to(
-      ref.current!.position,
-      {
-        duration: 0.5,
-        x: 0,
-        z: 0,
-      },
-      1
-    );
-  }, []);
+      tl.current!.to(
+        ref.current!.rotation,
+        {
+          duration: 0.5,
+          y: 2.8,
+          z: 0.5,
+        },
+        0
+      );
+      tl.current!.to(
+        ref.current!.rotation,
+        {
+          duration: 0.5,
+          y: Math.PI * 0.5 + 0.55,
+          z: 0,
+        },
+        1
+      );
+      tl.current!.to(
+        ref.current!.position,
+        {
+          duration: 0.5,
+          x: 1.5,
+          z: -1.5,
+        },
+        0
+      );
+      tl.current!.to(
+        ref.current!.position,
+        {
+          duration: 0.5,
+          x: -1,
+          z: 1,
+        },
+        0.5
+      );
+      tl.current!.to(
+        ref.current!.position,
+        {
+          duration: 0.5,
+          x: 0,
+          z: 0,
+        },
+        1
+      );
+    }
+  }, [enableScroll]);
 
   return (
     <>
       <group
-        rotation={[0, Math.PI * 0.5 + 0.55, 0]}
+        scale={scale}
+        rotation={rotation}
         dispose={null}
         ref={ref}
         castShadow
-        position={[0, -2.1, 0]}
+        position={position}
       >
         <mesh
           castShadow
