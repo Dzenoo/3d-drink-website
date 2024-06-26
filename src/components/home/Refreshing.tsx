@@ -21,8 +21,17 @@ const Refreshing: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h1 ref={textRef} className="text-[27em] font-bold">
+    <div className="max-sm:p-10">
+      <h1
+        ref={textRef}
+        className="text-7xl
+                   sm:text-8xl
+                   md:text-9xl
+                   lg:text-[10em]
+                   xl:text-[15em]
+                   2xl:text-[27em]
+                   font-bold"
+      >
         Refreshing
       </h1>
     </div>

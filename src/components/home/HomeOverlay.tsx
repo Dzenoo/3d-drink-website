@@ -34,7 +34,9 @@ const HomeOverlay: React.FC<{
 };
 
 const Section = ({ children }: { children?: React.ReactNode }) => {
-  return <section className={`h-screen w-full`}>{children}</section>;
+  return (
+    <section className={`max-sm:h-full h-screen w-full`}>{children}</section>
+  );
 };
 
 export default HomeOverlay;

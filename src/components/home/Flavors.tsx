@@ -41,10 +41,10 @@ const Flavors: React.FC<{
 
   return (
     <div className="mt-10 overflow-hidden p-10 flex flex-col gap-[10em]">
-      <div className="flex justify-between gap-5">
-        <div className="flex flex-col justify-between gap-[25em]">
+      <div className="flex justify-between gap-5 max-xl:flex-col">
+        <div className="flex flex-col justify-between gap-[25em] max-xl:gap-36">
           <div>
-            <h1 className="font-bold text-8xl">
+            <h1 className="font-bold text-8xl max-sm:text-7xl">
               Four Different <br /> Good Flavors
             </h1>
           </div>

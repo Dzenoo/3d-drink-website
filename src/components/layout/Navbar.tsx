@@ -1,3 +1,4 @@
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -8,7 +9,7 @@ const Navbar: React.FC = () => {
         <h1 className="text-[1.5rem] font-semibold">DRINK</h1>
       </div>
       <div>
-        <ul className="flex gap-10">
+        <ul className="max-md:hidden flex gap-10">
           {NavbarLinks.map((link) => (
             <li key={link.id}>
               <Link
@@ -20,6 +21,11 @@ const Navbar: React.FC = () => {
             </li>
           ))}
         </ul>
+      </div>
+      <div className="hidden max-md:block">
+        <button>
+          <Menu />
+        </button>
       </div>
     </header>
   );

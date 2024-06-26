@@ -2,7 +2,7 @@ import React from "react";
 
 const Ingredients: React.FC = () => {
   return (
-    <div className="pt-[10em] px-28 flex flex-col gap-10 justify-center">
+    <div className="pt-[10em] px-28 flex flex-col gap-10 justify-center max-sm:px-10">
       <div>
         <h1 className="font-bold text-7xl">Best Ingredients</h1>
       </div>

@@ -61,18 +61,18 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <div className="pt-28 flex justify-between">
+    <div className="pt-28 flex justify-between gap-10 max-lg:flex-col">
       <div>
         <div className="px-10">
           <div className="flex flex-col gap-16">
             <div>
-              <h1 className="hero_title text-9xl font-bold opacity-0 translate-y-10">
+              <h1 className="hero_title text-9xl font-bold opacity-0 translate-y-10 max-lg:text-7xl">
                 Unleash Your <br />
                 Energy
               </h1>
             </div>
             <div className="hero_description pl-1 opacity-0 translate-y-10">
-              <p className="text-3xl font-extralight">
+              <p className="text-3xl font-extralight max-sm:text-xl">
                 Experience the Unmatched Power and <br />
                 Endurance of Our Revolutionary Energy Drink
               </p>
@@ -88,8 +88,8 @@ const Hero: React.FC = () => {
           <h1 className="left-[5em] relative text-xl">The best of flavors</h1>
         </div>
       </div>
-      <div className="flex flex-col justify-between right_text opacity-0 translate-y-10">
-        <div className="bg-[#e8e8e8] p-5">
+      <div className="p-10 flex flex-col justify-between right_text opacity-0 translate-y-10 gap-10 max-xl:justify-normal">
+        <div className="bg-[#e8e8e8] p-5 max-lg:w-fit">
           <div>
             <h1 className="text-3xl">Incredibly Refreshing</h1>
           </div>
