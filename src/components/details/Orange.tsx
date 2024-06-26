@@ -1,14 +1,25 @@
 import React from "react";
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
+import { RigidBody } from "@react-three/rapier";
 
-const Orange: React.FC = () => {
+interface OrangeProps {
+  position: [number, number, number];
+}
+
+const Orange: React.FC<OrangeProps> = ({ position }) => {
   const { nodes: orangeNodes } = useGLTF("./models/orange.glb");
   const nodes: any = orangeNodes;
 
   return (
-    <>
-      <group scale={0.5}>
+    <RigidBody
+      position={position}
+      colliders="ball"
+      type="dynamic"
+      angularDamping={0.9}
+      linearDamping={0.1}
+    >
+      <group position={[0, 0, 0]} scale={0.5}>
         <mesh
           position={[0.1, 1.5, 0]}
           scale={0.05}
@@ -32,7 +43,7 @@ const Orange: React.FC = () => {
           }
         />
       </group>
-    </>
+    </RigidBody>
   );
 };
 

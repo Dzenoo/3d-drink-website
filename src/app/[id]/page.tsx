@@ -1,8 +1,4 @@
 "use client";
-import Apple from "@/components/details/apple/Apple";
-import Kiwi from "@/components/details/kiwi/Kiwi";
-import Orange from "@/components/details/orange/Orange";
-import Strawberry from "@/components/details/strawberry/Strawberry";
 import React, { Suspense } from "react";
 import Drink from "@/components/home/3d/Drink";
 import Experience from "@/components/setup/Experience";
@@ -10,9 +6,9 @@ import DetailsOverlay from "@/components/details/DetailsOverlay";
 import Lights from "@/components/setup/Lights";
 import { Canvas } from "@react-three/fiber";
 import { DrinkTexture } from "../page";
-import Plane from "@/components/details/plane/Plane";
 import { Physics, RigidBody } from "@react-three/rapier";
-import { OrbitControls } from "@react-three/drei";
+import FruitsManager from "@/components/details/FruitsManager";
+import Plane from "@/components/details/Plane";
 
 const DrinkDetails = ({ params }: { params: { id: DrinkTexture } }) => {
   return (
@@ -20,7 +16,7 @@ const DrinkDetails = ({ params }: { params: { id: DrinkTexture } }) => {
       <Experience />
       <Lights />
       <Suspense>
-        <Physics>
+        <Physics gravity={[0, -9.08, 0]}>
           <RigidBody restitution={0.5} type="fixed">
             <Drink
               droplets={false}
@@ -30,11 +26,10 @@ const DrinkDetails = ({ params }: { params: { id: DrinkTexture } }) => {
               texture={params?.id}
             />
           </RigidBody>
-          <Apple />
           <Plane />
+          <FruitsManager fruitType={params.id} count={100} />
         </Physics>
       </Suspense>
-      <OrbitControls />
     </Canvas>
   );
 };

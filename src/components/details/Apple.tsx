@@ -3,13 +3,23 @@ import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 
-const Apple: React.FC = () => {
+interface AppleProps {
+  position: [number, number, number];
+}
+
+const Apple: React.FC<AppleProps> = ({ position }) => {
   const { nodes: appleNodes } = useGLTF("./models/apple.glb");
   const nodes: any = appleNodes;
 
   return (
-    <RigidBody colliders="ball" type="dynamic">
-      <group position={[0, 10, 0]}>
+    <RigidBody
+      position={position}
+      colliders="ball"
+      type="dynamic"
+      angularDamping={0.9}
+      linearDamping={0.1}
+    >
+      <group position={[0, 0, 0]}>
         <mesh
           scale={0.09}
           geometry={nodes.Apple_Peduncle.geometry}

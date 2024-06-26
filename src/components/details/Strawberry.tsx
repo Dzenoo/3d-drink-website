@@ -1,13 +1,25 @@
 import React from "react";
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
+import { RigidBody } from "@react-three/rapier";
 
-const Strawberry: React.FC = () => {
+interface StrawberryProps {
+  position: [number, number, number];
+}
+
+const Strawberry: React.FC<StrawberryProps> = ({ position }) => {
   const { nodes: strawberryNodes } = useGLTF("./models/strawberry.glb");
   const nodes: any = strawberryNodes;
 
   return (
-    <>
+    <RigidBody
+      position={position}
+      colliders="ball"
+      type="dynamic"
+      angularDamping={0.9}
+      linearDamping={0.1}
+      scale={0.5}
+    >
       <group>
         <mesh
           rotation={[-Math.PI * 0.7, 0, 0.1]}
@@ -32,7 +44,7 @@ const Strawberry: React.FC = () => {
           }
         />
       </group>
-    </>
+    </RigidBody>
   );
 };
 
