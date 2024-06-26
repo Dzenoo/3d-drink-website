@@ -20,7 +20,7 @@ const Strawberry: React.FC<StrawberryProps> = ({ position }) => {
       linearDamping={0.1}
       scale={0.5}
     >
-      <group>
+      <group position={[0, 0, 0]}>
         <mesh
           rotation={[-Math.PI * 0.7, 0, 0.1]}
           position={[0, 0.25, 0.8]}

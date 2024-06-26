@@ -6,13 +6,12 @@ const Plane: React.FC = () => {
     <>
       <RigidBody friction={1.0} restitution={0.5} type="fixed">
         <mesh
-          receiveShadow
           scale={[50, 20, 1]}
           position={[0, -Math.PI * 0.5 - 1.5, 0]}
           rotation={[Math.PI * 0.5, 0, 0]}
         >
           <boxGeometry args={[1, 1, 0.1]} />
-          <meshBasicMaterial color="white" />
+          <meshBasicMaterial color="#f0f1f3" />
         </mesh>
       </RigidBody>
 

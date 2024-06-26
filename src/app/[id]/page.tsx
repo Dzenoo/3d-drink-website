@@ -12,25 +12,28 @@ import Plane from "@/components/details/Plane";
 
 const DrinkDetails = ({ params }: { params: { id: DrinkTexture } }) => {
   return (
-    <Canvas shadows camera={{ fov: 75 }} flat>
-      <Experience />
-      <Lights />
-      <Suspense>
-        <Physics gravity={[0, -9.08, 0]}>
-          <RigidBody restitution={0.5} type="fixed">
-            <Drink
-              droplets={false}
-              position={[0, -0.5, 0]}
-              rotation={[0, 1.55, 0]}
-              enableScroll={false}
-              texture={params?.id}
-            />
-          </RigidBody>
-          <Plane />
-          <FruitsManager fruitType={params.id} count={100} />
-        </Physics>
-      </Suspense>
-    </Canvas>
+    <>
+      <Canvas camera={{ fov: 75 }} flat>
+        <Experience />
+        <Lights />
+        <Suspense>
+          <Physics gravity={[0, -9.08, 0]}>
+            <RigidBody restitution={0.5} type="fixed">
+              <Drink
+                droplets={false}
+                position={[0, -0.5, 0]}
+                rotation={[0, 1.55, 0]}
+                enableScroll={false}
+                texture={params?.id}
+              />
+            </RigidBody>
+            <Plane />
+            <FruitsManager fruitType={params.id} count={50} />
+          </Physics>
+        </Suspense>
+      </Canvas>
+      <DetailsOverlay flavor={params.id} />
+    </>
   );
 };
 

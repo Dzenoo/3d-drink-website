@@ -1,11 +1,13 @@
 "use client";
-import Drink from "@/components/home/3d/Drink";
 import { Canvas } from "@react-three/fiber";
 import Lights from "@/components/setup/Lights";
 import Experience from "@/components/setup/Experience";
 import { ScrollControls } from "@react-three/drei";
 import HomeOverlay from "@/components/home/HomeOverlay";
 import { Suspense, useState } from "react";
+import dynamic from "next/dynamic";
+
+const Drink = dynamic(() => import("@/components/home/3d/Drink"));
 
 export type DrinkTexture = "apple" | "orange" | "strawberry" | "kiwi";
 

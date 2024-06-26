@@ -19,7 +19,7 @@ const Kiwi: React.FC<KiwiProps> = ({ position }) => {
       angularDamping={0.9}
       linearDamping={0.1}
     >
-      <group>
+      <group position={[0, 0, 0]}>
         <mesh
           geometry={nodes.Kiwi.geometry}
           material={

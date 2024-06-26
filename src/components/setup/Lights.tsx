@@ -7,7 +7,6 @@ const Lights: React.FC = () => {
       <directionalLight
         color="#ffffff"
         intensity={0.5}
-        castShadow
         position={[-25, 1, 7]}
         shadow-mapSize={[1024, 1024]}
         shadow-camera-near={1}

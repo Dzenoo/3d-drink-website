@@ -107,11 +107,9 @@ const Drink: React.FC<DrinkProps> = ({
         rotation={rotation}
         dispose={null}
         ref={ref}
-        castShadow
         position={position}
       >
         <mesh
-          castShadow
           geometry={nodes.Lid.geometry}
           material={
             new THREE.MeshStandardMaterial({
@@ -124,7 +122,6 @@ const Drink: React.FC<DrinkProps> = ({
           rotation={[0, -1.5, 0]}
         />
         <mesh
-          castShadow
           geometry={nodes.Top.geometry}
           material={
             new THREE.MeshStandardMaterial({
@@ -135,7 +132,6 @@ const Drink: React.FC<DrinkProps> = ({
           }
         />
         <mesh
-          castShadow
           geometry={nodes.Can.geometry}
           material={
             new THREE.MeshStandardMaterial({
@@ -149,9 +145,7 @@ const Drink: React.FC<DrinkProps> = ({
           <mesh
             rotation={[3.37, 3.95, 4.8]}
             scale={0.027}
-            receiveShadow
             position={[0.91, 0.86, -0.81]}
-            castShadow
             geometry={nodes.Droplets.geometry}
             material={
               new THREE.MeshPhysicalMaterial({
@@ -169,7 +163,6 @@ const Drink: React.FC<DrinkProps> = ({
           />
         )}
         <mesh
-          castShadow
           geometry={nodes.Bottom.geometry}
           material={
             new THREE.MeshStandardMaterial({
