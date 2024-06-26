@@ -12,6 +12,7 @@ import { Canvas } from "@react-three/fiber";
 import { DrinkTexture } from "../page";
 import Plane from "@/components/details/plane/Plane";
 import { Physics, RigidBody } from "@react-three/rapier";
+import { OrbitControls } from "@react-three/drei";
 
 const DrinkDetails = ({ params }: { params: { id: DrinkTexture } }) => {
   return (
@@ -20,16 +21,20 @@ const DrinkDetails = ({ params }: { params: { id: DrinkTexture } }) => {
       <Lights />
       <Suspense>
         <Physics>
-          <Drink
-            position={[0, -0.5, 0]}
-            rotation={[0, 1.55, 0]}
-            enableScroll={false}
-            texture={params?.id}
-          />
+          <RigidBody restitution={0.5} type="fixed">
+            <Drink
+              droplets={false}
+              position={[0, -0.5, 0]}
+              rotation={[0, 1.55, 0]}
+              enableScroll={false}
+              texture={params?.id}
+            />
+          </RigidBody>
           <Apple />
           <Plane />
         </Physics>
       </Suspense>
+      <OrbitControls />
     </Canvas>
   );
 };

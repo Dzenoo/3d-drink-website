@@ -8,7 +8,7 @@ const Apple: React.FC = () => {
   const nodes: any = appleNodes;
 
   return (
-    <RigidBody type="dynamic">
+    <RigidBody colliders="ball" type="dynamic">
       <group position={[0, 10, 0]}>
         <mesh
           scale={0.09}

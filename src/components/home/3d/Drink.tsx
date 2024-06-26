@@ -6,6 +6,7 @@ import { useFrame } from "@react-three/fiber";
 import { DrinkTexture } from "@/app/page";
 
 interface DrinkProps {
+  droplets?: boolean;
   enableScroll?: boolean;
   texture?: DrinkTexture;
   position?: [number, number, number];
@@ -14,6 +15,7 @@ interface DrinkProps {
 }
 
 const Drink: React.FC<DrinkProps> = ({
+  droplets = true,
   enableScroll = true,
   texture = "apple",
   position = [0, 0, 0],
@@ -143,27 +145,29 @@ const Drink: React.FC<DrinkProps> = ({
             })
           }
         />
-        <mesh
-          rotation={[3.37, 3.95, 4.8]}
-          scale={0.027}
-          receiveShadow
-          position={[0.91, 0.86, -0.81]}
-          castShadow
-          geometry={nodes.Droplets.geometry}
-          material={
-            new THREE.MeshPhysicalMaterial({
-              color: 0xffffff,
-              roughness: 0.05,
-              transmission: 1,
-              thickness: 1,
-              clearcoat: 1,
-              clearcoatRoughness: 0.05,
-              metalness: 0,
-              opacity: 0.5,
-              transparent: true,
-            })
-          }
-        />
+        {droplets && (
+          <mesh
+            rotation={[3.37, 3.95, 4.8]}
+            scale={0.027}
+            receiveShadow
+            position={[0.91, 0.86, -0.81]}
+            castShadow
+            geometry={nodes.Droplets.geometry}
+            material={
+              new THREE.MeshPhysicalMaterial({
+                color: 0xffffff,
+                roughness: 0.05,
+                transmission: 1,
+                thickness: 1,
+                clearcoat: 1,
+                clearcoatRoughness: 0.05,
+                metalness: 0,
+                opacity: 0.5,
+                transparent: true,
+              })
+            }
+          />
+        )}
         <mesh
           castShadow
           geometry={nodes.Bottom.geometry}
