@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { DrinkTexture } from "@/app/page";
+import Link from "next/link";
 
 const Flavors: React.FC<{
   drinkTexture: DrinkTexture;
@@ -59,9 +60,9 @@ const Flavors: React.FC<{
               ))}
             </div>
             <div>
-              <p className="text-xl">
+              <Link href={`/${drinkTexture}`} className="text-xl text-blue-700">
                 {drinkTexture.charAt(0).toUpperCase() + drinkTexture.slice(1)}
-              </p>
+              </Link>
             </div>
           </div>
         </div>
