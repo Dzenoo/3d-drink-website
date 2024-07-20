@@ -5,59 +5,22 @@ import React, { useEffect } from "react";
 
 const Hero: React.FC = () => {
   useEffect(() => {
-    const tl = gsap.timeline();
-
-    tl.to(
-      ".hero_title",
+    gsap.to(
+      [
+        ".hero_title",
+        ".hero_description",
+        ".hero_button",
+        ".hero_subtitle",
+        ".right_text",
+      ],
       {
-        y: 0,
         opacity: 1,
-        stagger: 0.05,
+        y: 0,
         duration: 0.5,
         ease: "power2.out",
-      },
-      0
-    )
-      .to(
-        ".hero_description",
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          ease: "power2.out",
-        },
-        "+=0.3"
-      )
-      .to(
-        ".hero_button",
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          ease: "power2.out",
-        },
-        "+=0.3"
-      )
-      .to(
-        ".hero_subtitle",
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          ease: "power2.out",
-        },
-        "+=0.3"
-      )
-      .to(
-        ".right_text",
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          ease: "power2.out",
-        },
-        "+=0.3"
-      );
+        stagger: 0.1,
+      }
+    );
   }, []);
 
   return (
