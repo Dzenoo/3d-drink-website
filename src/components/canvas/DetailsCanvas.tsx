@@ -11,6 +11,7 @@ import DetailsOverlay from "../pages/details/DetailsOverlay";
 import FruitsManager from "../pages/details/FruitsManager";
 import Plane from "../pages/details/Plane";
 import Drink from "./3d-models/Drink";
+import LoadingScreen from "../shared/LoadingScreen";
 
 interface DetailsCanvasProps {
   id: DrinkTexture;
@@ -19,6 +20,7 @@ interface DetailsCanvasProps {
 const DetailsCanvas: React.FC<DetailsCanvasProps> = ({ id }) => {
   return (
     <>
+      <LoadingScreen />
       <Canvas camera={{ fov: 75 }} flat>
         <Lights />
         <Experience />
