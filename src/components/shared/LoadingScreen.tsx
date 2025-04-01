@@ -8,21 +8,19 @@ const LoadingScreen: React.FC = () => {
 
   useEffect(() => {
     if (progress === 100) {
-      const interval = setInterval(
-        () =>
-          animate(
-            scope.current,
-            { opacity: 0 },
-            { duration: 1, ease: "easeInOut", damping: 20 },
-          ),
-        1000,
-      );
+      const interval = setInterval(() => {
+        animate(
+          scope.current,
+          { transform: "translateX(100%)" },
+          { duration: 1, ease: "easeInOut", damping: 20 },
+        );
 
-      scope.animations.forEach((animation) => {
-        animation.finished.then(() => {
-          scope.current?.remove();
+        scope.animations.forEach((animation) => {
+          animation.finished.then(() => {
+            scope.current?.remove();
+          });
         });
-      });
+      }, 1000);
 
       return () => clearInterval(interval);
     }
