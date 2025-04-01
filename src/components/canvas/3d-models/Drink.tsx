@@ -1,12 +1,10 @@
 "use client";
 
 import * as THREE from "three";
-import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { useGLTF, useScroll, useTexture } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-
+import React, { useRef } from "react";
+import { useGLTF, useTexture } from "@react-three/drei";
 import { useStore } from "@/store";
+import { useScrollBasedAnimation } from "@/hooks/useScrollBasedAnimation";
 
 interface DrinkProps {
   position?: [number, number, number];
@@ -25,8 +23,7 @@ const Drink: React.FC<DrinkProps> = ({
   enableScroll = true,
   textureId,
 }) => {
-  const { drinkTexture } = useStore();  
-
+  const { drinkTexture } = useStore();
   const { nodes } = useGLTF("./models/drink.glb") as unknown as {
     nodes: {
       Lid: THREE.Mesh;
@@ -36,6 +33,7 @@ const Drink: React.FC<DrinkProps> = ({
       Droplets: THREE.Mesh;
     };
   };
+  const groupRef = useRef<THREE.Group>(null);
 
   const energyTexture = useTexture(`/images/${textureId ?? drinkTexture}.png`);
   energyTexture.flipY = false;
@@ -44,81 +42,35 @@ const Drink: React.FC<DrinkProps> = ({
   energyTexture.minFilter = THREE.LinearFilter;
   energyTexture.repeat.set(2, 2);
 
-  const ref = useRef<any>();
-  const tl = useRef<any>();
-
-  const scroll = useScroll();
-
-  useFrame(() => {
-    if (enableScroll) {
-      tl.current!.seek(scroll.offset * tl.current!.duration());
-    }
-  });
-
-  useEffect(() => {
-    if (enableScroll) {
-      tl.current = gsap.timeline();
-
-      tl.current.to(ref.current!.position, {
-        duration: 0.1,
-        y: -0.1,
-      });
-
-      tl.current!.to(
-        ref.current!.rotation,
+  if (enableScroll) {
+    useScrollBasedAnimation(groupRef, {
+      keyframes: [
         {
-          duration: 0.5,
-          y: 2.8,
-          z: 0.5,
+          position: new THREE.Vector3(1.5, 0, -1.5),
+          rotation: new THREE.Euler(0, 2.8, 0.5),
         },
-        0,
-      );
-      tl.current!.to(
-        ref.current!.rotation,
         {
-          duration: 0.5,
-          y: Math.PI * 0.5 + 0.55,
-          z: 0,
+          position: new THREE.Vector3(-1, 0, 1),
+          rotation: new THREE.Euler(0, Math.PI * 0.5 + 0.55, 0),
         },
-        1,
-      );
-      tl.current!.to(
-        ref.current!.position,
         {
-          duration: 0.5,
-          x: 1.5,
-          z: -1.5,
+          position: new THREE.Vector3(1, 0.5, -1),
+          rotation: new THREE.Euler(0, 2.8, 0.5),
         },
-        0,
-      );
-      tl.current!.to(
-        ref.current!.position,
         {
-          duration: 0.5,
-          x: -1,
-          z: 1,
+          position: new THREE.Vector3(0, 0, 0),
         },
-        0.5,
-      );
-      tl.current!.to(
-        ref.current!.position,
-        {
-          duration: 0.5,
-          x: 0,
-          z: 0,
-        },
-        1,
-      );
-    }
-  }, [enableScroll]);
+      ],
+    });
+  }
 
   return (
     <group
+      ref={groupRef}
       position={position}
       rotation={rotation}
       scale={scale}
       dispose={null}
-      ref={ref}
     >
       <mesh
         geometry={nodes.Lid.geometry}
