@@ -12,7 +12,7 @@ const LoadingScreen: React.FC = () => {
         animate(
           scope.current,
           { transform: "translateX(100%)" },
-          { duration: 1, ease: "easeInOut", damping: 20 },
+          { duration: 1, ease: "easeInOut", damping: 20 }
         );
 
         scope.animations.forEach((animation) => {
