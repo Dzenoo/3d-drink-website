@@ -145,7 +145,7 @@ const Drink: React.FC<DrinkProps> = ({
         material={
           new THREE.MeshStandardMaterial({
             map: energyTexture,
-            roughness: 0.5,
+            roughness: 0.2,
             metalness: 0.7,
           })
         }
