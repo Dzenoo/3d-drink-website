@@ -1,15 +1,12 @@
-import { Scroll } from "@react-three/drei";
 import React from "react";
+import { Scroll } from "@react-three/drei";
+
 import Hero from "./Hero";
-import Flavors from "./Flavors";
 import Ingredients from "./Ingredients";
 import Refreshing from "./Refreshing";
-import { DrinkTexture } from "@/app/page";
+import Flavors from "./Flavors";
 
-const HomeOverlay: React.FC<{
-  drinkTexture: DrinkTexture;
-  setdrinkTexture: React.Dispatch<React.SetStateAction<DrinkTexture>>;
-}> = ({ drinkTexture, setdrinkTexture }) => {
+const HomeOverlay: React.FC = () => {
   return (
     <Scroll html>
       <div className="w-screen">
@@ -23,10 +20,7 @@ const HomeOverlay: React.FC<{
           <Refreshing />
         </Section>
         <Section>
-          <Flavors
-            drinkTexture={drinkTexture}
-            setdrinkTexture={setdrinkTexture}
-          />
+          <Flavors />
         </Section>
       </div>
     </Scroll>
@@ -35,7 +29,7 @@ const HomeOverlay: React.FC<{
 
 const Section = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <section className={`max-sm:h-full h-screen w-full`}>{children}</section>
+    <section className={`h-screen w-full max-sm:h-full`}>{children}</section>
   );
 };
 

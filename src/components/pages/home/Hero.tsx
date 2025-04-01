@@ -1,7 +1,8 @@
 "use client";
+
+import React, { useEffect } from "react";
 import { gsap } from "gsap";
 import { ArrowDown } from "lucide-react";
-import React, { useEffect } from "react";
 
 const Hero: React.FC = () => {
   useEffect(() => {

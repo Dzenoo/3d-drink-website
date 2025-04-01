@@ -1,8 +1,9 @@
 import React from "react";
-import Apple from "./Apple";
-import Kiwi from "./Kiwi";
-import Orange from "./Orange";
-import Strawberry from "./Strawberry";
+
+import Apple from "../../canvas/3d-models/Apple";
+import Orange from "../../canvas/3d-models/Orange";
+import Strawberry from "../../canvas/3d-models/Strawberry";
+import Kiwi from "../../canvas/3d-models/Kiwi";
 
 const FruitsManager = ({
   fruitType,
@@ -30,7 +31,7 @@ const FruitsManager = ({
       break;
   }
 
-  const generateFruits = (count: number) => {
+  const generateFruits = () => {
     const fruits = [];
     for (let i = 0; i < count; i++) {
       const position: [number, number, number] = [
@@ -43,7 +44,7 @@ const FruitsManager = ({
     return fruits;
   };
 
-  return <>{generateFruits(count)}</>;
+  return <>{generateFruits()}</>;
 };
 
 export default FruitsManager;

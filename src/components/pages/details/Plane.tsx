@@ -1,5 +1,5 @@
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import React from "react";
+import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
 const Plane: React.FC = () => {
   return (
@@ -14,7 +14,6 @@ const Plane: React.FC = () => {
           <meshBasicMaterial color="#f0f1f3" />
         </mesh>
       </RigidBody>
-
       <RigidBody type="fixed">
         <CuboidCollider args={[25.0, 1.0, 0.5]} position={[0.0, -1.95, 10.5]} />
         <CuboidCollider

@@ -1,0 +1,3 @@
+const useScrollBasedAnimation = () => {};
+
+export { useScrollBasedAnimation };
