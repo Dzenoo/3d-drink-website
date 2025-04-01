@@ -9,19 +9,31 @@ const Hero: React.FC = () => {
       <div>
         <div className="px-10">
           <div className="flex flex-col gap-16">
-            <Reveal>
+            <Reveal
+              transition={{
+                delay: 1,
+              }}
+            >
               <h1 className="text-9xl font-bold max-lg:text-7xl">
                 Unleash Your <br />
                 Energy
               </h1>
             </Reveal>
-            <Reveal>
+            <Reveal
+              transition={{
+                delay: 1,
+              }}
+            >
               <p className="text-3xl font-extralight max-sm:text-xl">
                 Experience the Unmatched Power and <br />
                 Endurance of Our Revolutionary Energy Drink
               </p>
             </Reveal>
-            <Reveal>
+            <Reveal
+              transition={{
+                delay: 1,
+              }}
+            >
               <button className="rounded-full bg-black px-10 py-5 text-xl font-thin text-white transition hover:bg-white hover:text-black">
                 Buy Now
               </button>
@@ -33,7 +45,11 @@ const Hero: React.FC = () => {
         </div>
       </div>
       <div className="flex translate-y-10 flex-col justify-between gap-10 p-10 max-xl:justify-normal">
-        <Reveal>
+        <Reveal
+          transition={{
+            delay: 1,
+          }}
+        >
           <div className="bg-[#e8e8e8] p-5 max-lg:w-fit">
             <div>
               <h1 className="text-3xl">Incredibly Refreshing</h1>

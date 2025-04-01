@@ -20,11 +20,9 @@ const Reveal: React.FC<RevealProps> = ({ children, ...props }) => {
         y: 50,
       }}
       animate={{
-        clipPath: isInView
-          ? "polygon(0 0, 100% 0, 100% 130%, 0 100%)"
-          : "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
-        opacity: isInView ? 1 : 0,
-        y: isInView ? 0 : 50,
+        clipPath: "polygon(0 0, 100% 0, 100% 130%, 0 100%)",
+        opacity: 1,
+        y: 0,
       }}
       transition={{
         duration: 1,
