@@ -14,6 +14,7 @@ interface DrinkProps {
   scale?: [number, number, number];
   droplets?: boolean;
   enableScroll?: boolean;
+  textureId?: string;
 }
 
 const Drink: React.FC<DrinkProps> = ({
@@ -22,8 +23,9 @@ const Drink: React.FC<DrinkProps> = ({
   scale = [1, 1, 1],
   droplets = true,
   enableScroll = true,
+  textureId,
 }) => {
-  const { drinkTexture } = useStore();
+  const { drinkTexture } = useStore();  
 
   const { nodes } = useGLTF("./models/drink.glb") as unknown as {
     nodes: {
@@ -35,7 +37,7 @@ const Drink: React.FC<DrinkProps> = ({
     };
   };
 
-  const energyTexture = useTexture(`/images/${drinkTexture}.png`);
+  const energyTexture = useTexture(`/images/${textureId ?? drinkTexture}.png`);
   energyTexture.flipY = false;
   energyTexture.colorSpace = THREE.SRGBColorSpace;
   energyTexture.magFilter = THREE.LinearFilter;

@@ -35,7 +35,7 @@ const Orange: React.FC<OrangeProps> = ({ position, physics = true }) => {
         material={
           new THREE.MeshStandardMaterial({
             color: new THREE.Color("#ED7014"),
-            roughness: 0.5,
+            roughness: 0.2,
             metalness: 0.1,
           })
         }

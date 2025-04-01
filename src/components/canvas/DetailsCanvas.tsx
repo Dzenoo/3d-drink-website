@@ -31,6 +31,7 @@ const DetailsCanvas: React.FC<DetailsCanvasProps> = ({ id }) => {
               rotation={[0, 1.55, 0]}
               droplets={false}
               enableScroll={false}
+              textureId={id}
             />
           </RigidBody>
           <Plane />

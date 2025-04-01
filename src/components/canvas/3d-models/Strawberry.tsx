@@ -38,8 +38,8 @@ const Strawberry: React.FC<StrawberryProps> = ({
         material={
           new THREE.MeshStandardMaterial({
             color: new THREE.Color("#cf3a45"),
-            roughness: 0.5,
-            metalness: 0.7,
+            roughness: 0.2,
+            metalness: 0.1,
           })
         }
       />

@@ -34,8 +34,8 @@ const Apple: React.FC<AppleProps> = ({ position, physics = true }) => {
         material={
           new THREE.MeshStandardMaterial({
             color: new THREE.Color("red"),
-            roughness: 0.5,
-            metalness: 0.7,
+            roughness: 0.2,
+            metalness: 0.1,
           })
         }
       />

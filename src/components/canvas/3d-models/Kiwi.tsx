@@ -22,8 +22,8 @@ const Kiwi: React.FC<KiwiProps> = ({ position, physics = true }) => {
         material={
           new THREE.MeshStandardMaterial({
             color: new THREE.Color("lightgreen"),
-            roughness: 0.5,
-            metalness: 0.7,
+            roughness: 0.2,
+            metalness: 0.1,
           })
         }
       />
