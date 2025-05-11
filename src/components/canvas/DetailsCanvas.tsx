@@ -12,6 +12,7 @@ import FruitsManager from "../pages/details/FruitsManager";
 import Plane from "../pages/details/Plane";
 import Drink from "./3d-models/Drink";
 import LoadingScreen from "../shared/LoadingScreen";
+import CameraRig from "./CameraRig";
 
 interface DetailsCanvasProps {
   id: DrinkTexture;
@@ -22,6 +23,7 @@ const DetailsCanvas: React.FC<DetailsCanvasProps> = ({ id }) => {
     <>
       <LoadingScreen />
       <Canvas camera={{ fov: 75 }} flat>
+        <CameraRig />
         <Lights />
         <Experience />
         <Physics gravity={[0, -9.08, 0]}>

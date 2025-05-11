@@ -8,15 +8,17 @@ import Experience from "@/components/canvas/setup/Experience";
 import HomeOverlay from "@/components/pages/home/HomeOverlay";
 import Drink from "./3d-models/Drink";
 import LoadingScreen from "../shared/LoadingScreen";
+import CameraRig from "./CameraRig";
 
 const HomeCanvas: React.FC = () => {
   return (
     <>
       <LoadingScreen />
       <Canvas camera={{ fov: 55, position: [3, 0, 5] }} flat>
+        <CameraRig />
         <Lights />
         <Experience />
-        <ScrollControls pages={4} damping={0.25}>
+        <ScrollControls pages={4} damping={0.5}>
           <HomeOverlay />
           <Drink
             position={[0, -2.1, 0]}
