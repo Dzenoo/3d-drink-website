@@ -1,9 +1,9 @@
 import React from "react";
 
-import Apple from "../../canvas/3d-models/Apple";
-import Orange from "../../canvas/3d-models/Orange";
-import Strawberry from "../../canvas/3d-models/Strawberry";
-import Kiwi from "../../canvas/3d-models/Kiwi";
+import Apple from "../../canvas/models/Apple";
+import Orange from "../../canvas/models/Orange";
+import Strawberry from "../../canvas/models/Strawberry";
+import Kiwi from "../../canvas/models/Kiwi";
 
 const FruitsManager = ({
   fruitType,

@@ -10,9 +10,8 @@ import Experience from "./setup/Experience";
 import DetailsOverlay from "../pages/details/DetailsOverlay";
 import FruitsManager from "../pages/details/FruitsManager";
 import Plane from "../pages/details/Plane";
-import Drink from "./3d-models/Drink";
+import Drink from "./models/Drink";
 import LoadingScreen from "../shared/LoadingScreen";
-import CameraRig from "./CameraRig";
 
 interface DetailsCanvasProps {
   id: DrinkTexture;
@@ -23,7 +22,6 @@ const DetailsCanvas: React.FC<DetailsCanvasProps> = ({ id }) => {
     <>
       <LoadingScreen />
       <Canvas camera={{ fov: 75 }} flat>
-        <CameraRig />
         <Lights />
         <Experience />
         <Physics gravity={[0, -9.08, 0]}>
@@ -32,7 +30,6 @@ const DetailsCanvas: React.FC<DetailsCanvasProps> = ({ id }) => {
               position={[0, -0.5, 0]}
               rotation={[0, 1.55, 0]}
               droplets={false}
-              enableScroll={false}
               textureId={id}
             />
           </RigidBody>

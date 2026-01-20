@@ -1,7 +1,11 @@
-import { useEffect, useState, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+"use client";
 
-function CameraRig() {
+import { useFrame, useThree } from "@react-three/fiber";
+import { useEffect, useRef, useState } from "react";
+import { scrollTimeline } from "./ScrollAnimationManager";
+
+const CameraAnimations = () => {
+  const { camera } = useThree();
   const [mouseCoordinates, setMouseCoordinates] = useState({
     x: 0,
     y: 0,
@@ -11,6 +15,11 @@ function CameraRig() {
     position: { x: number; y: number; z: number };
     rotation: { x: number; y: number; z: number };
   }>();
+
+  useEffect(() => {
+    scrollTimeline.to(camera.position, { x: 3, y: 1, z: 4 }, "ingredients");
+    scrollTimeline.to(camera.position, { x: 0, y: 0, z: 3 }, "flavors");
+  }, [camera]);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -42,16 +51,20 @@ function CameraRig() {
       };
     }
 
+    // Add smooth mouse follow with damping
     const targetRotationX =
-      initialValuesRef.current.rotation.x - mouseCoordinates.x;
+      initialValuesRef.current.rotation.x - mouseCoordinates.y; // Note: y mouse affects x rotation
     const targetRotationY =
-      initialValuesRef.current.rotation.y - mouseCoordinates.y;
+      initialValuesRef.current.rotation.y - mouseCoordinates.x;
 
-    camera.rotation.x += (targetRotationX - camera.rotation.x) * delta * 3;
-    camera.rotation.y += (targetRotationY - camera.rotation.y) * delta * 3;
+    const damping = 5;
+    camera.rotation.x +=
+      (targetRotationX - camera.rotation.x) * delta * damping;
+    camera.rotation.y +=
+      (targetRotationY - camera.rotation.y) * delta * damping;
   });
 
   return null;
-}
+};
 
-export default CameraRig;
+export default CameraAnimations;

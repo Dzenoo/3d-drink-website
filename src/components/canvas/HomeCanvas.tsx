@@ -2,28 +2,52 @@
 
 import { Canvas } from "@react-three/fiber";
 import { ScrollControls } from "@react-three/drei";
+import { useRef } from "react";
+import * as THREE from "three";
+import SceneDebug from "./debug/SceneDebug";
 
-import Lights from "@/components/canvas/setup/Lights";
-import Experience from "@/components/canvas/setup/Experience";
+import Lights from "./setup/Lights";
+import Experience from "./setup/Experience";
 import HomeOverlay from "@/components/pages/home/HomeOverlay";
-import Drink from "./3d-models/Drink";
-import LoadingScreen from "../shared/LoadingScreen";
-import CameraRig from "./CameraRig";
+import Drink from "./models/Drink";
+import LoadingScreen from "@/components/shared/LoadingScreen";
+import { ScrollAnimationManager } from "./animations/ScrollAnimationManager";
+import DrinkAnimations from "./animations/DrinkAnimations";
+import CameraAnimations from "./animations/CameraAnimations";
 
-const HomeCanvas: React.FC = () => {
+const HomeCanvas = () => {
+  const drinkRef = useRef<THREE.Group>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera>(null);
+
   return (
     <>
-      <LoadingScreen />
-      <Canvas camera={{ fov: 55, position: [3, 0, 5] }} flat>
-        <CameraRig />
-        <Lights />
-        <Experience />
-        <ScrollControls pages={4} damping={0.5}>
-          <HomeOverlay />
+      {/* <LoadingScreen /> */}
+
+      {/* <SceneDebug drinkRef={drinkRef} cameraRef={cameraRef} /> */}
+
+      <Canvas
+        camera={{ fov: 55, position: [3, 0, 5] }}
+        onCreated={({ camera }) => {
+          // @ts-ignore
+          cameraRef.current = camera as THREE.PerspectiveCamera;
+        }}
+      >
+        <ScrollControls pages={4} damping={0.4}>
+          <ScrollAnimationManager />
+
+          <Lights />
+          <Experience />
+
           <Drink
-            position={[0, -2.1, 0]}
+            ref={drinkRef}
+            position={[0, -3.1, 0]}
             rotation={[0, Math.PI * 0.5 + 0.55, 0]}
           />
+
+          <DrinkAnimations drinkRef={drinkRef} />
+          <CameraAnimations />
+
+          <HomeOverlay />
         </ScrollControls>
       </Canvas>
     </>
