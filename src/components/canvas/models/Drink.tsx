@@ -5,13 +5,13 @@ import React, { forwardRef, useMemo } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
 import { useStore } from "@/store";
 
-interface DrinkProps {
+type DrinkProps = {
   position?: [number, number, number];
   rotation?: [number, number, number];
   scale?: [number, number, number];
   droplets?: boolean;
   textureId?: string;
-}
+};
 
 const Drink = forwardRef<THREE.Group, DrinkProps>(
   (

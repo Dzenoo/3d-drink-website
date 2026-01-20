@@ -1,5 +1,5 @@
-import HomeCanvas from "@/components/canvas/HomeCanvas";
+import HomeScene from "@/components/canvas/scenes/HomeScene";
 
 export default function HomePage() {
-  return <HomeCanvas />;
+  return <HomeScene />;
 }

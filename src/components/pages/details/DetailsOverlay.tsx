@@ -23,9 +23,9 @@ const flavors = [
   },
 ];
 
-interface DetailsOverlayProps {
+type DetailsOverlayProps = {
   flavor: string;
-}
+};
 
 const DetailsOverlay: React.FC<DetailsOverlayProps> = ({ flavor }) => {
   let index = 0;

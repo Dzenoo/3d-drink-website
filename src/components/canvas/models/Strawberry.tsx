@@ -3,10 +3,10 @@ import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 
-interface StrawberryProps {
+type StrawberryProps = {
   position: [number, number, number];
   physics?: boolean;
-}
+};
 
 const Strawberry: React.FC<StrawberryProps> = ({
   position,

@@ -1,7 +1,11 @@
-import React from "react";
-import { Environment } from "@react-three/drei";
+import { Environment, EnvironmentProps } from "@react-three/drei";
 
-const Experience: React.FC = () => {
-  return <Environment preset="apartment" environmentIntensity={0.5} />;
+type ExperienceProps = EnvironmentProps;
+
+const Experience: React.FC<ExperienceProps> = ({ ...props }) => {
+  return (
+    <Environment preset="apartment" environmentIntensity={0.5} {...props} />
+  );
 };
+
 export default Experience;

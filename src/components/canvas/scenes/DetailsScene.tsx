@@ -5,25 +5,25 @@ import { Physics, RigidBody } from "@react-three/rapier";
 
 import { DrinkTexture } from "@/types";
 
-import Lights from "./setup/Lights";
-import Experience from "./setup/Experience";
-import DetailsOverlay from "../pages/details/DetailsOverlay";
-import FruitsManager from "../pages/details/FruitsManager";
-import Plane from "../pages/details/Plane";
-import Drink from "./models/Drink";
-import LoadingScreen from "../shared/LoadingScreen";
+import Lights from "../setup/Lights";
+import Experience from "../setup/Experience";
+import DetailsOverlay from "../../pages/details/DetailsOverlay";
+import FruitsManager from "../../pages/details/FruitsManager";
+import Plane from "../../pages/details/Plane";
+import Drink from "../models/Drink";
+import LoadingScreen from "../../shared/LoadingScreen";
 
-interface DetailsCanvasProps {
+type DetailsCanvasProps = {
   id: DrinkTexture;
-}
+};
 
-const DetailsCanvas: React.FC<DetailsCanvasProps> = ({ id }) => {
+const DetailsScene: React.FC<DetailsCanvasProps> = ({ id }) => {
   return (
     <>
       <LoadingScreen />
       <Canvas camera={{ fov: 75 }} flat>
-        <Lights />
         <Experience />
+        <Lights />
         <Physics gravity={[0, -9.08, 0]}>
           <RigidBody restitution={0.5} type="fixed">
             <Drink
@@ -42,4 +42,4 @@ const DetailsCanvas: React.FC<DetailsCanvasProps> = ({ id }) => {
   );
 };
 
-export default DetailsCanvas;
+export default DetailsScene;

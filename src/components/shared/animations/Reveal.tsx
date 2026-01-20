@@ -3,9 +3,9 @@
 import React from "react";
 import { motion, MotionProps } from "motion/react";
 
-interface RevealProps extends MotionProps {
+type RevealProps = MotionProps & {
   children: React.ReactNode;
-}
+};
 
 const Reveal: React.FC<RevealProps> = ({
   children,

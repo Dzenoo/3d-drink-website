@@ -1,42 +1,38 @@
 "use client";
 
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import { useFrame } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
-import gsap from "gsap";
-import { useEffect, useRef } from "react";
 
-const DEBUG = false;
+import { scrollTimeline } from "./animationRegistry";
+import { DEBUG_MODE } from "@/constants";
 
-export const scrollTimeline = gsap.timeline({
-  paused: true,
-  defaults: { duration: 0.01 }, // Set default very short duration
-});
-
-export const ScrollAnimationManager = () => {
+const ScrollController: React.FC = () => {
   const scroll = useScroll();
   const introDone = useRef(false);
 
   useEffect(() => {
-    // entrance animation
+    // entrance timeline (runs once)
     const intro = gsap.timeline({
       onComplete: () => {
         introDone.current = true;
-        // Reset timeline to beginning
+        // ensure timeline starts at 0 until user scrolls
         scrollTimeline.progress(0);
       },
     });
 
-    intro.to({}, { duration: 0.4 }); // small pause
+    // a tiny delay, in case you want the stage to settle
+    intro.to({}, { duration: 0.4 });
 
     return () => {
-      // Clean up intro timeline
       intro.kill();
     };
   }, []);
 
   useFrame(() => {
+    if (DEBUG_MODE) return;
     if (!introDone.current) return;
-    if (DEBUG) return;
 
     // Ensure smooth progress updates
     if (scroll.offset !== scrollTimeline.progress()) {
@@ -46,3 +42,5 @@ export const ScrollAnimationManager = () => {
 
   return null;
 };
+
+export default ScrollController;

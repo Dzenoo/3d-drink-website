@@ -3,10 +3,10 @@ import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 
-interface KiwiProps {
+type KiwiProps = {
   position: [number, number, number];
   physics?: boolean;
-}
+};
 
 const Kiwi: React.FC<KiwiProps> = ({ position, physics = true }) => {
   const { nodes } = useGLTF("./models/kiwi.glb") as unknown as {

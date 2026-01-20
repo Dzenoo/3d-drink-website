@@ -3,10 +3,10 @@ import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 
-interface OrangeProps {
+type OrangeProps = {
   position: [number, number, number];
   physics?: boolean;
-}
+};
 
 const Orange: React.FC<OrangeProps> = ({ position, physics = true }) => {
   const { nodes } = useGLTF("./models/orange.glb") as unknown as {

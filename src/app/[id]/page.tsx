@@ -1,10 +1,10 @@
 import { DrinkTexture } from "@/types";
-import DetailsCanvas from "@/components/canvas/DetailsCanvas";
+import DetailsScene from "@/components/canvas/scenes/DetailsScene";
 
 export default function DrinkDetailsPage({
   params,
 }: {
   params: { id: DrinkTexture };
 }) {
-  return <DetailsCanvas id={params.id} />;
+  return <DetailsScene id={params.id} />;
 }

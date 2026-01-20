@@ -1,10 +1,9 @@
-import React from "react";
 import { Scroll } from "@react-three/drei";
 
-import Hero from "./Hero";
-import Ingredients from "./Ingredients";
-import Refreshing from "./Refreshing";
-import Flavors from "./Flavors";
+import Hero from "./sections/Hero";
+import Ingredients from "./sections/Ingredients";
+import Refreshing from "./sections/Refreshing";
+import Flavors from "./sections/Flavors";
 
 const HomeOverlay: React.FC = () => {
   return (

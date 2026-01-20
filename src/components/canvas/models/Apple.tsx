@@ -3,10 +3,10 @@ import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 
-interface AppleProps {
+type AppleProps = {
   position: [number, number, number];
   physics?: boolean;
-}
+};
 
 const Apple: React.FC<AppleProps> = ({ position, physics = true }) => {
   const { nodes } = useGLTF("./models/apple.glb") as unknown as {
