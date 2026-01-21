@@ -40,10 +40,9 @@ const FlavorsData: {
 
 const Flavors: React.FC = () => {
   const { drinkTexture, setDrinkTexture } = useStore();
-  
 
   return (
-    <div className="mt-10 flex flex-col gap-[10em] overflow-hidden p-10">
+    <div className="flex flex-col gap-[10em] overflow-hidden p-10">
       <div className="flex justify-between gap-5 max-xl:flex-col">
         <div className="flex flex-col justify-between gap-[25em] max-xl:gap-36">
           <div>

@@ -1,5 +1,7 @@
 import { Scroll } from "@react-three/drei";
 
+import { cn } from "@/utils";
+
 import Hero from "./sections/Hero";
 import Ingredients from "./sections/Ingredients";
 import Refreshing from "./sections/Refreshing";
@@ -26,9 +28,17 @@ const HomeOverlay: React.FC = () => {
   );
 };
 
-const Section = ({ children }: { children?: React.ReactNode }) => {
+const Section = ({
+  children,
+  className,
+}: {
+  children?: React.ReactNode;
+  className?: string;
+}) => {
   return (
-    <section className={`h-screen w-full max-sm:h-full`}>{children}</section>
+    <section className={cn(className, `h-screen w-full max-sm:h-full`)}>
+      {children}
+    </section>
   );
 };
 

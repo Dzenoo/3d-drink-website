@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+  webpack: (config) => {
     config.module.rules.push({
-      test: /\.glsl$/i,
-      loader: "raw-loader",
+      test: /\.(glsl|vert|frag)$/,
+      use: ["raw-loader"],
     });
-
     return config;
   },
 };

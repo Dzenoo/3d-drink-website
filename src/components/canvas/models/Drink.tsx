@@ -39,8 +39,8 @@ const Drink = forwardRef<THREE.Group, DrinkProps>(
       () =>
         new THREE.MeshStandardMaterial({
           map: texture,
-          roughness: 0.2,
-          metalness: 0.7,
+          roughness: 0.5,
+          metalness: 0.3,
         }),
       [texture],
     );
