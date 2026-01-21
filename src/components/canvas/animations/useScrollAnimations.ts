@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
@@ -13,7 +13,7 @@ export function useScrollAnimations(config: AnimationConfig) {
   const { camera: threeCamera } = useThree();
   const scroll = useScroll();
   const introDone = useRef(false);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const mouse = useRef({ x: 0, y: 0 }); // Changed to ref
 
   const {
     distance = 8,
@@ -71,24 +71,43 @@ export function useScrollAnimations(config: AnimationConfig) {
     objects.forEach(({ ref, poses }) => {
       if (!ref.current) return;
 
+      const object = ref.current;
+
       poses.forEach((pose) => {
+        const { at, duration = 0.25, ease = "power1.inOut" } = pose;
+
         if (pose.position) {
-          const tween = gsap.to(ref.current!.position, {
+          const tween = gsap.to(object.position, {
             ...pose.position,
-            duration: pose.duration ?? 0.25,
-            ease: pose.ease ?? "power1.inOut",
+            duration,
+            ease,
           });
-          scrollTimeline.add(tween, pose.at);
+          scrollTimeline.add(tween, at);
           tweens.push(tween);
         }
 
         if (pose.rotation) {
-          const tween = gsap.to(ref.current!.rotation, {
+          const tween = gsap.to(object.rotation, {
             ...pose.rotation,
-            duration: pose.duration ?? 0.25,
-            ease: pose.ease ?? "power1.inOut",
+            duration,
+            ease,
           });
-          scrollTimeline.add(tween, pose.at);
+          scrollTimeline.add(tween, at);
+          tweens.push(tween);
+        }
+
+        if (pose.scale !== undefined) {
+          const scaleValue =
+            typeof pose.scale === "number"
+              ? { x: pose.scale, y: pose.scale, z: pose.scale }
+              : pose.scale;
+
+          const tween = gsap.to(object.scale, {
+            ...scaleValue,
+            duration,
+            ease,
+          });
+          scrollTimeline.add(tween, at);
           tweens.push(tween);
         }
       });
@@ -99,35 +118,52 @@ export function useScrollAnimations(config: AnimationConfig) {
     };
   }, [debug, objects]);
 
-  // Mouse tracking
+  // Mouse tracking (no re-renders now)
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      setMouse({
-        x: (e.clientX / window.innerWidth - 0.5) * mouseFactor,
-        y: (e.clientY / window.innerHeight - 0.5) * mouseFactor,
-      });
+      mouse.current.x = (e.clientX / window.innerWidth - 0.5) * mouseFactor;
+      mouse.current.y = (e.clientY / window.innerHeight - 0.5) * mouseFactor;
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
   }, [mouseFactor]);
 
+  // Block scroll during intro
+  useEffect(() => {
+    if (debug) return;
+
+    const scrollContainer = scroll.el;
+
+    const blockScroll = (e: Event) => {
+      if (!introDone.current) {
+        e.preventDefault();
+        scroll.el.scrollTop = 0;
+      }
+    };
+
+    scrollContainer.addEventListener("scroll", blockScroll);
+    return () => scrollContainer.removeEventListener("scroll", blockScroll);
+  }, [debug, scroll]);
+
   // Frame loop
   useFrame(() => {
     if (debug) return;
 
-    if (introDone.current && scroll.offset !== scrollTimeline.progress()) {
+    if (!introDone.current) {
+      scrollTimeline.progress(0);
+      threeCamera.lookAt(...lookAt);
+      return;
+    }
+
+    if (scroll.offset !== scrollTimeline.progress()) {
       scrollTimeline.progress(scroll.offset);
     }
 
-    if (introDone.current) {
-      threeCamera.lookAt(
-        lookAt[0] + mouse.x * 2,
-        lookAt[1] - mouse.y * 2,
-        lookAt[2],
-      );
-    } else {
-      threeCamera.lookAt(...lookAt);
-    }
+    threeCamera.lookAt(
+      lookAt[0] + mouse.current.x * 2,
+      lookAt[1] - mouse.current.y * 2,
+      lookAt[2],
+    );
   });
 
   return { introDone: introDone.current };
