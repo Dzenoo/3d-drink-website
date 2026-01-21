@@ -22,6 +22,7 @@ export type CameraConfig = {
 export type AnimatedObject = {
   ref: React.RefObject<THREE.Object3D>;
   poses: Pose[];
+  name?: string;
 };
 
 export type AnimationConfig = {

@@ -9,8 +9,7 @@ type DrinkProps = {
   position?: [number, number, number];
   rotation?: [number, number, number];
   scale?: [number, number, number];
-  droplets?: boolean;
-  textureId?: string;
+  textureName?: "apple" | "kiwi" | "orange" | "strawberry";
 };
 
 const Drink = forwardRef<THREE.Group, DrinkProps>(
@@ -19,16 +18,17 @@ const Drink = forwardRef<THREE.Group, DrinkProps>(
       position = [0, 0, 0],
       rotation = [0, 0, 0],
       scale = [1, 1, 1],
-      droplets = true,
-      textureId,
+      textureName,
     },
     ref,
   ) => {
-    const { drinkTexture } = useStore();
+    const { drinkTexture: defaultTextureName } = useStore();
 
     const { nodes } = useGLTF("/models/drink.glb") as any;
 
-    const texture = useTexture(`/images/${textureId ?? drinkTexture}.png`);
+    const texture = useTexture(
+      `/images/${textureName ?? defaultTextureName}.png`,
+    );
     texture.flipY = false;
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.magFilter = THREE.LinearFilter;
@@ -64,18 +64,6 @@ const Drink = forwardRef<THREE.Group, DrinkProps>(
         </mesh>
 
         <mesh geometry={nodes.Can.geometry} material={canMaterial} />
-
-        {/* {droplets && (
-          <mesh geometry={nodes.Droplets.geometry}>
-            <meshPhysicalMaterial
-              transmission={1}
-              roughness={0.05}
-              clearcoat={1}
-              transparent
-              opacity={0.5}
-            />
-          </mesh>
-        )} */}
 
         <mesh geometry={nodes.Bottom.geometry}>
           <meshStandardMaterial
