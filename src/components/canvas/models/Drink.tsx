@@ -3,51 +3,40 @@
 import * as THREE from "three";
 import React, { forwardRef, useMemo } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
-import { useStore } from "@/store";
 
 type DrinkProps = {
   position?: [number, number, number];
   rotation?: [number, number, number];
   scale?: [number, number, number];
-  textureName?: "apple" | "kiwi" | "orange" | "strawberry";
 };
 
 const Drink = forwardRef<THREE.Group, DrinkProps>(
-  (
-    {
-      position = [0, 0, 0],
-      rotation = [0, 0, 0],
-      scale = [1, 1, 1],
-      textureName,
-    },
-    ref,
-  ) => {
-    const { drinkTexture: defaultTextureName } = useStore();
-
+  ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = [1, 1, 1] }, ref) => {
     const { nodes } = useGLTF("/models/drink.glb") as any;
+    const map = useTexture(`/images/strawberry.png`);
 
-    const texture = useTexture(
-      `/images/${textureName ?? defaultTextureName}.png`,
-    );
-    texture.flipY = false;
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.magFilter = THREE.LinearFilter;
-    texture.minFilter = THREE.LinearFilter;
-    texture.repeat.set(2, 2);
+    map.flipY = false;
+    map.colorSpace = THREE.SRGBColorSpace;
+    map.magFilter = THREE.LinearFilter;
+    map.minFilter = THREE.LinearFilter;
+    map.wrapS = THREE.RepeatWrapping;
+    map.wrapT = THREE.ClampToEdgeWrapping;
+    map.repeat.set(1.9, 1);
+    map.offset.set(0.05, 0);
 
     const canMaterial = useMemo(
       () =>
         new THREE.MeshStandardMaterial({
-          map: texture,
-          roughness: 0.5,
-          metalness: 0.3,
+          map: map,
+          roughness: 0.3,
+          metalness: 0.7,
         }),
-      [texture],
+      [],
     );
 
     return (
       <group ref={ref} position={position} rotation={rotation} scale={scale}>
-        <mesh geometry={nodes.Lid.geometry}>
+        <mesh geometry={nodes.Tab.geometry}>
           <meshStandardMaterial
             color="lightgray"
             metalness={0.8}

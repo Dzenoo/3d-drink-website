@@ -36,11 +36,7 @@ const SceneContent: React.FC = () => {
       <Lights />
       <Experience />
 
-      <Drink
-        ref={drinkRef}
-        position={[0, -2.1, 0]}
-        rotation={[0, Math.PI * 0.5, 0]}
-      />
+      <Drink ref={drinkRef} position={[0, -1.2, 0]} />
 
       <HomeOverlay />
     </>
@@ -49,7 +45,7 @@ const SceneContent: React.FC = () => {
 
 const HomeScene: React.FC = () => {
   return (
-    <Canvas camera={{ fov: 55 }}>
+    <Canvas camera={{ fov: 30 }}>
       <ScrollControls pages={4} damping={0.5}>
         <SceneContent />
       </ScrollControls>

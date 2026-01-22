@@ -27,16 +27,16 @@ const NavbarLinks = [
 
 const Navbar: React.FC = () => {
   return (
-    <header className="sticky top-0 z-10 flex items-center justify-between gap-5 px-10 py-5">
+    <header className="absolute top-0 right-0 left-0 z-10 flex items-center justify-between gap-5 px-10 py-5 bg-transparent border-b border-b-white/50">
       <div>
-        <h1 className="text-[1.5rem] font-semibold">DRINK</h1>
+        <h1 className="text-[1.5rem] font-semibold text-white">ENERGY</h1>
       </div>
       <div>
         <ul className="flex gap-10 max-md:hidden">
           {NavbarLinks.map((link) => (
             <li key={link.id}>
               <Link
-                className="cursor-pointer text-xl font-light tracking-wide transition"
+                className="cursor-pointer uppercase tracking-wide transition text-white"
                 href={link.href}
               >
                 {link.title}
