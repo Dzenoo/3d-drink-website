@@ -13,7 +13,7 @@ type DrinkProps = {
 const Drink = forwardRef<THREE.Group, DrinkProps>(
   ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = [1, 1, 1] }, ref) => {
     const { nodes } = useGLTF("/models/drink.glb") as any;
-    const map = useTexture(`/images/strawberry.png`);
+    const map = useTexture(`/images/strawberry-drink-texture.png`);
 
     map.flipY = false;
     map.colorSpace = THREE.SRGBColorSpace;

@@ -1,67 +1,41 @@
-import React from "react";
+"use client";
+
+import { forwardRef, useRef, useState, useEffect } from "react";
 import * as THREE from "three";
-import { useGLTF } from "@react-three/drei";
-import { RigidBody } from "@react-three/rapier";
+import { useTexture } from "@react-three/drei";
 
 type StrawberryProps = {
-  position: [number, number, number];
-  physics?: boolean;
+  position?: [number, number, number];
+  rotation?: [number, number, number];
+  scale?: number;
 };
 
-const Strawberry: React.FC<StrawberryProps> = ({
-  position,
-  physics = true,
-}) => {
-  const { nodes } = useGLTF("./models/strawberry.glb") as unknown as {
-    nodes: {
-      List: THREE.Mesh;
-      Strawberry: THREE.Mesh;
-    };
-  };
+const Strawberry = forwardRef<THREE.Group, StrawberryProps>(
+  ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1 }, ref) => {
+    const [aspect, setAspect] = useState(1);
+    const innerRef = useRef<THREE.Mesh>(null);
+    const texture = useTexture("/images/strawberry.png");
 
-  const group = (
-    <group position={[0, 0, 0]}>
-      <mesh
-        rotation={[-Math.PI * 0.7, 0, 0.1]}
-        position={[0, 0.25, 0.8]}
-        geometry={nodes.List.geometry}
-        material={
-          new THREE.MeshStandardMaterial({
-            color: new THREE.Color("lightgreen"),
-            roughness: 0.9,
-            metalness: 0.9,
-          })
-        }
-      />
-      <mesh
-        geometry={nodes.Strawberry.geometry}
-        material={
-          new THREE.MeshStandardMaterial({
-            color: new THREE.Color("#cf3a45"),
-            roughness: 0.2,
-            metalness: 0.1,
-          })
-        }
-      />
-    </group>
-  );
+    useEffect(() => {
+      if (texture.image) {
+        const { width, height } = texture.image;
+        setAspect(width / height);
+      }
+    }, [texture]);
 
-  if (physics) {
     return (
-      <RigidBody
-        position={position}
-        colliders="ball"
-        type="dynamic"
-        angularDamping={0.9}
-        linearDamping={0.1}
-        scale={0.5}
-      >
-        {group}
-      </RigidBody>
+      <group ref={ref} position={position} rotation={rotation}>
+        <mesh ref={innerRef}>
+          <planeGeometry args={[scale * aspect, scale]} />
+          <meshBasicMaterial
+            map={texture}
+            transparent
+            side={THREE.DoubleSide}
+          />
+        </mesh>
+      </group>
     );
-  } else {
-    return group;
-  }
-};
+  },
+);
 
 export default Strawberry;

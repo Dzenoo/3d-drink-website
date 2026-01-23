@@ -7,11 +7,11 @@ const Hero: React.FC = () => {
   return (
     <div className="bg-[#0a0a0a] w-full h-full relative">
       {/* Orange glow (bottom center) */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_95%,_rgba(251,146,60,0.95),_transparent_45%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_95%,_rgba(236,72,152,0.95),_transparent_45%)]"></div>
       {/* Pink glow (top left) */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_5%,_rgba(236,72,153,0.10),_transparent_20%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_5%,_rgba(65,224,255,0.10),_transparent_20%)]"></div>
       {/* Subtle yellow glow (top right) */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_15%,_rgba(65,224,255,0.10),_transparent_20%)]"></div>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_15%,_rgba(251,146,60,0.10),_transparent_20%)]"></div>
 
       {/* Content */}
       <div className="py-28 px-10">
