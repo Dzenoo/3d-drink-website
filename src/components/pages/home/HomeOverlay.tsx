@@ -10,7 +10,7 @@ import Refreshing from "./sections/Refreshing";
 const HomeOverlay: React.FC = () => {
   return (
     <Scroll html>
-      <div className="w-screen">
+      <div className="w-screen relative z-[2]">
         <Navbar />
         <Section>
           <Hero />

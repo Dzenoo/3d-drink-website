@@ -1,58 +1,50 @@
 "use client";
 
-import { useRef, useEffect, ReactNode } from "react";
+import { useRef, useEffect, Children, cloneElement, ReactElement } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/utils";
 
 gsap.registerPlugin(ScrollTrigger);
 
-type Direction = "up" | "down" | "left" | "right" | "none";
-
-interface RevealProps {
-  children: ReactNode;
+interface StaggerProps {
+  children: ReactElement[];
   className?: string;
-  direction?: Direction;
+  direction?: "up" | "down" | "left" | "right";
+  stagger?: number;
   delay?: number;
   duration?: number;
   distance?: number;
   ease?: string;
-  scale?: number;
-  rotate?: number;
-  opacity?: number;
-  blur?: number;
+  from?: "start" | "center" | "end" | "edges" | "random";
   scrollTrigger?: boolean;
   triggerStart?: string;
   once?: boolean;
-  onComplete?: () => void;
 }
 
-export function Reveal({
+export function Stagger({
   children,
   className,
   direction = "up",
+  stagger = 0.1,
   delay = 0,
-  duration = 1,
-  distance = 50,
+  duration = 0.8,
+  distance = 40,
   ease = "power3.out",
-  scale = 1,
-  rotate = 0,
-  opacity = 0,
-  blur = 0,
+  from = "start",
   scrollTrigger = false,
   triggerStart = "top 85%",
   once = true,
-  onComplete,
-}: RevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
+}: StaggerProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const itemsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
-    if (!ref.current) return;
+    if (!containerRef.current) return;
 
-    const el = ref.current;
+    const items = itemsRef.current.filter(Boolean);
 
-    // Calculate initial position based on direction
-    const getInitialPosition = () => {
+    const getInitial = () => {
       switch (direction) {
         case "up":
           return { y: distance, x: 0 };
@@ -62,41 +54,29 @@ export function Reveal({
           return { x: distance, y: 0 };
         case "right":
           return { x: -distance, y: 0 };
-        case "none":
-          return { x: 0, y: 0 };
       }
     };
 
-    const { x, y } = getInitialPosition();
+    const { x, y } = getInitial();
 
-    // Set initial state
-    gsap.set(el, {
-      opacity,
-      x,
-      y,
-      scale,
-      rotate,
-      filter: blur > 0 ? `blur(${blur}px)` : "none",
-    });
+    gsap.set(items, { opacity: 0, x, y });
 
-    // Animation config
     const animationConfig: gsap.TweenVars = {
       opacity: 1,
       x: 0,
       y: 0,
-      scale: 1,
-      rotate: 0,
-      filter: "blur(0px)",
       duration,
       delay,
       ease,
-      onComplete,
+      stagger: {
+        each: stagger,
+        from,
+      },
     };
 
-    // With or without scroll trigger
     if (scrollTrigger) {
       animationConfig.scrollTrigger = {
-        trigger: el,
+        trigger: containerRef.current,
         start: triggerStart,
         toggleActions: once
           ? "play none none none"
@@ -104,30 +84,35 @@ export function Reveal({
       };
     }
 
-    const tween = gsap.to(el, animationConfig);
+    const tween = gsap.to(items, animationConfig);
 
     return () => {
       tween.kill();
     };
   }, [
     direction,
+    stagger,
     delay,
     duration,
     distance,
     ease,
-    scale,
-    rotate,
-    opacity,
-    blur,
+    from,
     scrollTrigger,
     triggerStart,
     once,
-    onComplete,
   ]);
 
   return (
-    <div ref={ref} className={cn("will-change-transform", className)}>
-      {children}
+    <div ref={containerRef} className={className}>
+      {Children.map(children, (child, i) => (
+        <div
+          ref={(el) => {
+            if (el) itemsRef.current[i] = el;
+          }}
+        >
+          {child}
+        </div>
+      ))}
     </div>
   );
 }

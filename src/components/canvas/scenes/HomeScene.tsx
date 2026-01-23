@@ -51,13 +51,13 @@ const SceneContent: React.FC = () => {
       <Experience />
 
       <Float>
-        <Strawberry ref={strawberryLeftRef} position={[-4, -1, -2]} scale={3} />
+        <Strawberry ref={strawberryLeftRef} position={[-2, -1, -2]} scale={2} />
       </Float>
 
       <Float>
         <Strawberry
           ref={strawberryRightRef}
-          position={[4, -1, -2]}
+          position={[2.5, -1, -2]}
           rotation={[0, 0, 3]}
           scale={2}
         />

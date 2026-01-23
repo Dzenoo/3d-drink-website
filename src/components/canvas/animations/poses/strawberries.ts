@@ -5,7 +5,7 @@ export const STRAWBERRY_LEFT_POSES: Pose[] = [
     at: 0,
     position: { x: 0.2, y: -1, z: -2 },
     rotation: { x: 0, y: 0, z: 0 },
-    scale: 1,
+    scale: 1.5,
   },
   {
     at: 0.25,

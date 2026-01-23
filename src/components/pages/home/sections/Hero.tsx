@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowDown } from "lucide-react";
 
-import Reveal from "@/components/shared/animations/Reveal";
+import { ClipReveal } from "@/components/shared/animations/ClipReveal";
 
 const Hero: React.FC = () => {
   return (
@@ -14,82 +14,59 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_15%,_rgba(251,146,60,0.10),_transparent_20%)]"></div>
 
       {/* Content */}
-      <div className="py-28 px-10">
-        <div>
-          <div>
-            <h2 className="text-white">The energy that keeps you going</h2>
+      <div className="pt-36 pb-10 px-10 flex flex-col h-full">
+        <div className="flex">
+          <div className="pt-2 space-y-2">
+            <ClipReveal>
+              <h1 className="text-xl text-pink-400">Incredibly Refreshing</h1>
+            </ClipReveal>
+            <ClipReveal delay={0.5}>
+              <p className="text-sm  text-white">
+                Natural energy crafted for focus, endurance, and momentum —
+                without the crash.
+              </p>
+            </ClipReveal>
           </div>
-          <div>
-            <h1 className="text-8xl text-white">
-              TOTAL <span className="font-semibold">ENERGY</span>
-            </h1>
+          <div className="basis-full flex-1 grow mr-40">
+            <ClipReveal delay={0.8}>
+              <h1 className="text-white text-9xl font-bold uppercase text-center tracking-wider">
+                TOTAL{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400">
+                  ENERGY
+                </span>
+              </h1>
+            </ClipReveal>
           </div>
-          <div>
-            <p className="text-white">
-              Natural energy crafted for focus, endurance, and momentum —
-              without the crash.
-            </p>
+          <div className="flex w-fit flex-col items-center justify-center gap-5 rounded-full border border-white p-5 h-28">
+            <div className="min-h-5 min-w-5 animate-bounce rounded-full bg-white"></div>
+            <ArrowDown className="text-white" />
           </div>
-          <div>
-            <button>Explore More</button>
-          </div>
-          <div>
-            <span>Alcoholal Free Drink</span>
-            <span>0% Animal fat and calories</span>
+        </div>
+        <div className="mt-auto">
+          <div className="flex flex-col gap-2 text-sm text-white">
+            <ClipReveal direction="right" delay={1} scrollTrigger={false}>
+              <span className="flex items-center gap-2 bg-pink-400 w-52 px-2 py-2">
+                <span className="w-2 h-2 bg-green-400 rounded-full" />
+                Alcohol Free
+              </span>
+            </ClipReveal>
+            <ClipReveal direction="right" delay={1.2} scrollTrigger={false}>
+              <span className="flex items-center gap-2 bg-pink-400 w-52 px-2 py-2">
+                <span className="w-2 h-2 bg-green-400 rounded-full" />
+                Zero Sugar
+              </span>
+            </ClipReveal>
+            <ClipReveal direction="right" delay={1.4} scrollTrigger={false}>
+              <span className="flex items-center gap-2 bg-pink-400 w-52 px-2 py-2">
+                <span className="w-2 h-2 bg-green-400 rounded-full" />
+                Natural Ingredients
+              </span>
+            </ClipReveal>
           </div>
         </div>
       </div>
     </div>
   );
-  // return (
-  //   <div className="flex justify-between gap-10 pt-28 max-lg:flex-col">
-  //     <div>
-  //       <div className="px-10">
-  //         <div className="flex flex-col gap-16">
-  //           <Reveal transition={{ delay: 1 }}>
-  //             <h1 className="text-9xl font-bold max-lg:text-7xl">
-  //               Unleash Your <br />
-  //               Energy
-  //             </h1>
-  //           </Reveal>
-  //           <Reveal transition={{ delay: 1 }}>
-  //             <p className="text-3xl font-extralight max-sm:text-xl">
-  //               Experience the Unmatched Power and <br />
-  //               Endurance of Our Revolutionary Energy Drink
-  //             </p>
-  //           </Reveal>
-  //           <Reveal transition={{ delay: 1 }}>
-  //             <button className="rounded-full bg-black px-10 py-5 text-xl font-thin text-white transition hover:bg-white hover:text-black">
-  //               Buy Now
-  //             </button>
-  //           </Reveal>
-  //         </div>
-  //       </div>
-  //       <div className="mt-28 w-fit translate-y-10 bg-[#90FF22] p-[0.5em]">
-  //         <h1 className="relative left-[5em] text-xl">The best of flavors</h1>
-  //       </div>
-  //     </div>
-  //     <div className="flex translate-y-10 flex-col justify-between gap-10 p-10 max-xl:justify-normal">
-  //       <Reveal transition={{ delay: 1 }}>
-  //         <div className="bg-[#e8e8e8] p-5 max-lg:w-fit">
-  //           <div>
-  //             <h1 className="text-3xl">Incredibly Refreshing</h1>
-  //           </div>
-  //           <div className="max-w-sm">
-  //             <p className="text-xl font-extralight">
-  //               Quench your thirst and invigorate your senses with our
-  //               incredibly refreshing energy drink.
-  //             </p>
-  //           </div>
-  //         </div>
-  //       </Reveal>
-  //       <div className="flex w-fit flex-col items-center justify-center gap-10 rounded-full border border-gray-700 p-5">
-  //         <div className="h-5 w-5 animate-bounce rounded-full bg-black"></div>
-  //         <ArrowDown />
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
 };
 
 export default Hero;
