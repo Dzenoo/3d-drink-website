@@ -6,11 +6,8 @@ import { ClipReveal } from "@/components/shared/animations/ClipReveal";
 const Hero: React.FC = () => {
   return (
     <div className="bg-[#0a0a0a] w-full h-full relative">
-      {/* Orange glow (bottom center) */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_95%,_rgba(236,72,152,0.95),_transparent_45%)]"></div>
-      {/* Pink glow (top left) */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_5%,_rgba(65,224,255,0.10),_transparent_20%)]"></div>
-      {/* Subtle yellow glow (top right) */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_5%,_rgba(34,197,94,0.15),_transparent_20%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_15%,_rgba(251,146,60,0.10),_transparent_20%)]"></div>
 
       {/* Content */}
@@ -44,19 +41,19 @@ const Hero: React.FC = () => {
         </div>
         <div className="mt-auto">
           <div className="flex flex-col gap-2 text-sm text-white">
-            <ClipReveal direction="right" delay={1} scrollTrigger={false}>
+            <ClipReveal direction="right" delay={1}>
               <span className="flex items-center gap-2 bg-pink-400 w-52 px-2 py-2">
                 <span className="w-2 h-2 bg-green-400 rounded-full" />
                 Alcohol Free
               </span>
             </ClipReveal>
-            <ClipReveal direction="right" delay={1.2} scrollTrigger={false}>
+            <ClipReveal direction="right" delay={1.2}>
               <span className="flex items-center gap-2 bg-pink-400 w-52 px-2 py-2">
                 <span className="w-2 h-2 bg-green-400 rounded-full" />
                 Zero Sugar
               </span>
             </ClipReveal>
-            <ClipReveal direction="right" delay={1.4} scrollTrigger={false}>
+            <ClipReveal direction="right" delay={1.4}>
               <span className="flex items-center gap-2 bg-pink-400 w-52 px-2 py-2">
                 <span className="w-2 h-2 bg-green-400 rounded-full" />
                 Natural Ingredients

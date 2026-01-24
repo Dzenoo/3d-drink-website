@@ -5,7 +5,9 @@ import { cn } from "@/utils";
 import Navbar from "@/components/layout/Navbar";
 import Hero from "./sections/Hero";
 import Ingredients from "./sections/Ingredients";
-import Refreshing from "./sections/Refreshing";
+import Experience from "./sections/Experience";
+import Flavors from "./sections/Flavors";
+import CTA from "./sections/CTA";
 
 const HomeOverlay: React.FC = () => {
   return (
@@ -19,9 +21,14 @@ const HomeOverlay: React.FC = () => {
           <Ingredients />
         </Section>
         <Section>
-          <Refreshing />
+          <Experience />
         </Section>
-        <Section>Flavors</Section>
+        <Section>
+          <Flavors />
+        </Section>
+        <Section>
+          <CTA />
+        </Section>
       </div>
     </Scroll>
   );

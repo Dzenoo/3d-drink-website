@@ -84,7 +84,7 @@ const SceneContent: React.FC = () => {
 const HomeScene: React.FC = () => {
   return (
     <Canvas camera={{ fov: 30 }}>
-      <ScrollControls pages={4} damping={0.5}>
+      <ScrollControls pages={5} damping={0.5}>
         <SceneContent />
       </ScrollControls>
     </Canvas>
