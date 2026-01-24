@@ -2,10 +2,9 @@
 
 import { useRef, useEffect, ReactNode } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { cn } from "@/utils";
 
-gsap.registerPlugin(ScrollTrigger);
+import { cn } from "@/utils";
+import { useInView } from "@/hooks/useInView";
 
 type Direction = "up" | "down" | "left" | "right" | "none";
 
@@ -21,8 +20,8 @@ interface RevealProps {
   rotate?: number;
   opacity?: number;
   blur?: number;
-  scrollTrigger?: boolean;
-  triggerStart?: string;
+  inView?: boolean;
+  rootMargin?: string;
   once?: boolean;
   onComplete?: () => void;
 }
@@ -39,19 +38,22 @@ export function Reveal({
   rotate = 0,
   opacity = 0,
   blur = 0,
-  scrollTrigger = false,
-  triggerStart = "top 85%",
+  inView = false,
+  rootMargin = "-15% 0px",
   once = true,
   onComplete,
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { rootMargin, once });
+  const hasAnimated = useRef(false);
+
+  const shouldAnimate = inView ? isInView : true;
 
   useEffect(() => {
     if (!ref.current) return;
 
     const el = ref.current;
 
-    // Calculate initial position based on direction
     const getInitialPosition = () => {
       switch (direction) {
         case "up":
@@ -78,9 +80,17 @@ export function Reveal({
       rotate,
       filter: blur > 0 ? `blur(${blur}px)` : "none",
     });
+  }, [direction, distance, opacity, scale, rotate, blur]);
 
-    // Animation config
-    const animationConfig: gsap.TweenVars = {
+  useEffect(() => {
+    if (!ref.current) return;
+    if (!shouldAnimate) return;
+    if (once && hasAnimated.current) return;
+
+    hasAnimated.current = true;
+    const el = ref.current;
+
+    const tween = gsap.to(el, {
       opacity: 1,
       x: 0,
       y: 0,
@@ -91,39 +101,12 @@ export function Reveal({
       delay,
       ease,
       onComplete,
-    };
-
-    // With or without scroll trigger
-    if (scrollTrigger) {
-      animationConfig.scrollTrigger = {
-        trigger: el,
-        start: triggerStart,
-        toggleActions: once
-          ? "play none none none"
-          : "play reverse play reverse",
-      };
-    }
-
-    const tween = gsap.to(el, animationConfig);
+    });
 
     return () => {
       tween.kill();
     };
-  }, [
-    direction,
-    delay,
-    duration,
-    distance,
-    ease,
-    scale,
-    rotate,
-    opacity,
-    blur,
-    scrollTrigger,
-    triggerStart,
-    once,
-    onComplete,
-  ]);
+  }, [shouldAnimate, duration, delay, ease, once, onComplete]);
 
   return (
     <div ref={ref} className={cn("will-change-transform", className)}>

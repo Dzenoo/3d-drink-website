@@ -2,10 +2,9 @@
 
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { cn } from "@/utils";
 
-gsap.registerPlugin(ScrollTrigger);
+import { cn } from "@/utils";
+import { useInView } from "@/hooks/useInView";
 
 interface SplitTextProps {
   children: string;
@@ -16,8 +15,8 @@ interface SplitTextProps {
   delay?: number;
   duration?: number;
   ease?: string;
-  scrollTrigger?: boolean;
-  triggerStart?: string;
+  inView?: boolean;
+  rootMargin?: string;
   once?: boolean;
   hover?: boolean;
 }
@@ -31,64 +30,108 @@ export function SplitText({
   delay = 0,
   duration = 0.6,
   ease = "power3.out",
-  scrollTrigger = false,
-  triggerStart = "top 85%",
+  inView = false,
+  rootMargin = "-15% 0px",
   once = true,
   hover = false,
 }: SplitTextProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const charsRef = useRef<HTMLSpanElement[]>([]);
+  const isInView = useInView(containerRef, { rootMargin, once });
+  const hasAnimated = useRef(false);
+
+  const shouldAnimate = inView ? isInView : true;
+
+  const getAnimation = () => {
+    switch (animation) {
+      case "fade":
+        return {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        };
+      case "slide":
+        return {
+          from: { opacity: 0, y: 50 },
+          to: { opacity: 1, y: 0 },
+        };
+      case "scale":
+        return {
+          from: { opacity: 0, scale: 0 },
+          to: { opacity: 1, scale: 1 },
+        };
+      case "rotate":
+        return {
+          from: { opacity: 0, rotateX: -90, y: 20 },
+          to: { opacity: 1, rotateX: 0, y: 0 },
+        };
+      case "wave":
+        return {
+          from: { opacity: 0, y: 30, rotateZ: 5 },
+          to: { opacity: 1, y: 0, rotateZ: 0 },
+        };
+      case "glitch":
+        return {
+          from: {
+            opacity: 0,
+            x: () => gsap.utils.random(-20, 20),
+            skewX: 20,
+          },
+          to: { opacity: 1, x: 0, skewX: 0 },
+        };
+    }
+  };
 
   useEffect(() => {
-    if (!containerRef.current) return;
-
     const chars = charsRef.current;
+    if (!chars.length) return;
 
-    // Animation presets
-    const getAnimation = () => {
-      switch (animation) {
-        case "fade":
-          return {
-            from: { opacity: 0 },
-            to: { opacity: 1 },
-          };
-        case "slide":
-          return {
-            from: { opacity: 0, y: 50 },
-            to: { opacity: 1, y: 0 },
-          };
-        case "scale":
-          return {
-            from: { opacity: 0, scale: 0 },
-            to: { opacity: 1, scale: 1 },
-          };
-        case "rotate":
-          return {
-            from: { opacity: 0, rotateX: -90, y: 20 },
-            to: { opacity: 1, rotateX: 0, y: 0 },
-          };
-        case "wave":
-          return {
-            from: { opacity: 0, y: 30, rotateZ: 5 },
-            to: { opacity: 1, y: 0, rotateZ: 0 },
-          };
-        case "glitch":
-          return {
-            from: {
-              opacity: 0,
-              x: () => gsap.utils.random(-20, 20),
-              skewX: 20,
-            },
-            to: { opacity: 1, x: 0, skewX: 0 },
-          };
-      }
-    };
+    const { from } = getAnimation();
+    gsap.set(chars, from);
+  }, [animation]);
+
+  useEffect(() => {
+    const chars = charsRef.current;
+    const container = containerRef.current;
+    if (!chars.length || !container || !hover) return;
 
     const { from, to } = getAnimation();
 
-    gsap.set(chars, from);
+    const handleEnter = () => {
+      gsap.to(chars, {
+        ...to,
+        duration: duration * 0.5,
+        stagger: { each: stagger * 0.5, from: "start" },
+      });
+    };
 
-    const animationConfig: gsap.TweenVars = {
+    const handleLeave = () => {
+      gsap.to(chars, {
+        ...from,
+        duration: duration * 0.5,
+        stagger: { each: stagger * 0.5, from: "end" },
+      });
+    };
+
+    container.addEventListener("mouseenter", handleEnter);
+    container.addEventListener("mouseleave", handleLeave);
+
+    return () => {
+      container.removeEventListener("mouseenter", handleEnter);
+      container.removeEventListener("mouseleave", handleLeave);
+    };
+  }, [hover, animation, duration, stagger]);
+
+  useEffect(() => {
+    if (hover) return;
+    const chars = charsRef.current;
+    if (!chars.length) return;
+    if (!shouldAnimate) return;
+    if (once && hasAnimated.current) return;
+
+    hasAnimated.current = true;
+    const { to } = getAnimation();
+
+    const tween = gsap.to(chars, {
       ...to,
       duration,
       delay,
@@ -97,62 +140,12 @@ export function SplitText({
         each: stagger,
         from: "start",
       },
-    };
-
-    if (scrollTrigger && !hover) {
-      animationConfig.scrollTrigger = {
-        trigger: containerRef.current,
-        start: triggerStart,
-        toggleActions: once
-          ? "play none none none"
-          : "play reverse play reverse",
-      };
-    }
-
-    const tween = gsap.to(chars, animationConfig);
-
-    // Hover animation
-    if (hover) {
-      const handleEnter = () => {
-        gsap.to(chars, {
-          ...to,
-          duration: duration * 0.5,
-          stagger: { each: stagger * 0.5, from: "start" },
-        });
-      };
-
-      const handleLeave = () => {
-        gsap.to(chars, {
-          ...from,
-          duration: duration * 0.5,
-          stagger: { each: stagger * 0.5, from: "end" },
-        });
-      };
-
-      containerRef.current.addEventListener("mouseenter", handleEnter);
-      containerRef.current.addEventListener("mouseleave", handleLeave);
-
-      return () => {
-        tween.kill();
-        containerRef.current?.removeEventListener("mouseenter", handleEnter);
-        containerRef.current?.removeEventListener("mouseleave", handleLeave);
-      };
-    }
+    });
 
     return () => {
       tween.kill();
     };
-  }, [
-    animation,
-    stagger,
-    delay,
-    duration,
-    ease,
-    scrollTrigger,
-    triggerStart,
-    once,
-    hover,
-  ]);
+  }, [shouldAnimate, hover, duration, delay, ease, stagger, once, animation]);
 
   return (
     <div

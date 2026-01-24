@@ -1,16 +1,15 @@
 "use client";
 
-import { useRef, useEffect, ReactNode } from "react";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { cn } from "@/utils";
 
-gsap.registerPlugin(ScrollTrigger);
+import { cn } from "@/utils";
+import { useInView } from "@/hooks/useInView";
 
 type AnimationType = "chars" | "words" | "lines";
 
 interface TextRevealProps {
-  children: ReactNode;
+  children: string;
   className?: string;
   type?: AnimationType;
   direction?: "up" | "down" | "left" | "right";
@@ -19,8 +18,8 @@ interface TextRevealProps {
   duration?: number;
   distance?: number;
   ease?: string;
-  scrollTrigger?: boolean;
-  triggerStart?: string;
+  inView?: boolean;
+  rootMargin?: string;
   once?: boolean;
 }
 
@@ -34,45 +33,41 @@ export function TextReveal({
   duration = 0.8,
   distance = 30,
   ease = "power3.out",
-  scrollTrigger = false,
-  triggerStart = "top 85%",
+  inView = false,
+  rootMargin = "-15% 0px",
   once = true,
 }: TextRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
+  const elementsRef = useRef<HTMLSpanElement[]>([]);
+  const isInView = useInView(containerRef, { rootMargin, once });
+  const hasAnimated = useRef(false);
+
+  const shouldAnimate = inView ? isInView : true;
 
   useEffect(() => {
     if (!containerRef.current || !textRef.current) return;
 
-    const container = containerRef.current;
-    const text = textRef.current.textContent || "";
-
-    // Split text based on type
-    let elements: HTMLSpanElement[] = [];
-
     if (type === "chars") {
-      textRef.current.innerHTML = text
+      textRef.current.innerHTML = children
         .split("")
         .map((char) =>
           char === " "
             ? "<span class='inline-block'>&nbsp;</span>"
-            : `<span class="inline-block">${char}</span>`,
+            : `<span class="inline-block">${char}</span>`
         )
         .join("");
-      elements = Array.from(textRef.current.querySelectorAll("span"));
     } else if (type === "words") {
-      textRef.current.innerHTML = text
+      textRef.current.innerHTML = children
         .split(" ")
         .map((word) => `<span class="inline-block">${word}&nbsp;</span>`)
         .join("");
-      elements = Array.from(textRef.current.querySelectorAll("span"));
     } else if (type === "lines") {
-      // For lines, wrap each line in a span with overflow hidden
-      textRef.current.innerHTML = `<span class="inline-block">${text}</span>`;
-      elements = Array.from(textRef.current.querySelectorAll("span"));
+      textRef.current.innerHTML = `<span class="inline-block">${children}</span>`;
     }
 
-    // Get initial position
+    elementsRef.current = Array.from(textRef.current.querySelectorAll("span"));
+
     const getInitial = () => {
       switch (direction) {
         case "up":
@@ -87,12 +82,17 @@ export function TextReveal({
     };
 
     const { x, y } = getInitial();
+    gsap.set(elementsRef.current, { opacity: 0, x, y });
+  }, [children, type, direction, distance]);
 
-    // Set initial state
-    gsap.set(elements, { opacity: 0, x, y });
+  useEffect(() => {
+    if (!elementsRef.current.length) return;
+    if (!shouldAnimate) return;
+    if (once && hasAnimated.current) return;
 
-    // Animation config
-    const animationConfig: gsap.TweenVars = {
+    hasAnimated.current = true;
+
+    const tween = gsap.to(elementsRef.current, {
       opacity: 1,
       x: 0,
       y: 0,
@@ -100,35 +100,12 @@ export function TextReveal({
       delay,
       ease,
       stagger,
-    };
-
-    if (scrollTrigger) {
-      animationConfig.scrollTrigger = {
-        trigger: container,
-        start: triggerStart,
-        toggleActions: once
-          ? "play none none none"
-          : "play reverse play reverse",
-      };
-    }
-
-    const tween = gsap.to(elements, animationConfig);
+    });
 
     return () => {
       tween.kill();
     };
-  }, [
-    type,
-    direction,
-    stagger,
-    delay,
-    duration,
-    distance,
-    ease,
-    scrollTrigger,
-    triggerStart,
-    once,
-  ]);
+  }, [shouldAnimate, duration, delay, ease, stagger, once]);
 
   return (
     <div ref={containerRef} className={cn("overflow-hidden", className)}>
