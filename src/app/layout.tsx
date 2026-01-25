@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import LayoutWrapper from "./_LayoutWrapper";
 
 const space_grotesk = Space_Grotesk({
   variable: "--font-space-grotesk-sans",
@@ -19,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={space_grotesk.className}>{children}</body>
+      <body className={space_grotesk.className}>
+        <LayoutWrapper>{children}</LayoutWrapper>
+      </body>
     </html>
   );
 }
