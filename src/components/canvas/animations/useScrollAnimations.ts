@@ -6,14 +6,14 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
 
 import { AnimationConfig } from "./types";
-import { scrollTimeline } from "./index";
 
 export function useScrollAnimations(config: AnimationConfig) {
   const { debug = false, camera = {}, objects = [] } = config;
   const { camera: threeCamera } = useThree();
   const scroll = useScroll();
   const introDone = useRef(false);
-  const mouse = useRef({ x: 0, y: 0 }); // Changed to ref
+  const mouse = useRef({ x: 0, y: 0 });
+  const timeline = useRef<gsap.core.Timeline | null>(null);
 
   const {
     distance = 8,
@@ -32,7 +32,7 @@ export function useScrollAnimations(config: AnimationConfig) {
     threeCamera.position.set(
       introFrom.x ?? 0,
       introFrom.y ?? height,
-      introFrom.z ?? distance,
+      introFrom.z ?? distance
     );
     threeCamera.lookAt(...lookAt);
 
@@ -44,7 +44,6 @@ export function useScrollAnimations(config: AnimationConfig) {
       ease: introEase,
       onComplete: () => {
         introDone.current = true;
-        scrollTimeline.progress(0);
       },
     });
 
@@ -62,63 +61,98 @@ export function useScrollAnimations(config: AnimationConfig) {
     introEase,
   ]);
 
-  // Object animations
+  // Build timeline for object animations
   useEffect(() => {
     if (debug) return;
 
-    const tweens: gsap.core.Tween[] = [];
+    // Kill previous timeline completely
+    if (timeline.current) {
+      timeline.current.kill();
+      timeline.current = null;
+    }
+
+    // Create fresh timeline - paused, we control it manually
+    const tl = gsap.timeline({ paused: true });
 
     objects.forEach(({ ref, poses }) => {
       if (!ref.current) return;
 
       const object = ref.current;
 
-      poses.forEach((pose) => {
-        const { at, duration = 0.25, ease = "power1.inOut" } = pose;
+      // Sort poses by 'at' position
+      const sortedPoses = [...poses].sort((a, b) => a.at - b.at);
 
-        if (pose.position) {
-          const tween = gsap.to(object.position, {
-            ...pose.position,
-            duration,
-            ease,
-          });
-          scrollTimeline.add(tween, at);
-          tweens.push(tween);
+      // Create tweens between consecutive poses
+      for (let i = 0; i < sortedPoses.length - 1; i++) {
+        const from = sortedPoses[i];
+        const to = sortedPoses[i + 1];
+        const ease = to.ease ?? "power1.inOut";
+
+        // Timeline position: use 'at' as label percentage (0-1 mapped to timeline)
+        // Duration in timeline = difference between 'at' values
+        const startAt = from.at;
+        const duration = to.at - from.at;
+
+        if (to.position) {
+          tl.to(
+            object.position,
+            {
+              x: to.position.x,
+              y: to.position.y,
+              z: to.position.z,
+              duration,
+              ease,
+            },
+            startAt
+          );
         }
 
-        if (pose.rotation) {
-          const tween = gsap.to(object.rotation, {
-            ...pose.rotation,
-            duration,
-            ease,
-          });
-          scrollTimeline.add(tween, at);
-          tweens.push(tween);
+        if (to.rotation) {
+          tl.to(
+            object.rotation,
+            {
+              x: to.rotation.x,
+              y: to.rotation.y,
+              z: to.rotation.z,
+              duration,
+              ease,
+            },
+            startAt
+          );
         }
 
-        if (pose.scale !== undefined) {
+        if (to.scale !== undefined) {
           const scaleValue =
-            typeof pose.scale === "number"
-              ? { x: pose.scale, y: pose.scale, z: pose.scale }
-              : pose.scale;
+            typeof to.scale === "number"
+              ? { x: to.scale, y: to.scale, z: to.scale }
+              : to.scale;
 
-          const tween = gsap.to(object.scale, {
-            ...scaleValue,
-            duration,
-            ease,
-          });
-          scrollTimeline.add(tween, at);
-          tweens.push(tween);
+          tl.to(
+            object.scale,
+            {
+              x: scaleValue.x,
+              y: scaleValue.y,
+              z: scaleValue.z,
+              duration,
+              ease,
+            },
+            startAt
+          );
         }
-      });
+      }
     });
 
+    // Set total duration to 1 so progress(0-1) maps directly to scroll(0-1)
+    tl.totalDuration(1);
+
+    timeline.current = tl;
+
     return () => {
-      tweens.forEach((t) => t.kill());
+      tl.kill();
     };
   }, [debug, objects]);
 
-  // Mouse tracking (no re-renders now)
+  // Mouse tracking
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
       mouse.current.x = (e.clientX / window.innerWidth - 0.5) * mouseFactor;
@@ -145,24 +179,26 @@ export function useScrollAnimations(config: AnimationConfig) {
     return () => scrollContainer.removeEventListener("scroll", blockScroll);
   }, [debug, scroll]);
 
-  // Frame loop
+  // Frame loop - drive timeline by scroll
   useFrame(() => {
     if (debug) return;
 
     if (!introDone.current) {
-      scrollTimeline.progress(0);
+      timeline.current?.progress(0);
       threeCamera.lookAt(...lookAt);
       return;
     }
 
-    if (scroll.offset !== scrollTimeline.progress()) {
-      scrollTimeline.progress(scroll.offset);
+    // Directly set timeline progress from scroll offset
+    if (timeline.current) {
+      timeline.current.progress(scroll.offset);
     }
 
+    // Mouse parallax on camera
     threeCamera.lookAt(
       lookAt[0] + mouse.current.x * 2,
       lookAt[1] - mouse.current.y * 2,
-      lookAt[2],
+      lookAt[2]
     );
   });
 

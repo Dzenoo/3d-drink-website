@@ -6,7 +6,7 @@ import { Canvas } from "@react-three/fiber";
 import { Float, ScrollControls } from "@react-three/drei";
 
 import { ScrollAnimations } from "../animations";
-import SceneDebug from "../debug/SceneDebug";
+import ScrollDebug from "../debug/ScrollDebug";
 import Lights from "../setup/Lights";
 import Experience from "../setup/Experience";
 import Drink from "../models/Drink";
@@ -28,7 +28,7 @@ const SceneContent: React.FC = () => {
 
   return (
     <>
-      {DEBUG_MODE && <SceneDebug targetRef={drinkRef} name="Drink" />}
+      {DEBUG_MODE && <ScrollDebug targetRef={drinkRef} name="Drink" />}
 
       <ScrollAnimations
         debug={DEBUG_MODE}
