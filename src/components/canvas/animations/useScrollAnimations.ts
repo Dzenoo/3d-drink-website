@@ -32,7 +32,7 @@ export function useScrollAnimations(config: AnimationConfig) {
     threeCamera.position.set(
       introFrom.x ?? 0,
       introFrom.y ?? height,
-      introFrom.z ?? distance
+      introFrom.z ?? distance,
     );
     threeCamera.lookAt(...lookAt);
 
@@ -103,7 +103,7 @@ export function useScrollAnimations(config: AnimationConfig) {
               duration,
               ease,
             },
-            startAt
+            startAt,
           );
         }
 
@@ -117,7 +117,7 @@ export function useScrollAnimations(config: AnimationConfig) {
               duration,
               ease,
             },
-            startAt
+            startAt,
           );
         }
 
@@ -136,7 +136,7 @@ export function useScrollAnimations(config: AnimationConfig) {
               duration,
               ease,
             },
-            startAt
+            startAt,
           );
         }
       }
@@ -198,7 +198,7 @@ export function useScrollAnimations(config: AnimationConfig) {
     threeCamera.lookAt(
       lookAt[0] + mouse.current.x * 2,
       lookAt[1] - mouse.current.y * 2,
-      lookAt[2]
+      lookAt[2],
     );
   });
 

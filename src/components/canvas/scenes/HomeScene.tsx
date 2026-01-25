@@ -28,7 +28,7 @@ const SceneContent: React.FC = () => {
 
   return (
     <>
-      {DEBUG_MODE && <ScrollDebug targetRef={drinkRef} name="Drink" />}
+      {DEBUG_MODE && <ScrollDebug targetRef={drinkRef} />}
 
       <ScrollAnimations
         debug={DEBUG_MODE}
@@ -50,11 +50,11 @@ const SceneContent: React.FC = () => {
       <Lights />
       <Experience />
 
-      <Float>
+      <Float floatIntensity={0.1} rotationIntensity={0.3}>
         <Strawberry ref={strawberryLeftRef} position={[-2, -1, -2]} scale={2} />
       </Float>
 
-      <Float>
+      <Float floatIntensity={0.1} rotationIntensity={0.3}>
         <Strawberry
           ref={strawberryRightRef}
           position={[2.5, -1, -2]}
@@ -63,7 +63,7 @@ const SceneContent: React.FC = () => {
         />
       </Float>
 
-      <Float>
+      <Float floatIntensity={0.1} rotationIntensity={0.3}>
         <Strawberry
           ref={strawberryTopRef}
           position={[1, 1, -3]}
@@ -72,7 +72,7 @@ const SceneContent: React.FC = () => {
         />
       </Float>
 
-      <Float>
+      <Float floatIntensity={0.1} rotationIntensity={0.5}>
         <Drink ref={drinkRef} position={[0, -1.2, 0]} />
       </Float>
 
