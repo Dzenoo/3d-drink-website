@@ -50,12 +50,12 @@ export default function Flavors() {
       />
       {/* Content - Right side (can is on left) */}
       <div className="relative z-10 ml-auto mr-10 lg:mr-20 max-w-xl">
-        <Reveal>
+        <Reveal inView>
           <span className="text-white/60 text-sm uppercase tracking-widest">
             Choose Your Flavor
           </span>
         </Reveal>
-        <Reveal>
+        <Reveal inView>
           <h2 className="text-5xl lg:text-6xl font-bold text-white mt-4">
             Find Your
             <span
@@ -65,7 +65,7 @@ export default function Flavors() {
             </span>
           </h2>
         </Reveal>
-        <Reveal>
+        <Reveal inView>
           <p className="text-white/60 mt-4">
             Four unique flavors, each crafted to deliver the perfect balance of
             taste and energy.
@@ -74,10 +74,10 @@ export default function Flavors() {
         {/* Flavor selector */}
         <div className="grid grid-cols-2 gap-3 mt-8">
           {flavors.map((flavor, index) => (
-            <Reveal key={flavor.id}>
+            <Reveal key={flavor.id} inView delay={index * 0.1}>
               <button
                 onClick={() => setSelected(flavor)}
-                className={`relative text-left p-4 rounded-2xl border transition-all duration-300 ${selected.id === flavor.id ? "bg-white/10 border-white/30" : "bg-white/5 border-white/10 hover:bg-white/10"}`}
+                className={`relative text-left w-full h-full p-4 rounded-2xl border transition-all duration-300 ${selected.id === flavor.id ? "bg-white/10 border-white/30" : "bg-white/5 border-white/10 hover:bg-white/10"}`}
               >
                 {selected.id === flavor.id && (
                   <div className="absolute top-3 right-3">
@@ -96,7 +96,7 @@ export default function Flavors() {
           ))}
         </div>
         {/* Add to cart */}
-        <Reveal>
+        <Reveal inView>
           <div className="flex items-center gap-4 mt-8">
             <button
               className={`px-8 py-4 bg-gradient-to-r ${selected.color} text-white font-semibold rounded-full hover:scale-105 transition-transform`}

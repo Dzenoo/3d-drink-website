@@ -12,12 +12,12 @@ export default function CTA() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,_rgba(251,146,60,0.3),_transparent_40%)]" />
       {/* Main CTA content */}
       <div className="relative z-10 text-center max-w-2xl px-10">
-        <Reveal>
+        <Reveal inView>
           <span className="text-pink-400 text-sm uppercase tracking-widest">
             Ready to Transform?
           </span>
         </Reveal>
-        <Reveal>
+        <Reveal inView>
           <h2 className="text-5xl lg:text-7xl font-bold text-white mt-4">
             Get Your
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400">
@@ -25,13 +25,13 @@ export default function CTA() {
             </span>
           </h2>
         </Reveal>
-        <Reveal>
+        <Reveal inView>
           <p className="text-white/60 text-lg mt-6">
             Join over 1 million people who've made the switch to cleaner, better
             energy. Free shipping on orders of 12+ cans.
           </p>
         </Reveal>
-        <Reveal>
+        <Reveal inView>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
             <button className="px-10 py-5 bg-gradient-to-r from-pink-500 to-orange-400 text-white text-lg font-semibold rounded-full hover:scale-105 transition-transform">
               Shop Now — Free Shipping
@@ -42,14 +42,14 @@ export default function CTA() {
           </div>
         </Reveal>
         {/* Trust badges */}
-        <Reveal>
+        <Reveal inView>
           <div className="flex justify-center gap-8 mt-10 text-white/40 text-sm">
             <span>🚚 Free Shipping</span> <span>↩️ 30-Day Returns</span>
             <span>🔒 Secure Checkout</span>
           </div>
         </Reveal>
         {/* Newsletter */}
-        <Reveal>
+        <Reveal inView>
           <div className="mt-16 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6">
             <h3 className="text-white font-semibold">
               Get 15% off your first order

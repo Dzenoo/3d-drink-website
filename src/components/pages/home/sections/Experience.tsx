@@ -41,12 +41,12 @@ export default function Experience() {
 
       {/* Content - Centered (can is also centered) */}
       <div className="relative z-10 text-center max-w-4xl px-10">
-        <Reveal>
+        <Reveal inView>
           <span className="text-purple-400 text-sm uppercase tracking-widest">
             Feel The Difference
           </span>
         </Reveal>
-        <Reveal>
+        <Reveal inView>
           <h2 className="text-5xl lg:text-7xl font-bold text-white mt-4">
             Fuel Your
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-orange-400">
@@ -54,7 +54,7 @@ export default function Experience() {
             </span>
           </h2>
         </Reveal>
-        <Reveal>
+        <Reveal inView>
           <p className="text-white/60 text-lg mt-6 max-w-2xl mx-auto">
             Whether you're crushing a workout, coding through the night, or
             chasing your next adventure — we've got the energy you need.
@@ -63,7 +63,7 @@ export default function Experience() {
         {/* Benefits row */}
         <div className="flex justify-center gap-6 lg:gap-10 mt-12 flex-wrap">
           {benefits.map((benefit, index) => (
-            <Reveal key={benefit.title}>
+            <Reveal key={benefit.title} inView delay={index * 0.1}>
               <div className="text-center group">
                 <div className="w-16 h-16 mx-auto bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center group-hover:bg-white/10 group-hover:border-purple-500/50 transition-all">
                   <benefit.icon className="w-7 h-7 text-purple-400" />
@@ -79,7 +79,7 @@ export default function Experience() {
           ))}
         </div>
         {/* Testimonial */}
-        <Reveal>
+        <Reveal inView>
           <div className="mt-16 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 max-w-lg mx-auto">
             <p className="text-white/80 italic">
               "Best energy drink I've ever tried. No jitters, no crash, just
