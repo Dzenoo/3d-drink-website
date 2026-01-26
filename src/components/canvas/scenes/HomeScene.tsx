@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import * as THREE from "three";
 import { Canvas } from "@react-three/fiber";
 import { Float, ScrollControls } from "@react-three/drei";
@@ -11,20 +11,47 @@ import Lights from "../setup/Lights";
 import Experience from "../setup/Experience";
 import Drink from "../models/Drink";
 import Strawberry from "../models/Strawberry";
-import { DEBUG_MODE } from "@/constants";
 import HomeOverlay from "@/components/pages/home/HomeOverlay";
-import { DRINK_POSES } from "../animations/poses/drink";
+import { DEBUG_MODE } from "@/constants";
+import { useResponsive } from "@/hooks/useResponsive";
+import { getCameraConfig } from "../config/camera";
+import { getResponsivePoses } from "../animations/poses/responsive";
+import { DRINK_POSES_RESPONSIVE } from "../animations/poses/drink";
 import {
-  STRAWBERRY_LEFT_POSES,
-  STRAWBERRY_RIGHT_POSES,
-  STRAWBERRY_TOP_POSES,
+  STRAWBERRY_LEFT_POSES_RESPONSIVE,
+  STRAWBERRY_RIGHT_POSES_RESPONSIVE,
+  STRAWBERRY_TOP_POSES_RESPONSIVE,
 } from "../animations/poses/strawberries";
 
-const SceneContent: React.FC = () => {
+function SceneContent() {
   const drinkRef = useRef<THREE.Group>(null);
   const strawberryLeftRef = useRef<THREE.Group>(null);
   const strawberryRightRef = useRef<THREE.Group>(null);
   const strawberryTopRef = useRef<THREE.Group>(null);
+
+  const responsive = useResponsive();
+  const { distance, floatIntensity, rotationIntensity, drinkRotationIntensity } =
+    getCameraConfig(responsive);
+
+  const drinkPoses = useMemo(
+    () => getResponsivePoses(DRINK_POSES_RESPONSIVE, responsive.breakpoint),
+    [responsive.breakpoint]
+  );
+
+  const strawberryLeftPoses = useMemo(
+    () => getResponsivePoses(STRAWBERRY_LEFT_POSES_RESPONSIVE, responsive.breakpoint),
+    [responsive.breakpoint]
+  );
+
+  const strawberryRightPoses = useMemo(
+    () => getResponsivePoses(STRAWBERRY_RIGHT_POSES_RESPONSIVE, responsive.breakpoint),
+    [responsive.breakpoint]
+  );
+
+  const strawberryTopPoses = useMemo(
+    () => getResponsivePoses(STRAWBERRY_TOP_POSES_RESPONSIVE, responsive.breakpoint),
+    [responsive.breakpoint]
+  );
 
   return (
     <>
@@ -33,28 +60,28 @@ const SceneContent: React.FC = () => {
       <ScrollAnimations
         debug={DEBUG_MODE}
         camera={{
-          distance: 8,
+          distance,
           height: 0,
           lookAt: [0, 0, 0],
           introFrom: { y: -3 },
           introDuration: 1.5,
         }}
         objects={[
-          { ref: drinkRef, poses: DRINK_POSES },
-          { ref: strawberryLeftRef, poses: STRAWBERRY_LEFT_POSES },
-          { ref: strawberryRightRef, poses: STRAWBERRY_RIGHT_POSES },
-          { ref: strawberryTopRef, poses: STRAWBERRY_TOP_POSES },
+          { ref: drinkRef, poses: drinkPoses },
+          { ref: strawberryLeftRef, poses: strawberryLeftPoses },
+          { ref: strawberryRightRef, poses: strawberryRightPoses },
+          { ref: strawberryTopRef, poses: strawberryTopPoses },
         ]}
       />
 
       <Lights />
       <Experience />
 
-      <Float floatIntensity={0.1} rotationIntensity={0.3}>
+      <Float floatIntensity={floatIntensity} rotationIntensity={rotationIntensity}>
         <Strawberry ref={strawberryLeftRef} position={[-2, -1, -2]} scale={2} />
       </Float>
 
-      <Float floatIntensity={0.1} rotationIntensity={0.3}>
+      <Float floatIntensity={floatIntensity} rotationIntensity={rotationIntensity}>
         <Strawberry
           ref={strawberryRightRef}
           position={[2.5, -1, -2]}
@@ -63,7 +90,7 @@ const SceneContent: React.FC = () => {
         />
       </Float>
 
-      <Float floatIntensity={0.1} rotationIntensity={0.3}>
+      <Float floatIntensity={floatIntensity} rotationIntensity={rotationIntensity}>
         <Strawberry
           ref={strawberryTopRef}
           position={[1, 1, -3]}
@@ -72,23 +99,24 @@ const SceneContent: React.FC = () => {
         />
       </Float>
 
-      <Float floatIntensity={0.1} rotationIntensity={0.5}>
+      <Float floatIntensity={floatIntensity} rotationIntensity={drinkRotationIntensity}>
         <Drink ref={drinkRef} position={[0, -1.2, 0]} />
       </Float>
 
       <HomeOverlay />
     </>
   );
-};
+}
 
-const HomeScene: React.FC = () => {
+export default function HomeScene() {
+  const responsive = useResponsive();
+  const { fov } = getCameraConfig(responsive);
+
   return (
-    <Canvas camera={{ fov: 30 }}>
+    <Canvas camera={{ fov }}>
       <ScrollControls pages={5} damping={0.5}>
         <SceneContent />
       </ScrollControls>
     </Canvas>
   );
-};
-
-export default HomeScene;
+}

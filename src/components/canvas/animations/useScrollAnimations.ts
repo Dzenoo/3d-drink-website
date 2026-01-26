@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import gsap from "gsap";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
 
 import { AnimationConfig } from "./types";
+import { useResponsive, Breakpoint } from "@/hooks/useResponsive";
 
 export function useScrollAnimations(config: AnimationConfig) {
   const { debug = false, camera = {}, objects = [] } = config;
@@ -14,6 +15,9 @@ export function useScrollAnimations(config: AnimationConfig) {
   const introDone = useRef(false);
   const mouse = useRef({ x: 0, y: 0 });
   const timeline = useRef<gsap.core.Timeline | null>(null);
+  const currentBreakpoint = useRef<Breakpoint>("desktop");
+
+  const responsive = useResponsive();
 
   const {
     distance = 8,
@@ -25,21 +29,34 @@ export function useScrollAnimations(config: AnimationConfig) {
     introEase = "power2.out",
   } = camera;
 
+  // Calculate responsive camera distance
+  const getResponsiveDistance = useCallback(() => {
+    if (responsive.isMobile) {
+      return responsive.isPortrait ? distance * 1.5 : distance * 1.25;
+    }
+    if (responsive.isTablet) {
+      return distance * 1.15;
+    }
+    return distance;
+  }, [responsive.isMobile, responsive.isTablet, responsive.isPortrait, distance]);
+
   // Camera intro
   useEffect(() => {
     if (debug) return;
 
+    const responsiveDistance = getResponsiveDistance();
+
     threeCamera.position.set(
       introFrom.x ?? 0,
       introFrom.y ?? height,
-      introFrom.z ?? distance,
+      introFrom.z ?? responsiveDistance,
     );
     threeCamera.lookAt(...lookAt);
 
     const tween = gsap.to(threeCamera.position, {
       x: 0,
       y: height,
-      z: distance,
+      z: responsiveDistance,
       duration: introDuration,
       ease: introEase,
       onComplete: () => {
@@ -53,18 +70,16 @@ export function useScrollAnimations(config: AnimationConfig) {
   }, [
     threeCamera,
     debug,
-    distance,
     height,
     lookAt,
     introFrom,
     introDuration,
     introEase,
+    getResponsiveDistance,
   ]);
 
   // Build timeline for object animations
-  useEffect(() => {
-    if (debug) return;
-
+  const buildTimeline = useCallback(() => {
     // Kill previous timeline completely
     if (timeline.current) {
       timeline.current.kill();
@@ -88,8 +103,6 @@ export function useScrollAnimations(config: AnimationConfig) {
         const to = sortedPoses[i + 1];
         const ease = to.ease ?? "power1.inOut";
 
-        // Timeline position: use 'at' as label percentage (0-1 mapped to timeline)
-        // Duration in timeline = difference between 'at' values
         const startAt = from.at;
         const duration = to.at - from.at;
 
@@ -147,20 +160,43 @@ export function useScrollAnimations(config: AnimationConfig) {
 
     timeline.current = tl;
 
+    return tl;
+  }, [objects]);
+
+  // Build timeline and rebuild when breakpoint changes
+  useEffect(() => {
+    if (debug) return;
+
+    // Check if breakpoint changed
+    if (currentBreakpoint.current !== responsive.breakpoint) {
+      currentBreakpoint.current = responsive.breakpoint;
+    }
+
+    const tl = buildTimeline();
+
     return () => {
       tl.kill();
     };
-  }, [debug, objects]);
+  }, [debug, buildTimeline, responsive.breakpoint]);
 
-  // Mouse tracking
+  // Mouse tracking (reduced on mobile)
   useEffect(() => {
+    // Disable mouse parallax on touch devices
+    if (responsive.isMobile) return;
+
+    const adjustedMouseFactor = responsive.isTablet
+      ? mouseFactor * 0.7
+      : mouseFactor;
+
     const onMove = (e: MouseEvent) => {
-      mouse.current.x = (e.clientX / window.innerWidth - 0.5) * mouseFactor;
-      mouse.current.y = (e.clientY / window.innerHeight - 0.5) * mouseFactor;
+      mouse.current.x =
+        (e.clientX / window.innerWidth - 0.5) * adjustedMouseFactor;
+      mouse.current.y =
+        (e.clientY / window.innerHeight - 0.5) * adjustedMouseFactor;
     };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
-  }, [mouseFactor]);
+  }, [mouseFactor, responsive.isMobile, responsive.isTablet]);
 
   // Block scroll during intro
   useEffect(() => {
@@ -194,7 +230,7 @@ export function useScrollAnimations(config: AnimationConfig) {
       timeline.current.progress(scroll.offset);
     }
 
-    // Mouse parallax on camera
+    // Mouse parallax on camera (already disabled on mobile via the useEffect)
     threeCamera.lookAt(
       lookAt[0] + mouse.current.x * 2,
       lookAt[1] - mouse.current.y * 2,
@@ -202,5 +238,10 @@ export function useScrollAnimations(config: AnimationConfig) {
     );
   });
 
-  return { introDone: introDone.current };
+  return {
+    introDone: introDone.current,
+    breakpoint: responsive.breakpoint,
+    isMobile: responsive.isMobile,
+    isTablet: responsive.isTablet,
+  };
 }

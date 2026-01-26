@@ -3,10 +3,8 @@
 import { useRef, useEffect, ReactNode } from "react";
 import gsap from "gsap";
 
-import { cn } from "@/utils";
+import { cn, getDirectionOffset, Direction } from "@/utils";
 import { useInView } from "@/hooks/useInView";
-
-type Direction = "up" | "down" | "left" | "right" | "none";
 
 interface RevealProps {
   children: ReactNode;
@@ -52,27 +50,9 @@ export function Reveal({
   useEffect(() => {
     if (!ref.current) return;
 
-    const el = ref.current;
+    const { x, y } = getDirectionOffset(direction, distance);
 
-    const getInitialPosition = () => {
-      switch (direction) {
-        case "up":
-          return { y: distance, x: 0 };
-        case "down":
-          return { y: -distance, x: 0 };
-        case "left":
-          return { x: distance, y: 0 };
-        case "right":
-          return { x: -distance, y: 0 };
-        case "none":
-          return { x: 0, y: 0 };
-      }
-    };
-
-    const { x, y } = getInitialPosition();
-
-    // Set initial state
-    gsap.set(el, {
+    gsap.set(ref.current, {
       opacity,
       x,
       y,
@@ -83,14 +63,12 @@ export function Reveal({
   }, [direction, distance, opacity, scale, rotate, blur]);
 
   useEffect(() => {
-    if (!ref.current) return;
-    if (!shouldAnimate) return;
+    if (!ref.current || !shouldAnimate) return;
     if (once && hasAnimated.current) return;
 
     hasAnimated.current = true;
-    const el = ref.current;
 
-    const tween = gsap.to(el, {
+    const tween = gsap.to(ref.current, {
       opacity: 1,
       x: 0,
       y: 0,

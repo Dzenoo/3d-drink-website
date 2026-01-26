@@ -1,10 +1,10 @@
 "use client";
 
-import { AnimationConfig } from "./types";
 import { useScrollAnimations } from "./useScrollAnimations";
+import { AnimationConfig } from "./types";
 
-export * from "./types";
-export * from "./useScrollAnimations";
+export { useScrollAnimations } from "./useScrollAnimations";
+export type { Pose, CameraConfig, AnimatedObject, AnimationConfig } from "./types";
 
 export function ScrollAnimations(config: AnimationConfig) {
   useScrollAnimations(config);

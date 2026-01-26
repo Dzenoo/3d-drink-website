@@ -42,7 +42,7 @@ const Section = ({
   className?: string;
 }) => {
   return (
-    <section className={cn(className, `h-screen w-full max-sm:h-full`)}>
+    <section className={cn(className, "min-h-screen w-full")}>
       {children}
     </section>
   );
