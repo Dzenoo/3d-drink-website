@@ -1,5 +1,5 @@
-import { Pose } from "../types";
-import { ResponsivePoses } from "./responsive";
+import { Pose } from '../types';
+import { ResponsivePoses } from './responsive';
 
 // Desktop poses - original layout
 const DRINK_POSES_DESKTOP: Pose[] = [
@@ -84,7 +84,7 @@ const DRINK_POSES_MOBILE: Pose[] = [
   // ============================================
   {
     at: 0,
-    position: { x: 0, y: -1.5, z: 2 },
+    position: { x: 0, y: 0, z: 2 },
     rotation: { x: 0.1, y: -0.3, z: 0 },
     scale: 0.75,
   },
@@ -95,7 +95,7 @@ const DRINK_POSES_MOBILE: Pose[] = [
   // ============================================
   {
     at: 0.2,
-    position: { x: 0.3, y: -1.2, z: 2 },
+    position: { x: 0.3, y: 0, z: 2 },
     rotation: { x: 0.4, y: 2.5, z: 0.2 },
     scale: 0.55,
   },

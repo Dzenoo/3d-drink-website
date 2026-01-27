@@ -1,5 +1,5 @@
-import { Pose } from "../types";
-import { ResponsivePoses } from "./responsive";
+import { Pose } from '../types';
+import { ResponsivePoses } from './responsive';
 
 // ============================================
 // LEFT STRAWBERRY - Desktop
@@ -330,31 +330,31 @@ const STRAWBERRY_TOP_POSES_MOBILE: Pose[] = [
   },
   {
     at: 0.2,
-    position: { x: 0.8, y: 1.5, z: -1 },
+    position: { x: 0.8, y: 0, z: -1 },
     rotation: { x: 0, y: 0, z: Math.PI * 0.4 },
     scale: 0.7,
   },
   {
     at: 0.4,
-    position: { x: -0.4, y: 1.8, z: -0.8 },
+    position: { x: -0.4, y: -0.2, z: -0.8 },
     rotation: { x: 0, y: 0, z: Math.PI * 0.6 },
     scale: 0.45,
   },
   {
     at: 0.6,
-    position: { x: -0.8, y: 1.5, z: -0.5 },
+    position: { x: -0.8, y: 0, z: -0.5 },
     rotation: { x: 0, y: 0, z: Math.PI * 0.8 },
     scale: 0.9,
   },
   {
     at: 0.8,
-    position: { x: 0, y: 1.8, z: -1 },
+    position: { x: 0, y: 0.3, z: -1 },
     rotation: { x: 0, y: 0, z: Math.PI },
     scale: 0.7,
   },
   {
     at: 1.0,
-    position: { x: -1, y: 1.5, z: -1.5 },
+    position: { x: -1, y: 0, z: -1.5 },
     rotation: { x: 0, y: 0, z: Math.PI * 1.2 },
     scale: 0.55,
   },

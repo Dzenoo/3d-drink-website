@@ -1,33 +1,33 @@
-import React from "react";
-import Link from "next/link";
-import { Menu } from "lucide-react";
+import React from 'react';
+import Link from 'next/link';
+import { Menu } from 'lucide-react';
 
 const NavbarLinks = [
   {
     id: 1,
-    title: "Home",
-    href: "",
+    title: 'Home',
+    href: '',
   },
   {
     id: 2,
-    title: "Products",
-    href: "",
+    title: 'Products',
+    href: '',
   },
   {
     id: 3,
-    title: "About Us",
-    href: "",
+    title: 'About Us',
+    href: '',
   },
   {
     id: 4,
-    title: "Store",
-    href: "",
+    title: 'Store',
+    href: '',
   },
 ];
 
 const Navbar: React.FC = () => {
   return (
-    <header className="absolute top-0 right-0 left-0 z-10 flex items-center justify-between gap-5 px-10 py-5 bg-transparent">
+    <header className="absolute left-0 right-0 top-0 z-10 flex items-center justify-between gap-5 bg-transparent px-10 py-5">
       <div>
         <h1 className="text-[1.5rem] font-semibold text-white">ENERGY</h1>
       </div>
@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
           {NavbarLinks.map((link) => (
             <li key={link.id}>
               <Link
-                className="cursor-pointer uppercase tracking-wide transition text-white"
+                className="cursor-pointer uppercase tracking-wide text-white transition"
                 href={link.href}
               >
                 {link.title}
@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
       </div>
       <div className="hidden max-md:block">
         <button>
-          <Menu />
+          <Menu className="text-white" />
         </button>
       </div>
     </header>

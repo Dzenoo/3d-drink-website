@@ -1,9 +1,9 @@
-import { ResponsiveState } from "@/hooks/useResponsive";
+import { ResponsiveState } from '@/hooks/useResponsive';
 
 export function getCameraConfig(responsive: ResponsiveState) {
   const { isMobile, isTablet, isPortrait } = responsive;
 
-  const fov = isMobile ? (isPortrait ? 45 : 38) : isTablet ? 35 : 30;
+  const fov = isMobile ? (isPortrait ? 25 : 38) : isTablet ? 35 : 30;
 
   const distance = isMobile ? (isPortrait ? 12 : 10) : isTablet ? 9 : 8;
 
