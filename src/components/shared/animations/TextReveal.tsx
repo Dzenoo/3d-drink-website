@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useRef, useEffect } from "react";
-import gsap from "gsap";
+import { useRef, useEffect } from 'react';
+import gsap from 'gsap';
 
-import { cn } from "@/utils";
-import { useInView } from "@/hooks/useInView";
+import { cn } from '@/utils';
+import { useInView } from '@/hooks/useInView';
 
-type AnimationType = "chars" | "words" | "lines";
+type AnimationType = 'chars' | 'words' | 'lines';
 
 interface TextRevealProps {
   children: string;
   className?: string;
   type?: AnimationType;
-  direction?: "up" | "down" | "left" | "right";
+  direction?: 'up' | 'down' | 'left' | 'right';
   stagger?: number;
   delay?: number;
   duration?: number;
@@ -26,15 +26,15 @@ interface TextRevealProps {
 export function TextReveal({
   children,
   className,
-  type = "words",
-  direction = "up",
+  type = 'words',
+  direction = 'up',
   stagger = 0.05,
   delay = 0,
   duration = 0.8,
   distance = 30,
-  ease = "power3.out",
+  ease = 'power3.out',
   inView = false,
-  rootMargin = "-15% 0px",
+  rootMargin = '-15% 0px',
   once = true,
 }: TextRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -48,35 +48,35 @@ export function TextReveal({
   useEffect(() => {
     if (!containerRef.current || !textRef.current) return;
 
-    if (type === "chars") {
+    if (type === 'chars') {
       textRef.current.innerHTML = children
-        .split("")
+        .split('')
         .map((char) =>
-          char === " "
+          char === ' '
             ? "<span class='inline-block'>&nbsp;</span>"
-            : `<span class="inline-block">${char}</span>`
+            : `<span class="inline-block">${char}</span>`,
         )
-        .join("");
-    } else if (type === "words") {
+        .join('');
+    } else if (type === 'words') {
       textRef.current.innerHTML = children
-        .split(" ")
+        .split(' ')
         .map((word) => `<span class="inline-block">${word}&nbsp;</span>`)
-        .join("");
-    } else if (type === "lines") {
+        .join('');
+    } else if (type === 'lines') {
       textRef.current.innerHTML = `<span class="inline-block">${children}</span>`;
     }
 
-    elementsRef.current = Array.from(textRef.current.querySelectorAll("span"));
+    elementsRef.current = Array.from(textRef.current.querySelectorAll('span'));
 
     const getInitial = () => {
       switch (direction) {
-        case "up":
+        case 'up':
           return { y: distance, x: 0 };
-        case "down":
+        case 'down':
           return { y: -distance, x: 0 };
-        case "left":
+        case 'left':
           return { x: distance, y: 0 };
-        case "right":
+        case 'right':
           return { x: -distance, y: 0 };
       }
     };
@@ -108,7 +108,7 @@ export function TextReveal({
   }, [shouldAnimate, duration, delay, ease, stagger, once]);
 
   return (
-    <div ref={containerRef} className={cn("overflow-hidden", className)}>
+    <div ref={containerRef} className={cn('overflow-hidden', className)}>
       <span ref={textRef} className="inline-block">
         {children}
       </span>

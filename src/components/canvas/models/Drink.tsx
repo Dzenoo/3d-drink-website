@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import * as THREE from "three";
-import React, { forwardRef, useMemo } from "react";
-import { useGLTF, useTexture } from "@react-three/drei";
+import * as THREE from 'three';
+import React, { forwardRef, useMemo } from 'react';
+import { useGLTF, useTexture } from '@react-three/drei';
 
 type DrinkProps = {
   position?: [number, number, number];
@@ -12,7 +12,7 @@ type DrinkProps = {
 
 const Drink = forwardRef<THREE.Group, DrinkProps>(
   ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = [1, 1, 1] }, ref) => {
-    const { nodes } = useGLTF("/models/drink.glb") as any;
+    const { nodes } = useGLTF('/models/drink.glb') as any;
     const map = useTexture(`/images/strawberry-drink-texture.png`);
 
     map.flipY = false;
@@ -66,6 +66,6 @@ const Drink = forwardRef<THREE.Group, DrinkProps>(
   },
 );
 
-useGLTF.preload("/models/drink.glb");
+useGLTF.preload('/models/drink.glb');
 
 export default Drink;

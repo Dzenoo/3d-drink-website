@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { forwardRef, useRef, useState, useEffect } from "react";
-import * as THREE from "three";
-import { useTexture } from "@react-three/drei";
+import { forwardRef, useRef, useState, useEffect } from 'react';
+import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 type StrawberryProps = {
   position?: [number, number, number];
@@ -14,7 +14,7 @@ const Strawberry = forwardRef<THREE.Group, StrawberryProps>(
   ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1 }, ref) => {
     const [aspect, setAspect] = useState(1);
     const innerRef = useRef<THREE.Mesh>(null);
-    const texture = useTexture("/images/strawberry.png");
+    const texture = useTexture('/images/strawberry.png');
 
     useEffect(() => {
       if (texture.image) {

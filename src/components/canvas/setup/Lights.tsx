@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const Lights: React.FC = () => {
   return (

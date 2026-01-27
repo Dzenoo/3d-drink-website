@@ -1,39 +1,31 @@
 import { Pose } from '../types';
 import { ResponsivePoses } from './responsive';
 
-// ============================================
-// LEFT STRAWBERRY - Desktop
-// ============================================
 const STRAWBERRY_LEFT_POSES_DESKTOP: Pose[] = [
-  // HERO - Bottom left corner, subtle
   {
     at: 0,
     position: { x: -3.5, y: -1.5, z: -2 },
     rotation: { x: 0, y: 0, z: 0.5 },
     scale: 1.2,
   },
-  // INGREDIENTS - Move up and left (text is left, we stay far left)
   {
     at: 0.2,
     position: { x: 0.2, y: -1, z: -4.5 },
     rotation: { x: 0, y: 0, z: 0.8 },
     scale: 1,
   },
-  // EXPERIENCE - Center section, move to left edge
   {
     at: 0.4,
     position: { x: -2.9, y: -0.5, z: 0.4 },
     rotation: { x: 0, y: 0, z: -0.4 },
     scale: 1.2,
   },
-  // FLAVORS - Text right, strawberry prominent on left with drink
   {
     at: 0.6,
     position: { x: -3.1, y: -0.5, z: -0.5 },
     rotation: { x: 0, y: 0, z: 0.4 },
     scale: 0.5,
   },
-  // CTA - Fade back
   {
     at: 0.8,
     position: { x: -4, y: -1, z: -2 },
@@ -48,7 +40,6 @@ const STRAWBERRY_LEFT_POSES_DESKTOP: Pose[] = [
   },
 ];
 
-// LEFT STRAWBERRY - Mobile (reduced horizontal range)
 const STRAWBERRY_LEFT_POSES_MOBILE: Pose[] = [
   {
     at: 0,
@@ -88,7 +79,6 @@ const STRAWBERRY_LEFT_POSES_MOBILE: Pose[] = [
   },
 ];
 
-// LEFT STRAWBERRY - Tablet
 const STRAWBERRY_LEFT_POSES_TABLET: Pose[] = [
   {
     at: 0,
@@ -128,32 +118,25 @@ const STRAWBERRY_LEFT_POSES_TABLET: Pose[] = [
   },
 ];
 
-// ============================================
-// RIGHT STRAWBERRY - Desktop
-// ============================================
 const STRAWBERRY_RIGHT_POSES_DESKTOP: Pose[] = [
-  // HERO - Near drink on right
   {
     at: 0,
     position: { x: 4, y: 0.5, z: -1.5 },
     rotation: { x: 0, y: 0, z: -0.5 },
     scale: 1,
   },
-  // INGREDIENTS - Stay right with drink
   {
     at: 0.2,
     position: { x: 5, y: 1, z: -1 },
     rotation: { x: 0, y: 0, z: 1.5 },
     scale: 1.4,
   },
-  // EXPERIENCE - Move to right (drink goes left)
   {
     at: 0.4,
     position: { x: 4, y: 0.5, z: -0.5 },
     rotation: { x: 0, y: 0, z: -3 },
     scale: 1.2,
   },
-  // FLAVORS - Move right (drink is left)
   {
     at: 0.5,
     position: { x: 3, y: -0.5, z: -2.5 },
@@ -166,7 +149,6 @@ const STRAWBERRY_RIGHT_POSES_DESKTOP: Pose[] = [
     rotation: { x: 0, y: 0, z: 1.1 },
     scale: 0.7,
   },
-  // CTA - Center fade
   {
     at: 0.9,
     position: { x: 1, y: 0.1, z: -1 },
@@ -181,7 +163,6 @@ const STRAWBERRY_RIGHT_POSES_DESKTOP: Pose[] = [
   },
 ];
 
-// RIGHT STRAWBERRY - Mobile
 const STRAWBERRY_RIGHT_POSES_MOBILE: Pose[] = [
   {
     at: 0,
@@ -227,7 +208,6 @@ const STRAWBERRY_RIGHT_POSES_MOBILE: Pose[] = [
   },
 ];
 
-// RIGHT STRAWBERRY - Tablet
 const STRAWBERRY_RIGHT_POSES_TABLET: Pose[] = [
   {
     at: 0,
@@ -273,39 +253,31 @@ const STRAWBERRY_RIGHT_POSES_TABLET: Pose[] = [
   },
 ];
 
-// ============================================
-// TOP STRAWBERRY - Desktop
-// ============================================
 const STRAWBERRY_TOP_POSES_DESKTOP: Pose[] = [
-  // HERO - Top area, floating
   {
     at: 0,
     position: { x: 1, y: 2, z: -2 },
     rotation: { x: 0, y: 0, z: Math.PI * 0.25 },
     scale: 0.7,
   },
-  // INGREDIENTS - Float toward right
   {
     at: 0.2,
     position: { x: 2, y: 1.5, z: -1.5 },
     rotation: { x: 0, y: 0, z: Math.PI * 0.4 },
     scale: 1,
   },
-  // EXPERIENCE - Move left with drink
   {
     at: 0.4,
     position: { x: -1, y: 2, z: -1 },
     rotation: { x: 0, y: 0, z: Math.PI * 0.6 },
     scale: 0.6,
   },
-  // FLAVORS - Stay left area
   {
     at: 0.6,
     position: { x: -2, y: 1.5, z: -0.5 },
     rotation: { x: 0, y: 0, z: Math.PI * 0.8 },
     scale: 1.3,
   },
-  // CTA - Float to center top
   {
     at: 0.8,
     position: { x: 0, y: 2, z: -1.5 },
@@ -320,7 +292,6 @@ const STRAWBERRY_TOP_POSES_DESKTOP: Pose[] = [
   },
 ];
 
-// TOP STRAWBERRY - Mobile
 const STRAWBERRY_TOP_POSES_MOBILE: Pose[] = [
   {
     at: 0,
@@ -360,7 +331,6 @@ const STRAWBERRY_TOP_POSES_MOBILE: Pose[] = [
   },
 ];
 
-// TOP STRAWBERRY - Tablet
 const STRAWBERRY_TOP_POSES_TABLET: Pose[] = [
   {
     at: 0,
@@ -400,9 +370,6 @@ const STRAWBERRY_TOP_POSES_TABLET: Pose[] = [
   },
 ];
 
-// ============================================
-// RESPONSIVE EXPORTS
-// ============================================
 export const STRAWBERRY_LEFT_POSES_RESPONSIVE: ResponsivePoses = {
   desktop: STRAWBERRY_LEFT_POSES_DESKTOP,
   tablet: STRAWBERRY_LEFT_POSES_TABLET,
@@ -421,7 +388,6 @@ export const STRAWBERRY_TOP_POSES_RESPONSIVE: ResponsivePoses = {
   mobile: STRAWBERRY_TOP_POSES_MOBILE,
 };
 
-// Backwards compatibility exports
 export const STRAWBERRY_LEFT_POSES = STRAWBERRY_LEFT_POSES_DESKTOP;
 export const STRAWBERRY_RIGHT_POSES = STRAWBERRY_RIGHT_POSES_DESKTOP;
 export const STRAWBERRY_TOP_POSES = STRAWBERRY_TOP_POSES_DESKTOP;

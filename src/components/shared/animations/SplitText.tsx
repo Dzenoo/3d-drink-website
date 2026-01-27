@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { useRef, useEffect } from "react";
-import gsap from "gsap";
+import { useRef, useEffect } from 'react';
+import gsap from 'gsap';
 
-import { cn } from "@/utils";
-import { useInView } from "@/hooks/useInView";
+import { cn } from '@/utils';
+import { useInView } from '@/hooks/useInView';
 
 interface SplitTextProps {
   children: string;
   className?: string;
   charClassName?: string;
-  animation?: "fade" | "slide" | "scale" | "rotate" | "wave" | "glitch";
+  animation?: 'fade' | 'slide' | 'scale' | 'rotate' | 'wave' | 'glitch';
   stagger?: number;
   delay?: number;
   duration?: number;
@@ -25,13 +25,13 @@ export function SplitText({
   children,
   className,
   charClassName,
-  animation = "slide",
+  animation = 'slide',
   stagger = 0.03,
   delay = 0,
   duration = 0.6,
-  ease = "power3.out",
+  ease = 'power3.out',
   inView = false,
-  rootMargin = "-15% 0px",
+  rootMargin = '-15% 0px',
   once = true,
   hover = false,
 }: SplitTextProps) {
@@ -44,32 +44,32 @@ export function SplitText({
 
   const getAnimation = () => {
     switch (animation) {
-      case "fade":
+      case 'fade':
         return {
           from: { opacity: 0 },
           to: { opacity: 1 },
         };
-      case "slide":
+      case 'slide':
         return {
           from: { opacity: 0, y: 50 },
           to: { opacity: 1, y: 0 },
         };
-      case "scale":
+      case 'scale':
         return {
           from: { opacity: 0, scale: 0 },
           to: { opacity: 1, scale: 1 },
         };
-      case "rotate":
+      case 'rotate':
         return {
           from: { opacity: 0, rotateX: -90, y: 20 },
           to: { opacity: 1, rotateX: 0, y: 0 },
         };
-      case "wave":
+      case 'wave':
         return {
           from: { opacity: 0, y: 30, rotateZ: 5 },
           to: { opacity: 1, y: 0, rotateZ: 0 },
         };
-      case "glitch":
+      case 'glitch':
         return {
           from: {
             opacity: 0,
@@ -100,7 +100,7 @@ export function SplitText({
       gsap.to(chars, {
         ...to,
         duration: duration * 0.5,
-        stagger: { each: stagger * 0.5, from: "start" },
+        stagger: { each: stagger * 0.5, from: 'start' },
       });
     };
 
@@ -108,16 +108,16 @@ export function SplitText({
       gsap.to(chars, {
         ...from,
         duration: duration * 0.5,
-        stagger: { each: stagger * 0.5, from: "end" },
+        stagger: { each: stagger * 0.5, from: 'end' },
       });
     };
 
-    container.addEventListener("mouseenter", handleEnter);
-    container.addEventListener("mouseleave", handleLeave);
+    container.addEventListener('mouseenter', handleEnter);
+    container.addEventListener('mouseleave', handleLeave);
 
     return () => {
-      container.removeEventListener("mouseenter", handleEnter);
-      container.removeEventListener("mouseleave", handleLeave);
+      container.removeEventListener('mouseenter', handleEnter);
+      container.removeEventListener('mouseleave', handleLeave);
     };
   }, [hover, animation, duration, stagger]);
 
@@ -138,7 +138,7 @@ export function SplitText({
       ease,
       stagger: {
         each: stagger,
-        from: "start",
+        from: 'start',
       },
     });
 
@@ -150,23 +150,23 @@ export function SplitText({
   return (
     <div
       ref={containerRef}
-      className={cn("inline-block", className)}
-      style={{ perspective: "1000px" }}
+      className={cn('inline-block', className)}
+      style={{ perspective: '1000px' }}
     >
-      {children.split("").map((char, i) => (
+      {children.split('').map((char, i) => (
         <span
           key={i}
           ref={(el) => {
             if (el) charsRef.current[i] = el;
           }}
           className={cn(
-            "inline-block will-change-transform",
-            char === " " && "w-[0.3em]",
+            'inline-block will-change-transform',
+            char === ' ' && 'w-[0.3em]',
             charClassName,
           )}
-          style={{ transformStyle: "preserve-3d" }}
+          style={{ transformStyle: 'preserve-3d' }}
         >
-          {char === " " ? "\u00A0" : char}
+          {char === ' ' ? '\u00A0' : char}
         </span>
       ))}
     </div>

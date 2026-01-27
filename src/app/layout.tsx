@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Space_Grotesk } from 'next/font/google';
+import './globals.css';
 
 const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
+  variable: '--font-space-grotesk',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Energy",
-  description: "3D Website for Energy Drink",
+  title: 'Energy',
+  description: '3D Website for Energy Drink',
 };
 
 export default function RootLayout({
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={spaceGrotesk.className}>
-        <main className="w-screen h-screen">{children}</main>
+        <main className="h-screen w-screen">{children}</main>
       </body>
     </html>
   );

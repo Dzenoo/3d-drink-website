@@ -1,18 +1,18 @@
-import { Scroll } from "@react-three/drei";
+import { Scroll } from '@react-three/drei';
 
-import { cn } from "@/utils";
+import { cn } from '@/utils';
 
-import Navbar from "@/components/layout/Navbar";
-import Hero from "./sections/Hero";
-import Ingredients from "./sections/Ingredients";
-import Experience from "./sections/Experience";
-import Flavors from "./sections/Flavors";
-import CTA from "./sections/CTA";
+import Navbar from '@/components/layout/Navbar';
+import Hero from './sections/Hero';
+import Ingredients from './sections/Ingredients';
+import Experience from './sections/Experience';
+import Flavors from './sections/Flavors';
+import CTA from './sections/CTA';
 
 const HomeOverlay: React.FC = () => {
   return (
     <Scroll html>
-      <div className="w-screen relative z-[2]">
+      <div className="relative z-[2] w-screen">
         <Navbar />
         <Section>
           <Hero />
@@ -40,12 +40,8 @@ const Section = ({
 }: {
   children?: React.ReactNode;
   className?: string;
-}) => {
-  return (
-    <section className={cn(className, "min-h-screen w-full")}>
-      {children}
-    </section>
-  );
-};
+}) => (
+  <section className={cn(className, 'min-h-screen w-full')}>{children}</section>
+);
 
 export default HomeOverlay;

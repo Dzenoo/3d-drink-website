@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState, RefObject } from "react";
+import { useEffect, useRef, useState, RefObject } from 'react';
 
 interface UseInViewOptions {
   threshold?: number;
@@ -10,7 +10,11 @@ interface UseInViewOptions {
 
 export function useInView(
   ref: RefObject<HTMLElement | null>,
-  { threshold = 0, rootMargin = "-15% 0px", once = true }: UseInViewOptions = {}
+  {
+    threshold = 0,
+    rootMargin = '-15% 0px',
+    once = true,
+  }: UseInViewOptions = {},
 ): boolean {
   const [isInView, setIsInView] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -28,7 +32,7 @@ export function useInView(
           setIsInView(false);
         }
       },
-      { threshold, rootMargin }
+      { threshold, rootMargin },
     );
 
     observerRef.current.observe(element);

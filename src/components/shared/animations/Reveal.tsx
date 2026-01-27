@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useRef, useEffect, ReactNode } from "react";
-import gsap from "gsap";
+import { useRef, useEffect, ReactNode } from 'react';
+import gsap from 'gsap';
 
-import { cn, getDirectionOffset, Direction } from "@/utils";
-import { useInView } from "@/hooks/useInView";
+import { cn, getDirectionOffset, Direction } from '@/utils';
+import { useInView } from '@/hooks/useInView';
 
 interface RevealProps {
   children: ReactNode;
@@ -27,17 +27,17 @@ interface RevealProps {
 export function Reveal({
   children,
   className,
-  direction = "up",
+  direction = 'up',
   delay = 0,
   duration = 1,
   distance = 50,
-  ease = "power3.out",
+  ease = 'power3.out',
   scale = 1,
   rotate = 0,
   opacity = 0,
   blur = 0,
   inView = false,
-  rootMargin = "-15% 0px",
+  rootMargin = '-15% 0px',
   once = true,
   onComplete,
 }: RevealProps) {
@@ -58,7 +58,7 @@ export function Reveal({
       y,
       scale,
       rotate,
-      filter: blur > 0 ? `blur(${blur}px)` : "none",
+      filter: blur > 0 ? `blur(${blur}px)` : 'none',
     });
   }, [direction, distance, opacity, scale, rotate, blur]);
 
@@ -74,7 +74,7 @@ export function Reveal({
       y: 0,
       scale: 1,
       rotate: 0,
-      filter: "blur(0px)",
+      filter: 'blur(0px)',
       duration,
       delay,
       ease,
@@ -87,7 +87,7 @@ export function Reveal({
   }, [shouldAnimate, duration, delay, ease, once, onComplete]);
 
   return (
-    <div ref={ref} className={cn("will-change-transform", className)}>
+    <div ref={ref} className={cn('will-change-transform', className)}>
       {children}
     </div>
   );

@@ -1,5 +1,5 @@
-import { Pose } from "../types";
-import { Breakpoint } from "@/hooks/useResponsive";
+import { Pose } from '../types';
+import { Breakpoint } from '@/hooks/useResponsive';
 
 export type ResponsivePoses = {
   desktop: Pose[];
@@ -9,12 +9,12 @@ export type ResponsivePoses = {
 
 export function getResponsivePoses(
   responsivePoses: ResponsivePoses,
-  breakpoint: Breakpoint
+  breakpoint: Breakpoint,
 ): Pose[] {
-  if (breakpoint === "mobile") {
+  if (breakpoint === 'mobile') {
     return responsivePoses.mobile;
   }
-  if (breakpoint === "tablet") {
+  if (breakpoint === 'tablet') {
     return responsivePoses.tablet ?? responsivePoses.desktop;
   }
   return responsivePoses.desktop;

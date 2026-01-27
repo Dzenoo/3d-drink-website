@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useRef, useEffect, ReactNode } from "react";
-import gsap from "gsap";
+import { useRef, useEffect, ReactNode } from 'react';
+import gsap from 'gsap';
 
-import { cn } from "@/utils";
-import { useInView } from "@/hooks/useInView";
+import { cn } from '@/utils';
+import { useInView } from '@/hooks/useInView';
 
-type Direction = "up" | "down" | "left" | "right";
+type Direction = 'up' | 'down' | 'left' | 'right';
 
 interface ClipRevealProps {
   children: ReactNode;
@@ -23,12 +23,12 @@ interface ClipRevealProps {
 export function ClipReveal({
   children,
   className,
-  direction = "up",
+  direction = 'up',
   delay = 0,
   duration = 1,
-  ease = "power4.out",
+  ease = 'power4.out',
   inView = false,
-  rootMargin = "-15% 0px",
+  rootMargin = '-15% 0px',
   once = true,
 }: ClipRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -40,28 +40,28 @@ export function ClipReveal({
 
   const getClipPaths = () => {
     switch (direction) {
-      case "up":
+      case 'up':
         return {
-          from: "inset(100% 0% 0% 0%)",
-          to: "inset(0% 0% 0% 0%)",
+          from: 'inset(100% 0% 0% 0%)',
+          to: 'inset(0% 0% 0% 0%)',
           translate: { y: 50 },
         };
-      case "down":
+      case 'down':
         return {
-          from: "inset(0% 0% 100% 0%)",
-          to: "inset(0% 0% 0% 0%)",
+          from: 'inset(0% 0% 100% 0%)',
+          to: 'inset(0% 0% 0% 0%)',
           translate: { y: -50 },
         };
-      case "left":
+      case 'left':
         return {
-          from: "inset(0% 0% 0% 100%)",
-          to: "inset(0% 0% 0% 0%)",
+          from: 'inset(0% 0% 0% 100%)',
+          to: 'inset(0% 0% 0% 0%)',
           translate: { x: 50 },
         };
-      case "right":
+      case 'right':
         return {
-          from: "inset(0% 100% 0% 0%)",
-          to: "inset(0% 0% 0% 0%)",
+          from: 'inset(0% 100% 0% 0%)',
+          to: 'inset(0% 0% 0% 0%)',
           translate: { x: -50 },
         };
     }
@@ -107,7 +107,7 @@ export function ClipReveal({
   }, [shouldAnimate, delay, duration, ease, once, direction]);
 
   return (
-    <div ref={containerRef} className={cn("overflow-hidden", className)}>
+    <div ref={containerRef} className={cn('overflow-hidden', className)}>
       <div ref={innerRef}>{children}</div>
     </div>
   );

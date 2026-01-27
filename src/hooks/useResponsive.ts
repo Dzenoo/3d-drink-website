@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-export type Breakpoint = "mobile" | "tablet" | "desktop";
+export type Breakpoint = 'mobile' | 'tablet' | 'desktop';
 
 export interface ResponsiveState {
   breakpoint: Breakpoint;
@@ -20,18 +20,18 @@ const BREAKPOINTS = {
 };
 
 function getBreakpoint(width: number): Breakpoint {
-  if (width < BREAKPOINTS.mobile) return "mobile";
-  if (width < BREAKPOINTS.tablet) return "tablet";
-  return "desktop";
+  if (width < BREAKPOINTS.mobile) return 'mobile';
+  if (width < BREAKPOINTS.tablet) return 'tablet';
+  return 'desktop';
 }
 
 function getResponsiveState(width: number, height: number): ResponsiveState {
   const breakpoint = getBreakpoint(width);
   return {
     breakpoint,
-    isMobile: breakpoint === "mobile",
-    isTablet: breakpoint === "tablet",
-    isDesktop: breakpoint === "desktop",
+    isMobile: breakpoint === 'mobile',
+    isTablet: breakpoint === 'tablet',
+    isDesktop: breakpoint === 'desktop',
     width,
     height,
     isPortrait: height > width,
@@ -40,7 +40,7 @@ function getResponsiveState(width: number, height: number): ResponsiveState {
 
 export function useResponsive(): ResponsiveState {
   const [state, setState] = useState<ResponsiveState>(() => {
-    if (typeof window === "undefined") {
+    if (typeof window === 'undefined') {
       return getResponsiveState(1920, 1080);
     }
     return getResponsiveState(window.innerWidth, window.innerHeight);
@@ -53,12 +53,12 @@ export function useResponsive(): ResponsiveState {
 
     handleResize();
 
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("orientationchange", handleResize);
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleResize);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
     };
   }, []);
 

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useProgress } from "@react-three/drei";
-import { motion, useAnimate } from "motion/react";
+import React, { useEffect } from 'react';
+import { useProgress } from '@react-three/drei';
+import { motion, useAnimate } from 'motion/react';
 
 const LoadingScreen: React.FC = () => {
   const { progress } = useProgress();
@@ -11,8 +11,8 @@ const LoadingScreen: React.FC = () => {
       const interval = setInterval(() => {
         animate(
           scope.current,
-          { transform: "translateX(100%)" },
-          { duration: 1, ease: "easeInOut", damping: 20 }
+          { transform: 'translateX(100%)' },
+          { duration: 1, ease: 'easeInOut', damping: 20 },
         );
 
         scope.animations.forEach((animation) => {
@@ -35,9 +35,9 @@ const LoadingScreen: React.FC = () => {
       <div className="mx-auto w-96">
         <motion.div
           className="h-[1px] rounded-full bg-black"
-          initial={{ width: "0%" }}
+          initial={{ width: '0%' }}
           animate={{ width: `${progress}%` }}
-          transition={{ ease: "linear", duration: 0.5 }}
+          transition={{ ease: 'linear', duration: 0.5 }}
         />
       </div>
     </div>

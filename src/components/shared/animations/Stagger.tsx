@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { useRef, useEffect, Children, ReactElement } from "react";
-import gsap from "gsap";
+import { useRef, useEffect, Children, ReactElement } from 'react';
+import gsap from 'gsap';
 
-import { useInView } from "@/hooks/useInView";
+import { useInView } from '@/hooks/useInView';
 
 interface StaggerProps {
   children: ReactElement[];
   className?: string;
-  direction?: "up" | "down" | "left" | "right";
+  direction?: 'up' | 'down' | 'left' | 'right';
   stagger?: number;
   delay?: number;
   duration?: number;
   distance?: number;
   ease?: string;
-  from?: "start" | "center" | "end" | "edges" | "random";
+  from?: 'start' | 'center' | 'end' | 'edges' | 'random';
   inView?: boolean;
   rootMargin?: string;
   once?: boolean;
@@ -23,15 +23,15 @@ interface StaggerProps {
 export function Stagger({
   children,
   className,
-  direction = "up",
+  direction = 'up',
   stagger = 0.1,
   delay = 0,
   duration = 0.8,
   distance = 40,
-  ease = "power3.out",
-  from = "start",
+  ease = 'power3.out',
+  from = 'start',
   inView = false,
-  rootMargin = "-15% 0px",
+  rootMargin = '-15% 0px',
   once = true,
 }: StaggerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,13 +47,13 @@ export function Stagger({
 
     const getInitial = () => {
       switch (direction) {
-        case "up":
+        case 'up':
           return { y: distance, x: 0 };
-        case "down":
+        case 'down':
           return { y: -distance, x: 0 };
-        case "left":
+        case 'left':
           return { x: distance, y: 0 };
-        case "right":
+        case 'right':
           return { x: -distance, y: 0 };
       }
     };

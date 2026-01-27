@@ -1,4 +1,4 @@
-import { Environment, EnvironmentProps } from "@react-three/drei";
+import { Environment, EnvironmentProps } from '@react-three/drei';
 
 type ExperienceProps = EnvironmentProps;
 

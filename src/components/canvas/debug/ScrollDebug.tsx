@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
-import { useScroll } from "@react-three/drei";
-import { useControls, folder, button, useStoreContext } from "leva";
+import { useEffect, useRef } from 'react';
+import * as THREE from 'three';
+import { useFrame } from '@react-three/fiber';
+import { useScroll } from '@react-three/drei';
+import { useControls, folder, button } from 'leva';
 
 type ScrollDebugProps = {
   targetRef: React.RefObject<THREE.Object3D>;
@@ -13,21 +13,12 @@ type ScrollDebugProps = {
 
 const ScrollDebug: React.FC<ScrollDebugProps> = ({
   targetRef,
-  name = "Object",
+  name = 'Object',
 }) => {
   const scroll = useScroll();
   const scrollRef = useRef(0);
-  const sectionRef = useRef("Hero");
-  const store = useStoreContext();
+  const sectionRef = useRef('Hero');
 
-  const jumpToSection = (progress: number) => {
-    if (scroll.el) {
-      const maxScroll = scroll.el.scrollHeight - scroll.el.clientHeight;
-      scroll.el.scrollTop = progress * maxScroll;
-    }
-  };
-
-  // Position controls
   const position = useControls(name, {
     Position: folder({
       x: { value: 0, min: -10, max: 10, step: 0.1 },
@@ -42,7 +33,7 @@ const ScrollDebug: React.FC<ScrollDebugProps> = ({
     Scale: folder({
       scale: { value: 1, min: 0.1, max: 5, step: 0.1 },
     }),
-    "Copy Pose": button(() => {
+    'Copy Pose': button(() => {
       if (!targetRef.current) return;
       const { x, y, z } = targetRef.current.position;
       const rot = targetRef.current.rotation;
@@ -56,12 +47,11 @@ const ScrollDebug: React.FC<ScrollDebugProps> = ({
 },`;
 
       navigator.clipboard.writeText(pose);
-      console.log("Copied pose:\n", pose);
+      console.log('Copied pose:\n', pose);
     }),
   });
 
-  // Scroll controls with set function
-  const [scrollControls, setScrollControls] = useControls("Scroll", () => ({
+  const [scrollControls, setScrollControls] = useControls('Scroll', () => ({
     progress: {
       value: 0,
       min: 0,
@@ -69,12 +59,11 @@ const ScrollDebug: React.FC<ScrollDebugProps> = ({
       step: 0.01,
     },
     section: {
-      value: "Hero",
+      value: 'Hero',
       editable: false,
     },
   }));
 
-  // Apply controls to object
   useEffect(() => {
     if (!targetRef.current) return;
 
@@ -83,19 +72,16 @@ const ScrollDebug: React.FC<ScrollDebugProps> = ({
     targetRef.current.scale.setScalar(position.scale);
   }, [position, targetRef]);
 
-  // Track scroll progress and update Leva
   useFrame(() => {
     const progress = scroll.offset;
     scrollRef.current = progress;
 
-    // Find current section
-    let section = "Hero";
-    if (progress >= 0.8) section = "CTA";
-    else if (progress >= 0.6) section = "Flavors";
-    else if (progress >= 0.4) section = "Experience";
-    else if (progress >= 0.2) section = "Ingredients";
+    let section = 'Hero';
+    if (progress >= 0.8) section = 'CTA';
+    else if (progress >= 0.6) section = 'Flavors';
+    else if (progress >= 0.4) section = 'Experience';
+    else if (progress >= 0.2) section = 'Ingredients';
 
-    // Only update Leva if values changed significantly
     if (
       Math.abs(progress - scrollControls.progress) > 0.005 ||
       section !== sectionRef.current
