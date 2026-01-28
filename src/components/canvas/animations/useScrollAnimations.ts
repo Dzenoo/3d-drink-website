@@ -9,7 +9,7 @@ import { AnimationConfig } from './types';
 import { useResponsive, Breakpoint } from '@/hooks/useResponsive';
 
 export function useScrollAnimations(config: AnimationConfig) {
-  const { debug = false, camera = {}, objects = [] } = config;
+  const { debug = false, debugProgress, camera = {}, objects = [] } = config;
   const { camera: threeCamera } = useThree();
   const scroll = useScroll();
   const introDone = useRef(false);
@@ -160,8 +160,6 @@ export function useScrollAnimations(config: AnimationConfig) {
   }, [objects]);
 
   useEffect(() => {
-    if (debug) return;
-
     if (currentBreakpoint.current !== responsive.breakpoint) {
       currentBreakpoint.current = responsive.breakpoint;
     }
@@ -171,7 +169,7 @@ export function useScrollAnimations(config: AnimationConfig) {
     return () => {
       tl.kill();
     };
-  }, [debug, buildTimeline, responsive.breakpoint]);
+  }, [buildTimeline, responsive.breakpoint]);
 
   useEffect(() => {
     if (responsive.isMobile) return;
@@ -207,6 +205,11 @@ export function useScrollAnimations(config: AnimationConfig) {
   }, [debug, scroll]);
 
   useFrame(() => {
+    if (debugProgress !== undefined && timeline.current) {
+      timeline.current.progress(debugProgress);
+      return;
+    }
+
     if (debug) return;
 
     if (!introDone.current) {

@@ -27,6 +27,7 @@ export type AnimatedObject = {
 
 export type AnimationConfig = {
   debug?: boolean;
+  debugProgress?: number;
   camera?: CameraConfig;
   objects?: AnimatedObject[];
 };

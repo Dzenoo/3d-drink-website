@@ -1,12 +1,12 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useCallback } from 'react';
 import * as THREE from 'three';
 import { Canvas } from '@react-three/fiber';
 import { Float, ScrollControls } from '@react-three/drei';
 
 import { ScrollAnimations } from '../animations';
-import ScrollDebug from '../debug/ScrollDebug';
+import DebugTools from '../debug/DebugTools';
 import Lights from '../setup/Lights';
 import Experience from '../setup/Experience';
 import Drink from '../models/Drink';
@@ -24,114 +24,83 @@ import {
 } from '../animations/poses/strawberries';
 
 function SceneContent() {
-  const drinkRef = useRef<THREE.Group>(null);
-  const strawberryLeftRef = useRef<THREE.Group>(null);
-  const strawberryRightRef = useRef<THREE.Group>(null);
-  const strawberryTopRef = useRef<THREE.Group>(null);
+  const refs = {
+    drink: useRef<THREE.Group>(null),
+    strawberryLeft: useRef<THREE.Group>(null),
+    strawberryRight: useRef<THREE.Group>(null),
+    strawberryTop: useRef<THREE.Group>(null),
+  };
+
+  const [paused, setPaused] = useState(false);
+  const [debugProgress, setDebugProgress] = useState<number | undefined>(undefined);
+  const onPauseChange = useCallback((p: boolean) => setPaused(p), []);
+  const onProgressChange = useCallback((p: number | undefined) => setDebugProgress(p), []);
 
   const responsive = useResponsive();
-  const {
-    distance,
-    floatIntensity,
-    rotationIntensity,
-    drinkRotationIntensity,
-  } = getCameraConfig(responsive);
+  const config = getCameraConfig(responsive);
+  const floatStrength = paused ? 0 : config.floatIntensity;
+  const rotStrength = paused ? 0 : config.rotationIntensity;
 
-  const drinkPoses = useMemo(
-    () => getResponsivePoses(DRINK_POSES_RESPONSIVE, responsive.breakpoint),
-    [responsive.breakpoint],
-  );
-
-  const strawberryLeftPoses = useMemo(
-    () =>
-      getResponsivePoses(
-        STRAWBERRY_LEFT_POSES_RESPONSIVE,
-        responsive.breakpoint,
-      ),
-    [responsive.breakpoint],
-  );
-
-  const strawberryRightPoses = useMemo(
-    () =>
-      getResponsivePoses(
-        STRAWBERRY_RIGHT_POSES_RESPONSIVE,
-        responsive.breakpoint,
-      ),
-    [responsive.breakpoint],
-  );
-
-  const strawberryTopPoses = useMemo(
-    () =>
-      getResponsivePoses(
-        STRAWBERRY_TOP_POSES_RESPONSIVE,
-        responsive.breakpoint,
-      ),
+  const poses = useMemo(
+    () => ({
+      drink: getResponsivePoses(DRINK_POSES_RESPONSIVE, responsive.breakpoint),
+      strawberryLeft: getResponsivePoses(STRAWBERRY_LEFT_POSES_RESPONSIVE, responsive.breakpoint),
+      strawberryRight: getResponsivePoses(STRAWBERRY_RIGHT_POSES_RESPONSIVE, responsive.breakpoint),
+      strawberryTop: getResponsivePoses(STRAWBERRY_TOP_POSES_RESPONSIVE, responsive.breakpoint),
+    }),
     [responsive.breakpoint],
   );
 
   return (
     <>
-      {DEBUG_MODE && <ScrollDebug targetRef={drinkRef} />}
+      {DEBUG_MODE && (
+        <DebugTools
+          objects={refs}
+          onPauseChange={onPauseChange}
+          onProgressChange={onProgressChange}
+        />
+      )}
 
       <ScrollAnimations
-        debug={DEBUG_MODE}
+        debug={paused}
+        debugProgress={debugProgress}
         camera={{
-          distance,
+          distance: config.distance,
           height: 0,
           lookAt: [0, 0, 0],
           introFrom: { y: -3 },
           introDuration: 1.5,
         }}
         objects={[
-          { ref: drinkRef, poses: drinkPoses },
-          { ref: strawberryLeftRef, poses: strawberryLeftPoses },
-          { ref: strawberryRightRef, poses: strawberryRightPoses },
-          { ref: strawberryTopRef, poses: strawberryTopPoses },
+          { ref: refs.drink, poses: poses.drink },
+          { ref: refs.strawberryLeft, poses: poses.strawberryLeft },
+          { ref: refs.strawberryRight, poses: poses.strawberryRight },
+          { ref: refs.strawberryTop, poses: poses.strawberryTop },
         ]}
       />
 
       <Lights />
       <Experience />
 
-      <Float
-        floatIntensity={floatIntensity}
-        rotationIntensity={rotationIntensity}
-      >
-        <Strawberry ref={strawberryLeftRef} position={[-2, -1, -2]} scale={2} />
+      <Float floatIntensity={floatStrength} rotationIntensity={rotStrength}>
+        <Strawberry ref={refs.strawberryLeft} position={[-2, -1, -2]} scale={2} />
       </Float>
 
-      <Float
-        floatIntensity={floatIntensity}
-        rotationIntensity={rotationIntensity}
-      >
-        <Strawberry
-          ref={strawberryRightRef}
-          position={[2.5, -1, -2]}
-          rotation={[0, 0, 3]}
-          scale={2}
-        />
+      <Float floatIntensity={floatStrength} rotationIntensity={rotStrength}>
+        <Strawberry ref={refs.strawberryRight} position={[2.5, -1, -2]} rotation={[0, 0, 3]} scale={2} />
       </Float>
 
-      <Float
-        floatIntensity={floatIntensity}
-        rotationIntensity={rotationIntensity}
-      >
+      <Float floatIntensity={floatStrength} rotationIntensity={rotStrength}>
         <Strawberry
-          ref={strawberryTopRef}
+          ref={refs.strawberryTop}
           position={[1, responsive.isDesktop ? 1 : 1.5, -3]}
           rotation={[0, 0, 1]}
           scale={1.5}
         />
       </Float>
 
-      <Float
-        floatIntensity={floatIntensity}
-        rotationIntensity={drinkRotationIntensity}
-      >
-        <Drink
-          ref={drinkRef}
-          position={[0, responsive.isDesktop ? -1.2 : -0.5, 0]}
-        />
+      <Float floatIntensity={floatStrength} rotationIntensity={paused ? 0 : config.drinkRotationIntensity}>
+        <Drink ref={refs.drink} position={[0, responsive.isDesktop ? -1.2 : -0.5, 0]} />
       </Float>
 
       <HomeOverlay />
