@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={spaceGrotesk.className}>
-        <main className="h-screen w-screen">{children}</main>
+        <main className="h-screen w-screen overflow-hidden">{children}</main>
       </body>
     </html>
   );
