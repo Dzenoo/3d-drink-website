@@ -158,7 +158,7 @@ export default function HomeScene() {
           antialias: !responsive.isMobile,
         }}
       >
-        <ScrollControls pages={5} damping={0.5}>
+        <ScrollControls pages={5} damping={responsive.isMobile ? 0.2 : 0.5}>
           <SceneContent />
         </ScrollControls>
       </Canvas>
