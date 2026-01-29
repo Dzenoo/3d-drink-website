@@ -14,7 +14,7 @@ const Strawberry = forwardRef<THREE.Group, StrawberryProps>(
   ({ position = [0, 0, 0], rotation = [0, 0, 0], scale = 1 }, ref) => {
     const [aspect, setAspect] = useState(1);
     const innerRef = useRef<THREE.Mesh>(null);
-    const texture = useTexture('/images/strawberry.png');
+    const texture = useTexture('/images/strawberry.webp');
 
     useEffect(() => {
       if (texture.image) {
@@ -30,7 +30,7 @@ const Strawberry = forwardRef<THREE.Group, StrawberryProps>(
           <meshBasicMaterial
             map={texture}
             transparent
-            side={THREE.DoubleSide}
+            side={THREE.FrontSide}
           />
         </mesh>
       </group>
