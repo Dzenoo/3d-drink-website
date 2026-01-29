@@ -13,6 +13,7 @@ import Experience from '../setup/Experience';
 import Drink from '../models/Drink';
 import Strawberry from '../models/Strawberry';
 import HomeOverlay from '@/components/pages/home/HomeOverlay';
+import LoadingScreen from '@/components/shared/LoadingScreen';
 import { DEBUG_MODE } from '@/constants';
 import { useResponsive } from '@/hooks/useResponsive';
 import { getCameraConfig } from '../config/camera';
@@ -146,18 +147,21 @@ export default function HomeScene() {
   const { fov } = getCameraConfig(responsive);
 
   return (
-    <Canvas
-      camera={{ fov }}
-      dpr={[1, 2]}
-      performance={{ min: 0.5 }}
-      gl={{
-        powerPreference: 'high-performance',
-        antialias: !responsive.isMobile,
-      }}
-    >
-      <ScrollControls pages={5} damping={0.5}>
-        <SceneContent />
-      </ScrollControls>
-    </Canvas>
+    <>
+      <LoadingScreen />
+      <Canvas
+        camera={{ fov }}
+        dpr={[1, 2]}
+        performance={{ min: 0.5 }}
+        gl={{
+          powerPreference: 'high-performance',
+          antialias: !responsive.isMobile,
+        }}
+      >
+        <ScrollControls pages={5} damping={0.5}>
+          <SceneContent />
+        </ScrollControls>
+      </Canvas>
+    </>
   );
 }

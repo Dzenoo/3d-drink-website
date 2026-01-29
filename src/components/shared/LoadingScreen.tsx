@@ -1,47 +1,62 @@
-import React, { useEffect } from 'react';
-import { useProgress } from '@react-three/drei';
-import { motion, useAnimate } from 'motion/react';
+'use client';
 
-const LoadingScreen: React.FC = () => {
-  const { progress } = useProgress();
-  const [scope, animate] = useAnimate();
+import { useState, useEffect } from 'react';
+import * as THREE from 'three';
+import { motion, AnimatePresence } from 'motion/react';
+
+export default function LoadingScreen() {
+  const [progress, setProgress] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    if (progress === 100) {
-      const interval = setInterval(() => {
-        animate(
-          scope.current,
-          { transform: 'translateX(100%)' },
-          { duration: 1, ease: 'easeInOut', damping: 20 },
-        );
+    const manager = THREE.DefaultLoadingManager;
 
-        scope.animations.forEach((animation) => {
-          animation.finished.then(() => {
-            scope.current?.remove();
-          });
-        });
-      }, 1000);
+    manager.onProgress = (_url, loaded, total) => {
+      setProgress((loaded / total) * 100);
+    };
 
-      return () => clearInterval(interval);
+    manager.onLoad = () => {
+      setProgress(100);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (progress >= 100) {
+      const timeout = setTimeout(() => setVisible(false), 500);
+      return () => clearTimeout(timeout);
     }
   }, [progress]);
 
   return (
-    <div
-      ref={scope}
-      className="fixed inset-0 bottom-0 left-0 right-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center gap-5 bg-white"
-    >
-      <div className="mb-4 text-xs text-black">Loading... Please wait</div>
-      <div className="mx-auto w-96">
+    <AnimatePresence>
+      {visible && (
         <motion.div
-          className="h-[1px] rounded-full bg-black"
-          initial={{ width: '0%' }}
-          animate={{ width: `${progress}%` }}
-          transition={{ ease: 'linear', duration: 0.5 }}
-        />
-      </div>
-    </div>
-  );
-};
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0a0a]"
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8, ease: 'easeInOut' }}
+        >
+          <h1 className="text-4xl font-bold uppercase tracking-wider sm:text-5xl">
+            <span className="bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent">
+              ENERGY
+            </span>
+          </h1>
 
-export default LoadingScreen;
+          <div className="mt-8 w-48">
+            <div className="h-[2px] w-full overflow-hidden rounded-full bg-white/10">
+              <motion.div
+                className="h-full rounded-full bg-gradient-to-r from-pink-500 to-orange-400"
+                initial={{ width: '0%' }}
+                animate={{ width: `${progress}%` }}
+                transition={{ ease: 'linear', duration: 0.3 }}
+              />
+            </div>
+          </div>
+
+          <p className="mt-3 text-xs tracking-widest text-white/40">
+            {Math.round(progress)}%
+          </p>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
