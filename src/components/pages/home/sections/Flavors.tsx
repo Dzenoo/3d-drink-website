@@ -47,7 +47,7 @@ export default function Flavors() {
         }}
       />
 
-      <div className="relative z-10 mx-4 w-full max-w-xl sm:mx-6 lg:mx-0 lg:ml-auto lg:mr-10 lg:w-auto xl:mr-20">
+      <div className="relative z-10 mx-4 w-full sm:mx-6 lg:mx-0 lg:ml-auto lg:mr-10 lg:w-auto lg:max-w-xl xl:mr-20">
         <Reveal inView>
           <span className="text-xs uppercase tracking-widest text-white/60 sm:text-sm">
             Choose Your Flavor
@@ -72,7 +72,7 @@ export default function Flavors() {
 
         <div className="mt-6 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-3">
           {flavors.map((flavor, i) => (
-            <Reveal key={flavor.id} inView delay={i * 0.1}>
+            <Reveal key={i} inView delay={i * 0.1}>
               <button
                 onClick={() => setSelected(flavor)}
                 className={`relative h-full w-full rounded-xl border p-3 text-left transition-all duration-300 sm:rounded-2xl sm:p-4 ${

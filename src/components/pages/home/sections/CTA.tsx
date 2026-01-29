@@ -80,9 +80,9 @@ export default function CTA() {
             TOTAL<span className="text-pink-500">ENERGY</span>
           </div>
           <div className="flex gap-5 sm:gap-6">
-            {socialLinks.map(({ icon: Icon, href }) => (
+            {socialLinks.map(({ icon: Icon, href }, index) => (
               <a
-                key={href + Icon.name}
+                key={index}
                 href={href}
                 className="text-white/40 transition-colors hover:text-white"
               >

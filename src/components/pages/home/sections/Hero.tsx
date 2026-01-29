@@ -54,7 +54,7 @@ export default function Hero() {
         <div className="mt-auto pt-8">
           <div className="flex justify-center gap-2 overflow-x-auto pb-2 text-xs text-white lg:flex-col lg:justify-start lg:pb-0">
             {badges.map((badge, i) => (
-              <ClipReveal key={badge} direction="right" delay={1 + i * 0.2}>
+              <ClipReveal key={i} direction="right" delay={1 + i * 0.2}>
                 <span className="flex w-auto items-center gap-2 whitespace-nowrap bg-pink-400 px-3 py-2 sm:px-2 lg:w-52">
                   <span className="h-2 w-2 flex-shrink-0 rounded-full bg-green-400" />
                   {badge}

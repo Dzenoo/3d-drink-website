@@ -40,7 +40,7 @@ export default function Experience() {
 
         <div className="mt-8 grid grid-cols-2 gap-4 sm:mt-12 sm:flex sm:justify-center sm:gap-6 lg:gap-10">
           {benefits.map((benefit, i) => (
-            <Reveal key={benefit.description} inView delay={i * 0.1}>
+            <Reveal key={i} inView delay={i * 0.1}>
               <div className="group text-center">
                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 transition-all group-hover:border-purple-500/50 group-hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-2xl lg:h-16 lg:w-16">
                   <benefit.icon className="h-5 w-5 text-purple-400 sm:h-6 sm:w-6 lg:h-7 lg:w-7" />

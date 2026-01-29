@@ -22,21 +22,17 @@ function getSection(progress: number) {
   return 'Hero';
 }
 
-function copyPose(obj: THREE.Group, scrollProgress: number) {
+function formatPose(obj: THREE.Group, scrollProgress: number) {
   const { x, y, z } = obj.position;
   const { x: rx, y: ry, z: rz } = obj.rotation;
   const s = obj.scale.x;
 
-  const pose = `{
+  return `{
   at: ${scrollProgress.toFixed(2)},
   position: { x: ${x.toFixed(2)}, y: ${y.toFixed(2)}, z: ${z.toFixed(2)} },
   rotation: { x: ${rx.toFixed(2)}, y: ${ry.toFixed(2)}, z: ${rz.toFixed(2)} },
   scale: ${s.toFixed(2)},
 },`;
-
-  navigator.clipboard.writeText(pose);
-  console.log('%c Pose copied! ', 'background: #4CAF50; color: white');
-  console.log(pose);
 }
 
 export default function DebugTools({
@@ -47,6 +43,8 @@ export default function DebugTools({
   const scroll = useScroll();
   const transformRef = useRef<any>(null);
   const progressRef = useRef(0);
+  const selectedRef = useRef('');
+  const draggingRef = useRef(false);
 
   const objectKeys = Object.keys(objects);
   const objectOptions = objectKeys.reduce(
@@ -75,11 +73,18 @@ export default function DebugTools({
         label: 'Mode',
       },
       'Copy Pose': button(() => {
-        const ref = objects[selected];
-        if (ref?.current) copyPose(ref.current, progressRef.current);
+        const ref = objects[selectedRef.current];
+        if (ref?.current) {
+          const pose = formatPose(ref.current, progressRef.current);
+          navigator.clipboard.writeText(pose);
+          console.log('%c Pose copied! ', 'background: #4CAF50; color: white');
+          console.log(pose);
+        }
       }),
     }),
   );
+
+  selectedRef.current = selected;
 
   useEffect(() => {
     onPauseChange(paused);
@@ -88,7 +93,7 @@ export default function DebugTools({
 
   useEffect(() => {
     if (paused) {
-      onProgressChange(manualScroll);
+      onProgressChange(draggingRef.current ? undefined : manualScroll);
       set({ section: getSection(manualScroll) });
       progressRef.current = manualScroll;
     }
@@ -98,15 +103,26 @@ export default function DebugTools({
     const controls = transformRef.current;
     if (!controls) return;
 
-    const onDrag = (e: { value: boolean }) => onPauseChange(e.value || paused);
+    const onDrag = (e: { value: boolean }) => {
+      draggingRef.current = e.value;
+      if (e.value) {
+        onProgressChange(undefined);
+      } else {
+        onPauseChange(paused);
+        if (paused) onProgressChange(manualScroll);
+      }
+    };
     controls.addEventListener('dragging-changed', onDrag);
     return () => controls.removeEventListener('dragging-changed', onDrag);
-  }, [paused, onPauseChange]);
+  }, [paused, manualScroll, onPauseChange, onProgressChange]);
 
   useFrame(() => {
     if (paused) return;
     progressRef.current = scroll.offset;
-    set({ scroll: parseFloat(scroll.offset.toFixed(2)), section: getSection(scroll.offset) });
+    set({
+      scroll: parseFloat(scroll.offset.toFixed(2)),
+      section: getSection(scroll.offset),
+    });
   });
 
   const targetRef = objects[selected];

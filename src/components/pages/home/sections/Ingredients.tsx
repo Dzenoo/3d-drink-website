@@ -62,7 +62,7 @@ export default function Ingredients() {
         </Reveal>
         <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:gap-4">
           {ingredients.map((item, i) => (
-            <Reveal key={item.title} inView delay={i * 0.1}>
+            <Reveal key={i} inView delay={i * 0.1}>
               <div className="rounded-xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm transition-colors hover:bg-white/10 sm:rounded-2xl sm:p-4">
                 <div className="flex items-center justify-between">
                   <item.icon className="h-4 w-4 text-green-400 sm:h-5 sm:w-5" />
