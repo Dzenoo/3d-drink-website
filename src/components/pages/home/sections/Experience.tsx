@@ -12,7 +12,7 @@ const benefits: { icon: LucideIcon; value: string; description: string }[] = [
 
 export default function Experience() {
   return (
-    <section className="relative flex min-h-screen w-screen items-center justify-center overflow-hidden py-16 lg:py-0">
+    <div className="relative flex min-h-screen w-screen items-center justify-center overflow-hidden py-16 lg:py-0">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(168,85,247,0.2),_transparent_40%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_0%_55%,_rgba(236,72,153,0.15),_transparent_20%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_40%,_rgba(59,130,246,0.15),_transparent_20%)]" />
@@ -76,6 +76,6 @@ export default function Experience() {
           </div>
         </Reveal>
       </div>
-    </section>
+    </div>
   );
 }

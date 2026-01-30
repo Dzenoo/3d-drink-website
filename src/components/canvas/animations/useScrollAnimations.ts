@@ -13,7 +13,7 @@ export function useScrollAnimations(config: AnimationConfig) {
   const { camera: threeCamera } = useThree();
   const scroll = useScroll();
   const introDone = useRef(false);
-  const mouse = useRef({ x: 0, y: 0 });
+  // const mouse = useRef({ x: 0, y: 0 });
   const timeline = useRef<gsap.core.Timeline | null>(null);
 
   const responsive = useResponsive();
@@ -22,7 +22,7 @@ export function useScrollAnimations(config: AnimationConfig) {
     distance = 8,
     height = 0,
     lookAt = [0, 0, 0],
-    mouseFactor = 0.05,
+    // mouseFactor = 0.05,
     introFrom = { y: -3 },
     introDuration = 1.5,
     introEase = 'power2.out',
@@ -166,22 +166,22 @@ export function useScrollAnimations(config: AnimationConfig) {
     };
   }, [buildTimeline]);
 
-  useEffect(() => {
-    if (responsive.isMobile) return;
+  // useEffect(() => {
+  //   if (responsive.isMobile) return;
 
-    const adjustedMouseFactor = responsive.isTablet
-      ? mouseFactor * 0.7
-      : mouseFactor;
+  //   const adjustedMouseFactor = responsive.isTablet
+  //     ? mouseFactor * 0.7
+  //     : mouseFactor;
 
-    const onMove = (e: MouseEvent) => {
-      mouse.current.x =
-        (e.clientX / window.innerWidth - 0.5) * adjustedMouseFactor;
-      mouse.current.y =
-        (e.clientY / window.innerHeight - 0.5) * adjustedMouseFactor;
-    };
-    window.addEventListener('mousemove', onMove);
-    return () => window.removeEventListener('mousemove', onMove);
-  }, [mouseFactor, responsive.isMobile, responsive.isTablet]);
+  //   const onMove = (e: MouseEvent) => {
+  //     mouse.current.x =
+  //       (e.clientX / window.innerWidth - 0.5) * adjustedMouseFactor;
+  //     mouse.current.y =
+  //       (e.clientY / window.innerHeight - 0.5) * adjustedMouseFactor;
+  //   };
+  //   window.addEventListener('mousemove', onMove);
+  //   return () => window.removeEventListener('mousemove', onMove);
+  // }, [mouseFactor, responsive.isMobile, responsive.isTablet]);
 
   useEffect(() => {
     if (debug) return;
@@ -217,11 +217,11 @@ export function useScrollAnimations(config: AnimationConfig) {
       timeline.current.progress(scroll.offset);
     }
 
-    threeCamera.lookAt(
-      lookAt[0] + mouse.current.x * 2,
-      lookAt[1] - mouse.current.y * 2,
-      lookAt[2],
-    );
+    // threeCamera.lookAt(
+    //   lookAt[0] + mouse.current.x * 2,
+    //   lookAt[1] - mouse.current.y * 2,
+    //   lookAt[2],
+    // );
   });
 
   return {

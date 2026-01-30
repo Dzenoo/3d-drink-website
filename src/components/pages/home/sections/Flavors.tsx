@@ -39,7 +39,7 @@ export default function Flavors() {
   const [selected, setSelected] = useState(flavors[0]);
 
   return (
-    <section className="relative flex min-h-screen w-screen items-center overflow-hidden py-16 lg:py-0">
+    <div className="relative flex min-h-screen w-screen overflow-hidden py-16 lg:items-center lg:py-0">
       <div
         className="absolute inset-0 transition-all duration-700"
         style={{
@@ -111,6 +111,6 @@ export default function Flavors() {
           </div>
         </Reveal>
       </div>
-    </section>
+    </div>
   );
 }

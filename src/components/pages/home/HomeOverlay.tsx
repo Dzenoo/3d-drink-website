@@ -20,7 +20,7 @@ const SECTIONS = [
 const HomeOverlay: React.FC = () => {
   return (
     <Scroll html>
-      <div className="relative z-[2] w-screen">
+      <div className="relative z-[2] w-screen select-none">
         <Navbar />
         {SECTIONS.map(({ Component }, index) => (
           <Section key={index}>

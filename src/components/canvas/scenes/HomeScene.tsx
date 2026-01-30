@@ -173,7 +173,7 @@ export default function HomeScene() {
 
   return (
     <>
-      <LoadingScreen />
+      {!DEBUG_MODE && <LoadingScreen />}
       <Canvas
         camera={{ fov }}
         dpr={[1, 2]}
@@ -186,7 +186,7 @@ export default function HomeScene() {
         <ScrollControls
           pages={SCROLL_SECTIONS}
           damping={
-            SCROLL_MODE === 'snap' ? 0.1 : responsive.isMobile ? 0.2 : 0.5
+            SCROLL_MODE === 'snap' ? 0.2 : responsive.isMobile ? 0.2 : 0.5
           }
         >
           <SceneContent />

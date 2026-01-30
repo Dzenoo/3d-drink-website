@@ -11,7 +11,7 @@ const socialLinks = [
 
 export default function CTA() {
   return (
-    <section className="relative flex min-h-screen w-screen flex-col items-center justify-center overflow-hidden py-16 pb-24 lg:py-0">
+    <div className="relative flex min-h-screen w-screen flex-col items-center justify-center overflow-hidden py-16 pb-24 lg:py-0">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(236,72,153,0.2),_transparent_40%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,_rgba(251,146,60,0.3),_transparent_40%)]" />
 
@@ -95,6 +95,6 @@ export default function CTA() {
           </p>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

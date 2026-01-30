@@ -37,7 +37,7 @@ const ingredients: {
 
 export default function Ingredients() {
   return (
-    <div className="relative flex min-h-screen w-screen items-center overflow-hidden px-4 py-16 sm:px-6 lg:px-10 lg:py-0">
+    <div className="relative flex min-h-screen w-screen overflow-hidden px-4 py-16 sm:px-6 lg:items-center lg:px-10 lg:py-0">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_10%_50%,_rgba(34,197,94,0.15),_transparent_22%)]" />
 
       <div className="relative z-10 mx-auto max-w-xl space-y-4 sm:space-y-5 lg:mx-0">
