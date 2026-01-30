@@ -6,6 +6,8 @@ import { useFrame } from '@react-three/fiber';
 import { TransformControls, useScroll } from '@react-three/drei';
 import { useControls, button } from 'leva';
 
+import { SCROLL_SECTIONS, SECTION_NAMES } from '@/constants';
+
 type ObjectRefs = Record<string, React.RefObject<THREE.Group>>;
 
 type DebugToolsProps = {
@@ -14,12 +16,12 @@ type DebugToolsProps = {
   onProgressChange: (progress: number | undefined) => void;
 };
 
-function getSection(progress: number) {
-  if (progress >= 0.8) return 'CTA';
-  if (progress >= 0.6) return 'Flavors';
-  if (progress >= 0.4) return 'Experience';
-  if (progress >= 0.2) return 'Ingredients';
-  return 'Hero';
+function getSection(progress: number): string {
+  const index = Math.min(
+    SCROLL_SECTIONS - 1,
+    Math.round(progress * (SCROLL_SECTIONS - 1)),
+  );
+  return SECTION_NAMES[index];
 }
 
 function formatPose(obj: THREE.Group, scrollProgress: number) {
@@ -57,7 +59,7 @@ export default function DebugTools({
     () => ({
       paused: { value: false, label: 'Pause' },
       scroll: { value: 0, min: 0, max: 1, step: 0.01, label: 'Scroll' },
-      section: { value: 'Hero', editable: false },
+      section: { value: SECTION_NAMES[0], editable: false },
       selected: {
         value: objectKeys[0],
         options: objectOptions,

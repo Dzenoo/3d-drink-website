@@ -6,7 +6,7 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { useScroll } from '@react-three/drei';
 
 import { AnimationConfig } from './types';
-import { useResponsive, Breakpoint } from '@/hooks/useResponsive';
+import { useResponsive } from '@/hooks/useResponsive';
 
 export function useScrollAnimations(config: AnimationConfig) {
   const { debug = false, debugProgress, camera = {}, objects = [] } = config;
@@ -15,7 +15,6 @@ export function useScrollAnimations(config: AnimationConfig) {
   const introDone = useRef(false);
   const mouse = useRef({ x: 0, y: 0 });
   const timeline = useRef<gsap.core.Timeline | null>(null);
-  const currentBreakpoint = useRef<Breakpoint>('desktop');
 
   const responsive = useResponsive();
 
@@ -160,16 +159,12 @@ export function useScrollAnimations(config: AnimationConfig) {
   }, [objects]);
 
   useEffect(() => {
-    if (currentBreakpoint.current !== responsive.breakpoint) {
-      currentBreakpoint.current = responsive.breakpoint;
-    }
-
     const tl = buildTimeline();
 
     return () => {
       tl.kill();
     };
-  }, [buildTimeline, responsive.breakpoint]);
+  }, [buildTimeline]);
 
   useEffect(() => {
     if (responsive.isMobile) return;

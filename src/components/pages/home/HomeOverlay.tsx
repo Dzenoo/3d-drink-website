@@ -9,26 +9,24 @@ import Experience from './sections/Experience';
 import Flavors from './sections/Flavors';
 import CTA from './sections/CTA';
 
+const SECTIONS = [
+  { Component: Hero },
+  { Component: Ingredients },
+  { Component: Experience },
+  { Component: Flavors },
+  { Component: CTA },
+] as const;
+
 const HomeOverlay: React.FC = () => {
   return (
     <Scroll html>
       <div className="relative z-[2] w-screen">
         <Navbar />
-        <Section>
-          <Hero />
-        </Section>
-        <Section>
-          <Ingredients />
-        </Section>
-        <Section>
-          <Experience />
-        </Section>
-        <Section>
-          <Flavors />
-        </Section>
-        <Section>
-          <CTA />
-        </Section>
+        {SECTIONS.map(({ Component }, index) => (
+          <Section key={index}>
+            <Component />
+          </Section>
+        ))}
       </div>
     </Scroll>
   );

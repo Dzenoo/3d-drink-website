@@ -14,8 +14,14 @@ import Drink from '../models/Drink';
 import Strawberry from '../models/Strawberry';
 import HomeOverlay from '@/components/pages/home/HomeOverlay';
 import LoadingScreen from '@/components/shared/LoadingScreen';
-import { DEBUG_MODE } from '@/constants';
+import {
+  DEBUG_MODE,
+  SCROLL_MODE,
+  SCROLL_SECTIONS,
+  SNAP_SCROLL_CONFIG,
+} from '@/constants';
 import { useResponsive } from '@/hooks/useResponsive';
+import { useSnapScroll } from '@/hooks/useSnapScroll';
 import { getCameraConfig } from '../config/camera';
 import { getResponsivePoses } from '../animations/poses/responsive';
 import { DRINK_POSES_RESPONSIVE } from '../animations/poses/drink';
@@ -47,6 +53,13 @@ function SceneContent() {
   const config = getCameraConfig(responsive);
   const floatStrength = paused ? 0 : config.floatIntensity;
   const rotStrength = paused ? 0 : config.rotationIntensity;
+
+  useSnapScroll({
+    sections: SCROLL_SECTIONS,
+    duration: SNAP_SCROLL_CONFIG.duration,
+    ease: SNAP_SCROLL_CONFIG.ease,
+    enabled: SCROLL_MODE === 'snap' && !paused && !debugProgress,
+  });
 
   const poses = useMemo(
     () => ({
@@ -101,31 +114,43 @@ function SceneContent() {
       <Lights />
       <Experience />
 
-      <Float floatIntensity={floatStrength} rotationIntensity={rotStrength}>
-        <Strawberry
-          ref={refs.strawberryLeft}
-          position={[-2, -1, -2]}
-          scale={2}
-        />
-      </Float>
-
-      <Float floatIntensity={floatStrength} rotationIntensity={rotStrength}>
-        <Strawberry
-          ref={refs.strawberryRight}
-          position={[2.5, -1, -2]}
-          rotation={[0, 0, 3]}
-          scale={2}
-        />
-      </Float>
-
-      <Float floatIntensity={floatStrength} rotationIntensity={rotStrength}>
-        <Strawberry
-          ref={refs.strawberryTop}
-          position={[1, responsive.isDesktop ? 1 : 1.5, -3]}
-          rotation={[0, 0, 1]}
-          scale={1.5}
-        />
-      </Float>
+      {[
+        {
+          ref: refs.strawberryLeft,
+          position: [-2, -1, -2] as [number, number, number],
+          rotation: [0, 0, 0] as [number, number, number],
+          scale: 2,
+        },
+        {
+          ref: refs.strawberryRight,
+          position: [2.5, -1, -2] as [number, number, number],
+          rotation: [0, 0, 3] as [number, number, number],
+          scale: 2,
+        },
+        {
+          ref: refs.strawberryTop,
+          position: [1, responsive.isDesktop ? 1 : 1.5, -3] as [
+            number,
+            number,
+            number,
+          ],
+          rotation: [0, 0, 1] as [number, number, number],
+          scale: 1.5,
+        },
+      ].map((strawberry, index) => (
+        <Float
+          key={index}
+          floatIntensity={floatStrength}
+          rotationIntensity={rotStrength}
+        >
+          <Strawberry
+            ref={strawberry.ref}
+            position={strawberry.position}
+            rotation={strawberry.rotation}
+            scale={strawberry.scale}
+          />
+        </Float>
+      ))}
 
       <Float
         floatIntensity={floatStrength}
@@ -158,7 +183,12 @@ export default function HomeScene() {
           antialias: !responsive.isMobile,
         }}
       >
-        <ScrollControls pages={5} damping={responsive.isMobile ? 0.2 : 0.5}>
+        <ScrollControls
+          pages={SCROLL_SECTIONS}
+          damping={
+            SCROLL_MODE === 'snap' ? 0.1 : responsive.isMobile ? 0.2 : 0.5
+          }
+        >
           <SceneContent />
         </ScrollControls>
       </Canvas>
