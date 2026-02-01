@@ -168,10 +168,9 @@ export function useSnapScroll({
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (isAnimating.current) {
-        e.preventDefault();
-        return;
-      }
+      e.preventDefault();
+
+      if (isAnimating.current) return;
 
       const touchY = e.touches[0].clientY;
       const delta = touchStartY - touchY;
@@ -186,6 +185,8 @@ export function useSnapScroll({
         if (nextSection !== currentSection.current) {
           touchAccumulator = 0;
           snapToSection(nextSection);
+        } else {
+          touchAccumulator = 0;
         }
       }
     };
