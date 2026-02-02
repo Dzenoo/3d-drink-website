@@ -2,83 +2,15 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { useScroll } from '@react-three/drei';
 
 import { AnimationConfig } from './types';
-import { useResponsive } from '@/hooks/useResponsive';
 
 export function useScrollAnimations(config: AnimationConfig) {
-  const { debug = false, debugProgress, camera = {}, objects = [] } = config;
-  const { camera: threeCamera } = useThree();
+  const { debug = false, debugProgress, objects = [] } = config;
   const scroll = useScroll();
-  const introDone = useRef(false);
-  // const mouse = useRef({ x: 0, y: 0 });
   const timeline = useRef<gsap.core.Timeline | null>(null);
-
-  const responsive = useResponsive();
-
-  const {
-    distance = 8,
-    height = 0,
-    lookAt = [0, 0, 0],
-    // mouseFactor = 0.05,
-    introFrom = { y: -3 },
-    introDuration = 1.5,
-    introEase = 'power2.out',
-  } = camera;
-
-  const getResponsiveDistance = useCallback(() => {
-    if (responsive.isMobile) {
-      return responsive.isPortrait ? distance * 1.5 : distance * 1.25;
-    }
-    if (responsive.isTablet) {
-      return distance * 1.15;
-    }
-    return distance;
-  }, [
-    responsive.isMobile,
-    responsive.isTablet,
-    responsive.isPortrait,
-    distance,
-  ]);
-
-  useEffect(() => {
-    if (debug) return;
-
-    const responsiveDistance = getResponsiveDistance();
-
-    threeCamera.position.set(
-      introFrom.x ?? 0,
-      introFrom.y ?? height,
-      introFrom.z ?? responsiveDistance,
-    );
-    threeCamera.lookAt(...lookAt);
-
-    const tween = gsap.to(threeCamera.position, {
-      x: 0,
-      y: height,
-      z: responsiveDistance,
-      duration: introDuration,
-      ease: introEase,
-      onComplete: () => {
-        introDone.current = true;
-      },
-    });
-
-    return () => {
-      tween.kill();
-    };
-  }, [
-    threeCamera,
-    debug,
-    height,
-    lookAt,
-    introFrom,
-    introDuration,
-    introEase,
-    getResponsiveDistance,
-  ]);
 
   const buildTimeline = useCallback(() => {
     if (timeline.current) {
@@ -166,39 +98,6 @@ export function useScrollAnimations(config: AnimationConfig) {
     };
   }, [buildTimeline]);
 
-  // useEffect(() => {
-  //   if (responsive.isMobile) return;
-
-  //   const adjustedMouseFactor = responsive.isTablet
-  //     ? mouseFactor * 0.7
-  //     : mouseFactor;
-
-  //   const onMove = (e: MouseEvent) => {
-  //     mouse.current.x =
-  //       (e.clientX / window.innerWidth - 0.5) * adjustedMouseFactor;
-  //     mouse.current.y =
-  //       (e.clientY / window.innerHeight - 0.5) * adjustedMouseFactor;
-  //   };
-  //   window.addEventListener('mousemove', onMove);
-  //   return () => window.removeEventListener('mousemove', onMove);
-  // }, [mouseFactor, responsive.isMobile, responsive.isTablet]);
-
-  useEffect(() => {
-    if (debug) return;
-
-    const scrollContainer = scroll.el;
-
-    const blockScroll = (e: Event) => {
-      if (!introDone.current) {
-        e.preventDefault();
-        scroll.el.scrollTop = 0;
-      }
-    };
-
-    scrollContainer.addEventListener('scroll', blockScroll);
-    return () => scrollContainer.removeEventListener('scroll', blockScroll);
-  }, [debug, scroll]);
-
   useFrame(() => {
     if (debugProgress !== undefined && timeline.current) {
       timeline.current.progress(debugProgress);
@@ -207,27 +106,8 @@ export function useScrollAnimations(config: AnimationConfig) {
 
     if (debug) return;
 
-    if (!introDone.current) {
-      timeline.current?.progress(0);
-      threeCamera.lookAt(...lookAt);
-      return;
-    }
-
     if (timeline.current) {
       timeline.current.progress(scroll.offset);
     }
-
-    // threeCamera.lookAt(
-    //   lookAt[0] + mouse.current.x * 2,
-    //   lookAt[1] - mouse.current.y * 2,
-    //   lookAt[2],
-    // );
   });
-
-  return {
-    introDone: introDone.current,
-    breakpoint: responsive.breakpoint,
-    isMobile: responsive.isMobile,
-    isTablet: responsive.isTablet,
-  };
 }

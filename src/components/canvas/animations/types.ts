@@ -9,16 +9,6 @@ export type Pose = {
   ease?: string;
 };
 
-export type CameraConfig = {
-  distance?: number;
-  height?: number;
-  lookAt?: [number, number, number];
-  mouseFactor?: number;
-  introFrom?: { x?: number; y?: number; z?: number };
-  introDuration?: number;
-  introEase?: string;
-};
-
 export type AnimatedObject = {
   ref: React.RefObject<THREE.Object3D>;
   poses: Pose[];
@@ -28,6 +18,5 @@ export type AnimatedObject = {
 export type AnimationConfig = {
   debug?: boolean;
   debugProgress?: number;
-  camera?: CameraConfig;
   objects?: AnimatedObject[];
 };
